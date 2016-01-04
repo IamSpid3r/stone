@@ -18,6 +18,7 @@
     "mocha":"*",
     "aws-lib":"*",
     "xml2js":"*",
-    "iconv-lite":"*"
+    "iconv-lite":"*",
+    "q":"*"
     }
 }
