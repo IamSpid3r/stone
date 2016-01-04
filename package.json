@@ -1,0 +1,22 @@
+{
+  "name": "cake",
+  "dependencies": {
+    "request": "*",
+    "url":"*",
+    "cluster-master": "*",
+    "express": "4.*",
+    "tough-cookie-filestore":"*",
+    "tough-cookie":"*",
+    "lodash":"*",
+    "jschardet":"*",
+    "cheerio":"*",
+    "phantom":"*",
+    "url":"*",
+    "compression":"*",
+    "iconv":"*",
+    "md5":"*",
+    "mocha":"*",
+    "aws-lib":"*",
+    "xml2js":"*"
+    }
+}
