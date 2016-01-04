@@ -17,6 +17,7 @@
     "md5":"*",
     "mocha":"*",
     "aws-lib":"*",
-    "xml2js":"*"
+    "xml2js":"*",
+    "iconv-lite":"*"
     }
 }
