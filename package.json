@@ -1,23 +1,23 @@
 {
   "name": "cake",
   "dependencies": {
-    "request": "*",
-    "url":"*",
+    "aws-lib": "*",
+    "cheerio": "*",
     "cluster-master": "*",
+    "compression": "*",
+    "eventproxy": "^0.3.4",
     "express": "4.*",
-    "tough-cookie-filestore":"*",
-    "tough-cookie":"*",
-    "lodash":"*",
-    "jschardet":"*",
-    "cheerio":"*",
-    "phantom":"*",
-    "url":"*",
-    "compression":"*",
-    "iconv":"*",
-    "md5":"*",
-    "mocha":"*",
-    "aws-lib":"*",
-    "xml2js":"*",
-    "iconv-lite":"*"
-    }
+    "iconv": "*",
+    "iconv-lite": "*",
+    "jschardet": "*",
+    "lodash": "*",
+    "md5": "*",
+    "mocha": "*",
+    "phantom": "*",
+    "request": "*",
+    "tough-cookie": "*",
+    "tough-cookie-filestore": "*",
+    "url": "*",
+    "xml2js": "*"
+  }
 }
