@@ -7,17 +7,20 @@
     "compression": "*",
     "eventproxy": "^0.3.4",
     "express": "4.*",
-    "iconv": "*",
-    "iconv-lite": "*",
-    "jschardet": "*",
-    "lodash": "*",
-    "md5": "*",
-    "mocha": "*",
-    "phantom": "*",
-    "request": "*",
-    "tough-cookie": "*",
-    "tough-cookie-filestore": "*",
-    "url": "*",
-    "xml2js": "*"
-  }
+    "tough-cookie-filestore":"*",
+    "tough-cookie":"*",
+    "lodash":"*",
+    "jschardet":"*",
+    "cheerio":"*",
+    "phantom":"*",
+    "url":"*",
+    "compression":"*",
+    "iconv":"*",
+    "md5":"*",
+    "mocha":"*",
+    "aws-lib":"*",
+    "xml2js":"*",
+    "iconv-lite":"*",
+    "q":"*"
+    }
 }
