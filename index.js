@@ -12,6 +12,7 @@ var compress = require('compression');
 var taobao = require('./lib/taobao');
 var amazon = require('./lib/amazon');
 var nikeStore = require('./lib/nikeStore');
+var yougou = require('./lib/yougou');
 
 app.use(compress());
 app.get('/test', function (req, res) {
@@ -25,12 +26,20 @@ app.get('/test', function (req, res) {
    /* amazon.getInfo('http://www.amazon.cn/gp/product/B013OOT614/ref=s9_cngwdyfloorv2-s9?pf_rd_m=A1AJ19PSB66TGU&pf_rd_s=desktop-1&pf_rd_r=0NXVQ726G3DZPAQBVMTQ&pf_rd_t=36701&pf_rd_p=B013OOT614&pf_rd_i=desktop',function(error,itemInfo){
         res.send(itemInfo);
     })*/
-    nikeStore.getInfo('http://store.nike.com/cn/zh_cn/pd/air-max-2016-%E8%B7%91%E6%AD%A5%E9%9E%8B/pid-10865050/pgid-10345833',function(error,itemInfo){
+  /*  nikeStore.getInfo('http://store.nike.com/cn/zh_cn/pd/air-max-2016-%E8%B7%91%E6%AD%A5%E9%9E%8B/pid-10865050/pgid-10345833',function(error,itemInfo){
          if(error){
              res.send(error);
          }else{
              res.send(itemInfo);
          }
+    })*/
+
+    yougou.getInfo('http://seoul.yougou.com/c-chrischristy/sku-kcxalrc1041-100343796.shtml#ref=search&po=search',function(error,itemInfo){
+        if(error){
+            res.send(error);
+        }else{
+            res.send(itemInfo);
+        }
     })
 
 })
