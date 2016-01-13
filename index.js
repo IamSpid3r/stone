@@ -52,9 +52,11 @@ app.get('/test', function (req, res) {
 var allowHostname = ['www.amazon.cn', 'item.taobao.com', 'detail.tmall.com', 'store.nike.com', 'www.yougou.com', 'seoul.yougou.com'];
 app.get('/info', function (req, res) {
     var goodsUrl = req.query.url;
+    var goodsUrlHost = '';
     if(goodsUrl){
         var urlInfo = url.parse(goodsUrl, true, true);
-        if(allowHostname.indexOf(urlInfo.host) == -1){
+        goodsUrlHost = urlInfo.host;
+        if(allowHostname.indexOf(goodsUrlHost) == -1){
             res.json({
                 Status: false,
                 Msg: '请求地址不在抓取访问'
@@ -62,7 +64,7 @@ app.get('/info', function (req, res) {
         }
     }
 
-    switch(urlInfo.host){
+    switch(goodsUrlHost){
         case 'www.amazon.cn':
             amazon.getInfo(goodsUrl ,function(error, itemInfo){
                 res.json({ Status: true, Data: itemInfo});
@@ -86,11 +88,10 @@ app.get('/info', function (req, res) {
             })
             break;
         default:
-            yougou.getInfo(goodsUrl ,function(error, itemInfo){
-                res.json({
-                    Status: false,
-                    Msg: '请求地址不在抓取访问'});
-            })
+            res.json({
+                Status: false,
+                Msg: '请求地址不在抓取访问'
+                });
             break;
     }
 })
