@@ -1,6 +1,7 @@
 {
   "name": "cake",
   "dependencies": {
+    "request":"*",
     "aws-lib": "*",
     "body-parser": "^1.14.2",
     "cheerio": "*",
