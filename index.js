@@ -59,7 +59,12 @@ app.get('/info', function (req, res) {
         if(allowHostname.indexOf(goodsUrlHost) == -1){
             res.json({
                 Status: false,
-                Msg: '请求地址不在抓取访问'
+                Msg: {
+                    Errors: [{
+                        Code: '请求地址不在抓取访问',
+                        Message: '请求地址不在抓取访问'
+                    }]
+                }
             })
         }
     }
@@ -119,7 +124,12 @@ app.get('/info', function (req, res) {
         default:
             res.json({
                 Status: false,
-                Msg: '请求地址不在抓取访问'
+                Msg: {
+                    Errors: [{
+                        Code: '请求地址不在抓取访问',
+                        Message: '请求地址不在抓取访问'
+                    }]
+                }
                 });
             break;
     }
