@@ -2,6 +2,7 @@
   "name": "cake",
   "dependencies": {
     "aws-lib": "*",
+    "body-parser": "^1.14.2",
     "cheerio": "*",
     "cluster-master": "*",
     "compression": "*",
@@ -13,7 +14,6 @@
     "lodash": "*",
     "md5": "*",
     "mocha": "*",
-    "nodemailer": "^0.7.1",
     "phantom": "*",
     "q": "*",
     "tough-cookie": "*",
