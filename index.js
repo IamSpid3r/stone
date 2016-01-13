@@ -11,12 +11,11 @@ var url = require('url');
 // var phantom = require('phantom');
 
 var taobao = require('./lib/taobao');
-var amazon = require('./lib/amazonUsa');
+var amazonCn = require('./lib/amazonCn');
 var nikeStore = require('./lib/nikeStore');
 var yougou = require('./lib/yougou');
 
 app.use(compress());
-app.use(bodyParser.urlencoded());
 app.use(bodyParser.json());
 
 
@@ -71,7 +70,7 @@ app.get('/info', function (req, res) {
 
     switch(goodsUrlHost){
         case 'www.amazon.cn':
-            amazon.getInfo(goodsUrl ,function(error, itemInfo){
+            amazonCn.getInfo(goodsUrl ,function(error, itemInfo){
                 if(error){
                     res.json({
                         Status: false,
