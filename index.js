@@ -11,7 +11,7 @@ var url = require('url');
 // var phantom = require('phantom');
 
 var taobao = require('./lib/taobao');
-var amazon = require('./lib/amazon');
+var amazon = require('./lib/amazonUsa');
 var nikeStore = require('./lib/nikeStore');
 var yougou = require('./lib/yougou');
 
