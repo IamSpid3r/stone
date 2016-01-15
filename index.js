@@ -16,6 +16,9 @@ var nikeStore = require('./lib/nikeStore');
 var yougou = require('./lib/yougou');
 var _6pm = require('./lib/6pm');
 var shihuoHaitao = require('./lib/shihuoHaitao');
+var amazonJp = require('./lib/amazonJp');
+var amazonUsa = require('./lib/amazonUsa');
+
 
 app.use(compress());
 app.use(bodyParser.json());
@@ -33,28 +36,28 @@ app.get('/test', function (req, res) {
         res.send(itemInfo);
     })*/
     /* nikeStore.getInfo('http://store.nike.com/cn/zh_cn/pd/air-max-2016-%E8%B7%91%E6%AD%A5%E9%9E%8B/pid-10865050/pgid-10345833',function(error,itemInfo){
-         if(error){
+        if(error){
              res.send(error);
          }else{
              res.send(itemInfo);
          }
     })*/
 
-  /*  yougou.getInfo('http://seoul.yougou.com/c-chrischristy/sku-kcxalrc1041-100343796.shtml#ref=search&po=search',function(error,itemInfo){
-        if(error){
-            res.send(error);
-        }else{
-            res.send(itemInfo);
-        }
-    })*/
-
-    _6pm.getInfo('http://www.6pm.com/product/8550462/color/567398',function(error,itemInfo){
+    yougou.getInfo('http://seoul.yougou.com/c-chrischristy/sku-kcxalrc1041-100343796.shtml#ref=search&po=search',function(error,itemInfo){
         if(error){
             res.send(error);
         }else{
             res.send(itemInfo);
         }
     })
+
+   /* _6pm.getInfo('http://www.6pm.com/product/8550462/color/567398',function(error,itemInfo){
+        if(error){
+            res.send(error);
+        }else{
+            res.send(itemInfo);
+        }
+    })*/
 
   /*  shihuoHaitao.getInfo('http://www.shihuo.cn/haitao/buy/84756.html?from=shyjg',function(error,itemInfo){
         if(error){
@@ -67,7 +70,9 @@ app.get('/test', function (req, res) {
 
 var allowHostname = [
     'www.amazon.cn', 'item.taobao.com', 'detail.tmall.com','www.shihuo.cn',
-    'store.nike.com', 'www.yougou.com', 'seoul.yougou.com','www.6pm.com'
+    'store.nike.com', 'www.yougou.com', 'seoul.yougou.com','www.6pm.com',
+    'www.amazon.co.jp','www.amazon.com'
+
 ];
 app.get('/info', function (req, res) {
     var goodsUrl = req.query.url;
@@ -91,6 +96,32 @@ app.get('/info', function (req, res) {
     switch(goodsUrlHost){
         case 'www.amazon.cn':
             amazonCn.getInfo(goodsUrl ,function(error, itemInfo){
+                if(error){
+                    res.json({
+                        Status: false,
+                        Msg: error
+                    })
+                }else{
+                    res.json({ Status: true, Data: itemInfo});
+                }
+
+            })
+            break;
+        case 'www.amazon.co.jp':
+            amazonJp.getInfo(goodsUrl ,function(error, itemInfo){
+                if(error){
+                    res.json({
+                        Status: false,
+                        Msg: error
+                    })
+                }else{
+                    res.json({ Status: true, Data: itemInfo});
+                }
+
+            })
+            break;
+        case 'www.amazon.com':
+            amazonUsa.getInfo(goodsUrl ,function(error, itemInfo){
                 if(error){
                     res.json({
                         Status: false,
