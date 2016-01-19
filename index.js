@@ -8,6 +8,7 @@ var express = require('express'), app = express();
 var compress = require('compression');
 var bodyParser = require('body-parser');
 var url = require('url');
+var request = require('request');
 // var phantom = require('phantom');
 
 var taobao = require('./lib/taobao');
@@ -68,147 +69,117 @@ app.get('/test', function (req, res) {
     })*/
 })
 
-var allowHostname = [
-    'www.amazon.cn', 'item.taobao.com', 'detail.tmall.com','www.shihuo.cn',
-    'store.nike.com', 'www.yougou.com', 'seoul.yougou.com','www.6pm.com',
-    'www.amazon.co.jp','www.amazon.com'
-
-];
 app.get('/info', function (req, res) {
     var goodsUrl = req.query.url;
     var goodsUrlHost = '';
     if(goodsUrl){
         var urlInfo = url.parse(goodsUrl, true, true);
         goodsUrlHost = urlInfo.host;
-        if(allowHostname.indexOf(goodsUrlHost) == -1){
-            res.json({
-                Status: false,
-                Msg: {
-                    Errors: [{
-                        Code: '请求地址不在抓取访问',
-                        Message: '请求地址不在抓取访问'
-                    }]
-                }
-            })
-        }
     }
 
-    switch(goodsUrlHost){
-        case 'www.amazon.cn':
-            amazonCn.getInfo(goodsUrl ,function(error, itemInfo){
-                if(error){
-                    res.json({
-                        Status: false,
-                        Msg: error
-                    })
-                }else{
-                    res.json({ Status: true, Data: itemInfo});
-                }
-
-            })
-            break;
-        case 'www.amazon.co.jp':
-            amazonJp.getInfo(goodsUrl ,function(error, itemInfo){
-                if(error){
-                    res.json({
-                        Status: false,
-                        Msg: error
-                    })
-                }else{
-                    res.json({ Status: true, Data: itemInfo});
-                }
-
-            })
-            break;
-        case 'www.amazon.com':
-            amazonUsa.getInfo(goodsUrl ,function(error, itemInfo){
-                if(error){
-                    res.json({
-                        Status: false,
-                        Msg: error
-                    })
-                }else{
-                    res.json({ Status: true, Data: itemInfo});
-                }
-
-            })
-            break;
-        case 'item.taobao.com':
-        case 'detail.tmall.com':
-            taobao.getInfo(goodsUrl ,function(error, itemInfo){
-                if(error){
-                    res.json({
-                        Status: false,
-                        Msg: error
-                    })
-                }else{
-                    res.json({ Status: true, Data: itemInfo});
-                }
-            })
-            break;
-        case 'store.nike.com':
-            nikeStore.getInfo(goodsUrl ,function(error, itemInfo){
-                if(error){
-                    res.json({
-                        Status: false,
-                        Msg: error
-                    })
-                }else{
-                    res.json({ Status: true, Data: itemInfo});
-                }
-            })
-            break;
-        case 'www.yougou.com':
-        case 'seoul.yougou.com':
-            yougou.getInfo(goodsUrl ,function(error, itemInfo){
-                if(error){
-                    res.json({
-                        Status: false,
-                        Msg: error
-                    })
-                }else{
-                    res.json({ Status: true, Data: itemInfo});
-                }
-            })
-            break;
-        case 'www.shihuo.cn':
-            shihuoHaitao.getInfo(goodsUrl ,function(error, itemInfo){
-                if(error){
-                    res.json({
-                        Status: false,
-                        Msg: error
-                    })
-                }else{
-                    res.json({ Status: true, Data: itemInfo});
-                }
-            })
-            break;
-        case 'www.6pm.com':
-            _6pm.getInfo(goodsUrl ,function(error, itemInfo){
-                if(error){
-                    res.json({
-                        Status: false,
-                        Msg: error
-                    })
-                }else{
-                    res.json({ Status: true, Data: itemInfo});
-                }
-            })
-            break;
-        default:
-            res.json({
-                Status: false,
-                Msg: {
-                    Errors: [{
-                        Code: '请求地址不在抓取访问',
-                        Message: '请求地址不在抓取访问'
-                    }]
-                }
-                });
-            break;
+    var storeObj = getStoreObj(goodsUrlHost);
+    if(typeof storeObj == 'object'){
+        storeObj.getInfo(goodsUrl ,function(error, itemInfo){
+            if(error){
+                res.json({
+                    Status: false,
+                    Msg: error
+                })
+            }else{
+                res.json({ Status: true, Data: itemInfo});
+            }
+        })
+    }else{
+        res.json({
+            Status: false,
+            Msg: {
+                Errors: [{
+                    Code: '请求地址不在抓取访问',
+                    Message: '请求地址不在抓取访问'
+                }]
+            }
+        })
     }
 })
 
+
+app.get('/manage',function(req, res){
+    var channel = 'all';
+    var producerUrl = 'http://www.shihuo.cn/api/stone/act/producer';
+    var consumerUrl = 'http://www.shihuo.cn/api/stone/act/consumer';
+
+    request(producerUrl, function(error,response,body) {
+        if (!error && response.statusCode == 200) {
+            body = JSON.parse(body);
+            if(body.status){
+                var urlInfo = url.parse(body.data.url, true, true);
+                var storeObj = getStoreObj(urlInfo.host);
+
+                if(typeof storeObj == 'object'){
+                    storeObj.getInfo(body.data.url ,function(error, itemInfo){
+                        if(error){
+                            var formData = {
+                                Status: 1,
+                                Msg: error,
+                                Id: body.data.id
+                            };
+                        }else{
+                            if(itemInfo.md5 == body.data.md5){
+                                var formData = { Status: 2, Id: body.data.id};
+                            }else{
+                                var formData = { Status: 3, Data: itemInfo, Id: body.data.id};
+                            }
+                        }
+
+                        request.post({proxy:'http://172.16.15.126:8888',url: consumerUrl, form: formData});
+                    })
+                }else{
+                    var formData = {
+                        Status: 1,
+                        Msg: {
+                            Errors: [{
+                                Code: '请求地址不在抓取访问',
+                                Message: '请求地址不在抓取访问'
+                            }]
+                        },
+                        Id: body.data.id
+                    };
+
+                    request.post({proxy:'http://172.16.15.126:8888',url: consumerUrl, form: formData});
+                }
+            }
+        }
+    })
+
+    res.send('hello world');
+})
+
+
+//获取商城对象
+function getStoreObj(host){
+    switch(host){
+        case 'www.amazon.cn':
+            return amazonCn;
+        case 'www.amazon.co.jp':
+            return amazonJp;
+        case 'www.amazon.com':
+            return amazonUsa;
+        case 'item.taobao.com':
+        case 'detail.tmall.com':
+            return taobao;
+        case 'store.nike.com':
+            return nikeStore;
+        case 'www.yougou.com':
+        case 'seoul.yougou.com':
+            return yougou;
+        case 'www.shihuo.cn':
+            return shihuoHaitao;
+        case 'www.6pm.com':
+            return _6pm;
+        default:
+            return NULL;
+    }
+}
 
 app.listen(3000,function(){
    console.log('listen 3000');
