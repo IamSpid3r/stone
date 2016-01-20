@@ -103,58 +103,6 @@ app.get('/info', function (req, res) {
 })
 
 
-app.get('/manage',function(req, res){
-    var channel = 'all';
-    var producerUrl = 'http://www.shihuo.cn/api/stone/act/producer';
-    var consumerUrl = 'http://www.shihuo.cn/api/stone/act/consumer';
-
-    request(producerUrl, function(error,response,body) {
-        if (!error && response.statusCode == 200) {
-            body = JSON.parse(body);
-            if(body.status){
-                var urlInfo = url.parse(body.data.url, true, true);
-                var storeObj = getStoreObj(urlInfo.host);
-
-                if(typeof storeObj == 'object'){
-                    storeObj.getInfo(body.data.url ,function(error, itemInfo){
-                        if(error){
-                            var formData = {
-                                Status: 1,
-                                Msg: error,
-                                Id: body.data.id
-                            };
-                        }else{
-                            if(itemInfo.md5 == body.data.md5){
-                                var formData = { Status: 2, Id: body.data.id};
-                            }else{
-                                var formData = { Status: 3, Data: itemInfo, Id: body.data.id};
-                            }
-                        }
-
-                        request.post({proxy:'http://172.16.15.126:8888',url: consumerUrl, form: formData});
-                    })
-                }else{
-                    var formData = {
-                        Status: 1,
-                        Msg: {
-                            Errors: [{
-                                Code: '请求地址不在抓取访问',
-                                Message: '请求地址不在抓取访问'
-                            }]
-                        },
-                        Id: body.data.id
-                    };
-
-                    request.post({proxy:'http://172.16.15.126:8888',url: consumerUrl, form: formData});
-                }
-            }
-        }
-    })
-
-    res.send('hello world');
-})
-
-
 //获取商城对象
 function getStoreObj(host){
     switch(host){
