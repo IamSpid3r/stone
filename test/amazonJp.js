@@ -1,7 +1,7 @@
 var assert = require('assert');
 var amazonJp = require('../lib/amazonJp');
 //亚马逊 特别的商品 B00X7HAQEI
-describe('amazon', function() {
+describe('amazonJp', function() {
     describe('#getItemInfo', function() {
         it('测试不存在的商品', function(done) {
             this.timeout(60000)
