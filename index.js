@@ -125,7 +125,7 @@ function getStoreObj(host){
         case 'www.6pm.com':
             return _6pm;
         default:
-            return NULL;
+            return '';
     }
 }
 
