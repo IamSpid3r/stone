@@ -2,7 +2,7 @@ var process = require('child_process');
 var sendEmail = require('./lib/email').sendEmail;
 
 /*2 failing*/
-process.exec('mocha',
+process.exec('/usr/local/bin/mocha',
     function (error, stdout, stderr) {
         if (error !== null) {
             console.log('exec error: ' + error);
