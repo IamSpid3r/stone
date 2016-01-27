@@ -52,12 +52,12 @@ describe('amazonCn', function() {
         });
         it('测试单个属性多个商品',function(done){
         this.timeout(60000)
-            amazonCn.getInfo('http://www.amazon.cn/gp/product/B017SL87Q2/', function(err, data) {
+            amazonCn.getInfo('http://www.amazon.cn/gp/product/B0195YELX8/', function(err, data) {
                 if (err) {
                     throw new Error(err);
                 }
                 assert.equal('inStock', data.Status);
-                assert.equal('cn.amazon.B017SLDRDA', data.Unique);
+                assert.equal('cn.amazon.B019ERIO9I', data.Unique);
                 assert.ok(data.Variations.length > 0, 'data.Variations.length is 0');
                 assert.ok(data.Variations[0].Values.length > 0, 'data.Variations[0].Values is 0');
                 assert.ok(data.Items.length > 0, 'data.Items.length is 0')
