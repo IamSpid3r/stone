@@ -8,22 +8,21 @@ var taobao = require('./lib/comment/taobaoComment');
 var amazonCn = require('./lib/comment/amazonCnComment');
 
 app.get('/t',function(req,res){
-  /*  taobao.getInfo('https://item.taobao.com/item.htm?spm=a1z10.1-c.w4977-13294912758.1.XfyLud&id=39809358246&scene=taobao_shop',function(error,itemInfo){
+    taobao.getInfo('https://detail.tmall.com/item.htm?spm=a230r.1.14.9.4LFEYQ&id=524753097959&ns=1&abbucket=15',function(error,itemInfo){
         if(error){
             res.send(error);
         }else{
             res.send(itemInfo);
         }
     })
-*/
 
-    amazonCn.getInfo('http://www.amazon.cn/gp/product/B00P622SX4?ref_=amb_link_104780692_2',function(error,itemInfo){
+    /*amazonCn.getInfo('http://www.amazon.cn/adidas-%E9%98%BF%E8%BF%AA%E8%BE%BE%E6%96%AF-TENNIS-CULTURE-%E4%B8%AD%E6%80%A7-%E7%BD%91%E7%90%83%E9%9E%8BGVP-CANVAS-STR/dp/B00KV6CITE/ref=cm_cr_pr_product_top?ie=UTF8',function(error,itemInfo){
         if(error){
             res.send(error);
         }else{
             res.send(itemInfo);
         }
-    })
+    })*/
 })
 
 app.get('/info', function (req, res) {

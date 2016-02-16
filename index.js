@@ -44,13 +44,13 @@ app.get('/test', function (req, res) {
          }
     })*/
 
-    yougou.getInfo('http://seoul.yougou.com/c-chrischristy/sku-kcxalrc1041-100343796.shtml#ref=search&po=search',function(error,itemInfo){
+   /* yougou.getInfo('http://seoul.yougou.com/c-chrischristy/sku-kcxalrc1041-100343796.shtml#ref=search&po=search',function(error,itemInfo){
         if(error){
             res.send(error);
         }else{
             res.send(itemInfo);
         }
-    })
+    })*/
 
    /* _6pm.getInfo('http://www.6pm.com/product/8550462/color/567398',function(error,itemInfo){
         if(error){
@@ -60,13 +60,13 @@ app.get('/test', function (req, res) {
         }
     })*/
 
-  /*  shihuoHaitao.getInfo('http://www.shihuo.cn/haitao/buy/84756.html?from=shyjg',function(error,itemInfo){
+    shihuoHaitao.getInfo('http://www.shihuo.cn/haitao/buy/84755.html',function(error,itemInfo){
         if(error){
             res.send(error);
         }else{
             res.send(itemInfo);
         }
-    })*/
+    })
 })
 
 app.get('/info', function (req, res) {
