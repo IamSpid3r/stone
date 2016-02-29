@@ -4,7 +4,7 @@ var nikeStore = require('../lib/nikeStore');
 
 describe('nikeStore', function() {
     describe('#getItemInfo', function () {
-        it('测试nbastore商品',function(done){
+        it('测试nikeStore商品',function(done){
             this.timeout(60000)
             nikeStore.getInfo('http://store.nike.com/cn/zh_cn/pd/free-5-solstice-%E8%B7%91%E6%AD%A5%E9%9E%8B/pid-10338569/pgid-10349077',function(err,data){
                 if(err)
