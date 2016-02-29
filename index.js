@@ -19,6 +19,7 @@ var _6pm = require('./lib/6pm');
 var shihuoHaitao = require('./lib/shihuoHaitao');
 var amazonJp = require('./lib/amazonJp');
 var amazonUsa = require('./lib/amazonUsa');
+var nbaStore = require('./lib/nbaStore');
 
 
 app.use(compress());
@@ -116,6 +117,7 @@ function getStoreObj(host){
         case 'detail.tmall.com':
             return taobao;
         case 'store.nike.com':
+        case 'www.nike.com':
             return nikeStore;
         case 'www.yougou.com':
         case 'seoul.yougou.com':
@@ -124,6 +126,8 @@ function getStoreObj(host){
             return shihuoHaitao;
         case 'www.6pm.com':
             return _6pm;
+        case 'store.nba.com':
+            return nbaStore;
         default:
             return '';
     }

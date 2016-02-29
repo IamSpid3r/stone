@@ -6,6 +6,7 @@ var request = require('request');
 
 var taobao = require('./lib/comment/taobaoComment');
 var amazonCn = require('./lib/comment/amazonCnComment');
+var shihuoHaitao = require('./lib/comment/shihuoHaitaoComment');
 
 app.get('/t',function(req,res){
     taobao.getInfo('https://detail.tmall.com/item.htm?spm=a230r.1.14.9.4LFEYQ&id=524753097959&ns=1&abbucket=15',function(error,itemInfo){
@@ -71,6 +72,7 @@ function getStoreObj(host){
         case 'detail.tmall.com':
             return taobao;
         case 'store.nike.com':
+        case 'www.nike.com':
             return nikeStore;
         case 'www.yougou.com':
         case 'seoul.yougou.com':
@@ -79,6 +81,8 @@ function getStoreObj(host){
             return shihuoHaitao;
         case 'www.6pm.com':
             return _6pm;
+        case 'store.nba.com':
+            return nbaStore;
         default:
             return '';
     }
