@@ -7,7 +7,7 @@ process.exec('/usr/local/bin/mocha',
         if (error !== null) {
             console.log('exec error: ' + error);
         }
-
+        console.log(new Date()+"\n");
         console.log(stdout);
 
         //匹配
