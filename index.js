@@ -24,7 +24,7 @@ var nbaStore = require('./lib/nbaStore');
 
 app.use(compress());
 app.use(bodyParser.json());
-
+app.use(express.static('mochawesome-reports'));
 
 app.get('/test', function (req, res) {
   /* taobao.getInfo('https://item.taobao.com/item.htm?spm=a230r.1.14.20.EFhUKi&id=45122936450',function(error,itemInfo){
@@ -102,6 +102,8 @@ app.get('/info', function (req, res) {
         })
     }
 })
+
+
 
 
 //获取商城对象
