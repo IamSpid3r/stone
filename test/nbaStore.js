@@ -5,7 +5,7 @@ var nbaStore = require('../lib/nbaStore');
 describe('nbaStore', function() {
     describe('#getItemInfo', function () {
         it('测试nbaStore正常商品',function(done){
-            this.timeout(60000)
+            this.timeout(80000)
             nbaStore.getInfo('http://store.nba.com/Basketball_Essentials/Mens_Jordan_Black_Red_Jumpman_Brushed_Full-Zip_Hoodie',function(err,data){
                 if(err)
                 {
@@ -30,7 +30,7 @@ describe('nbaStore', function() {
                 {
                     throw new Error(err);
                 }
-                assert.equal('outStock',data.Status);
+                assert.equal('outOfStock',data.Status);
                 assert.equal('com.nbastore.2287228',data.Unique);
                 done()
             })
