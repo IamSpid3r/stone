@@ -20,6 +20,7 @@ var shihuoHaitao = require('./lib/shihuoHaitao');
 var amazonJp = require('./lib/amazonJp');
 var amazonUsa = require('./lib/amazonUsa');
 var nbaStore = require('./lib/nbaStore');
+var yohobuy = require('./lib/yohobuy');
 
 
 app.use(compress());
@@ -61,7 +62,15 @@ app.get('/test', function (req, res) {
         }
     })*/
 
-    shihuoHaitao.getInfo('http://www.shihuo.cn/haitao/buy/84755.html',function(error,itemInfo){
+ /*   shihuoHaitao.getInfo('http://www.shihuo.cn/haitao/buy/84755.html',function(error,itemInfo){
+        if(error){
+            res.send(error);
+        }else{
+            res.send(itemInfo);
+        }
+    })*/
+
+    yohobuy.getInfo('http://item.yohobuy.com/product/pro_289611_371709',function(error,itemInfo){
         if(error){
             res.send(error);
         }else{
@@ -130,6 +139,8 @@ function getStoreObj(host){
             return _6pm;
         case 'store.nba.com':
             return nbaStore;
+        case 'item.yohobuy.com':
+            return yohobuy;
         default:
             return '';
     }
