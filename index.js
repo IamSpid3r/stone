@@ -105,8 +105,8 @@ app.get('/info', function (req, res) {
             Status: false,
             Msg: {
                 Errors: [{
-                    Code: '请求地址不在抓取访问',
-                    Message: '请求地址不在抓取访问'
+                    Code: 'Fatal',
+                    Message: 'Address request not to crawl access'
                 }]
             }
         })
