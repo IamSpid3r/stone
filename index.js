@@ -21,6 +21,7 @@ var amazonJp = require('./lib/amazonJp');
 var amazonUsa = require('./lib/amazonUsa');
 var nbaStore = require('./lib/nbaStore');
 var yohobuy = require('./lib/yohobuy');
+var yintai = require('./lib/yintai');
 
 
 app.use(compress());
@@ -141,6 +142,8 @@ function getStoreObj(host){
             return nbaStore;
         case 'item.yohobuy.com':
             return yohobuy;
+        case 'item.yintai.com':
+            return yintai;
         default:
             return '';
     }
