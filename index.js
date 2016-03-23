@@ -90,7 +90,7 @@ app.get('/info', function (req, res) {
 
     var storeObj = getStoreObj(goodsUrlHost);
     if(typeof storeObj == 'object'){
-        storeObj.getInfo(goodsUrl ,function(error, itemInfo){
+        storeObj.getInfo(encodeURI(goodsUrl) ,function(error, itemInfo){
             if(error){
                 res.json({
                     Status: false,
@@ -104,10 +104,10 @@ app.get('/info', function (req, res) {
         res.json({
             Status: false,
             Msg: {
-                Errors: [{
+                Errors: {
                     Code: 'Fatal',
                     Message: 'Address request not to crawl access'
-                }]
+                }
             }
         })
     }
