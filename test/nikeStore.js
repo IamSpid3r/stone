@@ -6,13 +6,13 @@ describe('nikeStore', function() {
     describe('#getItemInfo', function () {
         it('测试nikeStore正常商品',function(done){
             this.timeout(60000)
-            nikeStore.getInfo('http://store.nike.com/cn/zh_cn/pd/free-5-solstice-%E8%B7%91%E6%AD%A5%E9%9E%8B/pid-10338569/pgid-10349077',function(err,data){
+            nikeStore.getInfo('http://store.nike.com/cn/zh_cn/pd/kobe-11-elite-low-bhm-%E7%AF%AE%E7%90%83%E9%9E%8B/pid-10873886/pgid-11181193',function(err,data){
                 if(err)
                 {
                     throw new Error(err);
                 }
                 assert.equal('inStock',data.Status);
-                assert.equal('cn.nikestore.10349077',data.Unique);
+                assert.equal('cn.nikestore.11181193',data.Unique);
                 assert.ok(data.Variations.length > 0,'data.Variations.length is 0');
                 assert.ok(data.Variations[0].Values.length > 0,'data.Variations[0].Values is 0');
                 assert.ok(data.Items.length > 0,'data.Items.length is 0')
@@ -25,7 +25,7 @@ describe('nikeStore', function() {
 
         it('测试nikeStore售罄商品',function(done){
             this.timeout(60000)
-            nikeStore.getInfo('http://store.nike.com/cn/zh_cn/pd/kobe-10-elite-se-篮球鞋/pid-10870422/pgid-11181186?cp=cnns_aff_080214_a_ALHPMC_hp100',function(err,data){
+            nikeStore.getInfo(encodeURI('http://store.nike.com/cn/zh_cn/pd/kobe-10-elite-se-篮球鞋/pid-10870422/pgid-11181186?cp=cnns_aff_080214_a_ALHPMC_hp100'),function(err,data){
                 if(err)
                 {
                     throw new Error(err);
