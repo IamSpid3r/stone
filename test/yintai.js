@@ -12,7 +12,7 @@ describe('yintai', function() {
                     throw new Error(err);
                 }
                 assert.equal('inStock',data.Status);
-                assert.equal('cn.yintai.20.997',data.Unique);
+                assert.equal('cn.yintai.20.997.9748',data.Unique);
                 assert.ok(data.Variations.length > 0,'data.Variations.length is 0');
                 assert.ok(data.Variations[0].Values.length > 0,'data.Variations[0].Values is 0');
                 assert.ok(data.Items.length > 0,'data.Items.length is 0')
@@ -31,7 +31,7 @@ describe('yintai', function() {
                     throw new Error(err);
                 }
                 assert.equal('outOfStock',data.Status);
-                assert.equal('cn.yohobuy.05.017',data.Unique);
+                assert.equal('cn.yohobuy.05.017.0849',data.Unique);
                 done()
             })
         })
