@@ -25,13 +25,26 @@ describe('nikeStore', function() {
 
         it('测试nikeStore售罄商品',function(done){
             this.timeout(60000)
-            nikeStore.getInfo(encodeURI('http://store.nike.com/cn/zh_cn/pd/kobe-10-elite-se-篮球鞋/pid-10870422/pgid-11181186?cp=cnns_aff_080214_a_ALHPMC_hp100'),function(err,data){
+            nikeStore.getInfo(encodeURI('http://store.nike.com/cn/zh_cn/pd/air-max-mp-ultra-男-女运动鞋（男码）/pid-11149648/pgid-11280183'),function(err,data){
                 if(err)
                 {
                     throw new Error(err);
                 }
                 assert.equal('outOfStock',data.Status);
-                assert.equal('cn.nikestore.11181186',data.Unique);
+                assert.equal('cn.nikestore.11280183',data.Unique);
+                done()
+            })
+        })
+
+        it('测试nikeStore定制化商品',function(done){
+            this.timeout(80000)
+            nikeStore.getInfo(encodeURI('http://store.nike.com/cn/zh_cn/product/lunarepic-flyknit-id/?piid=42164&pbid=350687392'),function(err,data){
+                if(err)
+                {
+                    throw new Error(err);
+                }
+                assert.equal('inStock',data.Status);
+                assert.equal('cn.nikestore.piid.42164',data.Unique);
                 done()
             })
         })
