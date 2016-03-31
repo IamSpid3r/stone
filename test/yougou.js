@@ -22,6 +22,18 @@ describe('yougou', function() {
                 done()
             })
         })
+
+        it('测试yougou下架商品',function(done){
+            this.timeout(60000)
+            yougou.getInfo('http://www.yougou.com/c-nike/sku-554954-100268270.shtml#ref=list&po=list',function(err,data){
+                if(err)
+                {
+                    throw new Error(err);
+                }
+                assert.equal('outOfStock',data.Status);
+                done()
+            })
+        })
     });
 
 });
