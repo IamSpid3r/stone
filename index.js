@@ -22,6 +22,7 @@ var amazonUsa = require('./lib/amazonUsa');
 var nbaStore = require('./lib/nbaStore');
 var yohobuy = require('./lib/yohobuy');
 var yintai = require('./lib/yintai');
+var kaluli = require('./lib/kaluli');
 
 
 app.use(compress());
@@ -145,6 +146,8 @@ function getStoreObj(host){
             return yohobuy;
         case 'item.yintai.com':
             return yintai;
+        case 'www.kaluli.com':
+            return kaluli;
         default:
             return '';
     }
