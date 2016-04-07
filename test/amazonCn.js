@@ -23,7 +23,7 @@ describe('amazonCn', function() {
                     throw new Error(err);
                 }
                 assert.equal('inStock', data.Status);
-                assert.equal('cn.amazon.B00LWHVZKE', data.Unique);
+                assert.equal('cn.amazon.B00KDRNYO4', data.Unique);
                 assert.ok(data.Variations.length == 1, 'data.Variations.length is 1');
                 assert.ok(data.Variations[0].Values.length > 0, 'data.Variations[0].Values is 0');
                 assert.ok(data.Items.length > 0, 'data.Items.length is 0')
@@ -57,7 +57,7 @@ describe('amazonCn', function() {
                     throw new Error(err);
                 }
                 assert.equal('inStock', data.Status);
-                assert.equal('cn.amazon.B019ERIO9I', data.Unique);
+                assert.equal('cn.amazon.B0195YELX8', data.Unique);
                 assert.ok(data.Variations.length > 0, 'data.Variations.length is 0');
                 assert.ok(data.Variations[0].Values.length > 0, 'data.Variations[0].Values is 0');
                 assert.ok(data.Items.length > 0, 'data.Items.length is 0')

@@ -2,7 +2,7 @@ var assert = require('assert');
 var kaluli = require('../lib/kaluli');
 
 
-describe('yintai', function() {
+describe('kaluli', function() {
     describe('#getItemInfo', function () {
         it('测试kaluli正常商品',function(done){
             this.timeout(30000)

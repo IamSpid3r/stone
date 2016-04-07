@@ -12,7 +12,7 @@ describe('nikeStore', function() {
                     throw new Error(err);
                 }
                 assert.equal('inStock',data.Status);
-                assert.equal('cn.nikestore.11181193',data.Unique);
+                assert.equal('cn.nikestore.11181193.10873886',data.Unique);
                 assert.ok(data.Variations.length > 0,'data.Variations.length is 0');
                 assert.ok(data.Variations[0].Values.length > 0,'data.Variations[0].Values is 0');
                 assert.ok(data.Items.length > 0,'data.Items.length is 0')
@@ -30,8 +30,8 @@ describe('nikeStore', function() {
                 {
                     throw new Error(err);
                 }
-                assert.equal('outOfStock',data.Status);
-                assert.equal('cn.nikestore.11280183',data.Unique);
+                assert.equal('inStock',data.Status);
+                assert.equal('cn.nikestore.11280183.11149648',data.Unique);
                 done()
             })
         })
@@ -44,7 +44,7 @@ describe('nikeStore', function() {
                     throw new Error(err);
                 }
                 assert.equal('inStock',data.Status);
-                assert.equal('cn.nikestore.piid.42164',data.Unique);
+                assert.equal('cn.nikestore.piid.lunarepic-flyknit-i',data.Unique);
                 done()
             })
         })
