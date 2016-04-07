@@ -44,7 +44,7 @@ describe('nikeStore', function() {
                     throw new Error(err);
                 }
                 assert.equal('inStock',data.Status);
-                assert.equal('cn.nikestore.piid.lunarepic-flyknit-i',data.Unique);
+                assert.equal('cn.nikestore.piid.lunarepic-flyknit-id',data.Unique);
                 done()
             })
         })
