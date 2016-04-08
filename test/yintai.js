@@ -31,7 +31,7 @@ describe('yintai', function() {
                     throw new Error(err);
                 }
                 assert.equal('outOfStock',data.Status);
-                assert.equal('cn.yohobuy.05.017.0849',data.Unique);
+                assert.equal('cn.yintai.05.017.0849',data.Unique);
                 done()
             })
         })
