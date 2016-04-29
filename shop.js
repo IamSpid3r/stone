@@ -18,6 +18,7 @@ app.get('/t',function(req,res){
 
 app.get('/info', function (req, res) {
     var goodsUrl = req.query.url;
+    var page = req.query.page ? req.query.page : 1;
     var goodsUrlHost = '';
     if(goodsUrl){
         var urlInfo = url.parse(goodsUrl, true, true);
@@ -26,7 +27,7 @@ app.get('/info', function (req, res) {
 
     var storeObj = getStoreObj(goodsUrlHost);
     if(typeof storeObj == 'object'){
-        storeObj.getInfo(goodsUrl ,function(error, itemInfo){
+        storeObj.getInfo(goodsUrl , page, function(error, itemInfo){
             if(error){
                 res.json({
                     Status: false,
