@@ -52,11 +52,9 @@ app.get('/info', function (req, res) {
 
 //获取商城对象
 function getStoreObj(host){
-    if(host.indexOf('taobao') != -1 || host.indexOf('tmall') != -1){
+
         return taobao;
-    }else{
-        return '';
-    }
+
 }
 
 app.listen(3002);
