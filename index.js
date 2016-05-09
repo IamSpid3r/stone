@@ -23,6 +23,7 @@ var nbaStore = require('./lib/nbaStore');
 var yohobuy = require('./lib/yohobuy');
 var yintai = require('./lib/yintai');
 var kaluli = require('./lib/kaluli');
+var footlocker = require('./lib/footlocker');
 
 
 app.use(compress());
@@ -148,6 +149,8 @@ function getStoreObj(host){
             return yintai;
         case 'www.kaluli.com':
             return kaluli;
+        case 'www.footlocker.com':
+            return footlocker;
         default:
             return '';
     }
