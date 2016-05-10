@@ -8,7 +8,6 @@ process.exec('/usr/local/bin/mocha',
             console.log('exec error: ' + error);
         }
         console.log(new Date()+"\n");
-        console.log(stdout);
 
         //匹配
         var regExp = /(\d*) failing/g;
@@ -22,7 +21,7 @@ process.exec('/usr/local/bin/mocha',
                      from: 'hanxiaolin',
                      to: '724753832@qq.com',
                      subject:"mocha测试文件",
-                     content:result[1]+':<br>'+ stdout
+                     content:result[1]+':<br><a href="http://47.88.17.37:3000/mochawesome.html">查看</a>'
                  },function(err,msg){
                      if(err){
                          console.log(err);
