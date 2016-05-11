@@ -140,7 +140,7 @@ app.get('/i', function (req, res) {
                     minPriceType = 'RMB';
 
                 itemInfo.Variations.forEach(function(val){
-                    if(val.Name == '尺寸'){
+                    if(val.Name == '尺码'){
                         sizeCount = val.Values.length;
                     }else if((val.Name == '颜色')){
                         colorCount = val.Values.length;
