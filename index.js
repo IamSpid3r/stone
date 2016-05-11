@@ -24,6 +24,7 @@ var yohobuy = require('./lib/yohobuy');
 var yintai = require('./lib/yintai');
 var kaluli = require('./lib/kaluli');
 var footlocker = require('./lib/footlocker');
+var jd = require('./lib/jd');
 
 
 app.use(compress());
@@ -108,14 +109,78 @@ app.get('/info', function (req, res) {
             Msg: {
                 Errors: {
                     Code: 'Fatal',
-                    Message: 'Address request not to crawl access'
+                    Message: '当前地址不支持爬取'
                 }
             }
         })
     }
 })
 
+app.get('/i', function (req, res) {
+    var goodsUrl = req.query.url;
+    var goodsUrlHost = '';
+    if(goodsUrl){
+        var urlInfo = url.parse(goodsUrl, true, true);
+        goodsUrlHost = urlInfo.host;
+    }
 
+    var storeObj = getStoreObj(goodsUrlHost);
+    if(typeof storeObj == 'object'){
+        storeObj.getInfo(encodeURI(goodsUrl) ,function(error, itemInfo){
+            if(error){
+                res.json({
+                    Status: false,
+                    Msg: error
+                })
+            }else{
+                var colorCount = 0,
+                    sizeCount = 0,
+                    itemCount = 0,
+                    minPrice = 0,
+                    minPriceType = 'RMB';
+
+                itemInfo.Variations.forEach(function(val){
+                    if(val.Name == '尺寸'){
+                        sizeCount = val.Values.length;
+                    }else if((val.Name == '颜色')){
+                        colorCount = val.Values.length;
+                    }
+                })
+                itemInfo.Items.forEach(function(val){
+                    if(minPrice == 0) {
+                        minPrice = val.Offers[0].List[0].Price;
+                        minPriceType = val.Offers[0].List[0].Type;
+                    }else if(val.Offers[0].List[0].Price < minPrice){
+                        minPrice = val.Offers[0].List[0].Price;
+                        minPriceType = val.Offers[0].List[0].Type;
+                    }
+                })
+                itemCount = itemInfo.Items.length;
+
+                itemInfo.ItemAttributes.Price = minPrice;
+                itemInfo.ItemAttributes.PriceType = minPriceType;
+                itemInfo.ItemAttributes.ColorCount = colorCount;
+                itemInfo.ItemAttributes.SizeCount = sizeCount;
+                itemInfo.ItemAttributes.ItemCount = itemCount;
+
+                delete itemInfo.Variations;
+                delete itemInfo.Items;
+
+                res.json({ Status: true, Data: itemInfo});
+            }
+        })
+    }else{
+        res.json({
+            Status: false,
+            Msg: {
+                Errors: {
+                    Code: 'Fatal',
+                    Message: '当前地址不支持爬取'
+                }
+            }
+        })
+    }
+})
 
 
 //获取商城对象
@@ -151,6 +216,8 @@ function getStoreObj(host){
             return kaluli;
         case 'www.footlocker.com':
             return footlocker;
+        case 'item.jd.com':
+            return jd;
         default:
             return '';
     }
