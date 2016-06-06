@@ -6,13 +6,13 @@ describe('yohobuy', function() {
     describe('#getItemInfo', function () {
         it('测试yohobuy正常商品',function(done){
             this.timeout(30000)
-            yohobuy.getInfo('http://item.yohobuy.com/product/pro_318189_409293',function(err,data){
+            yohobuy.getInfo('http://item.yohobuy.com/product/pro_374993_343422/LIFEAFTERLIFEDuanXiuTXuLALA602TE64.html',function(err,data){
                 if(err)
                 {
                     throw new Error(err);
                 }
                 assert.equal('inStock',data.Status);
-                assert.equal('cn.yohobuy.318189.409293',data.Unique);
+                assert.equal('cn.yohobuy.374993',data.Unique);
                 assert.ok(data.Variations.length > 0,'data.Variations.length is 0');
                 assert.ok(data.Variations[0].Values.length > 0,'data.Variations[0].Values is 0');
                 assert.ok(data.Items.length > 0,'data.Items.length is 0')
@@ -31,7 +31,7 @@ describe('yohobuy', function() {
                     throw new Error(err);
                 }
                 assert.equal('outOfStock',data.Status);
-                assert.equal('cn.yohobuy.69744.105661',data.Unique);
+                assert.equal('cn.yohobuy.69744',data.Unique);
                 done()
             })
         })
@@ -44,7 +44,7 @@ describe('yohobuy', function() {
                     throw new Error(err);
                 }
                 assert.equal('notFind',data.Status);
-                assert.equal('cn.yohobuy.6464646464.undefined',data.Unique);
+                assert.equal('cn.yohobuy.6464646464',data.Unique);
                 done()
             })
         })
