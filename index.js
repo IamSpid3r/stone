@@ -83,6 +83,7 @@ app.get('/test', function (req, res) {
     })
 })
 
+
 app.get('/info', function (req, res) {
     var goodsUrl = req.query.url;
     var goodsUrlHost = '';
@@ -93,6 +94,15 @@ app.get('/info', function (req, res) {
 
     var storeObj = getStoreObj(goodsUrlHost);
     if(typeof storeObj == 'object'){
+        //语法错误捕获
+        process.on('uncaughtException', function (err) {
+            var stack = JSON.stringify(err.stack);
+            res.json({
+                Status: false,
+                Msg: stack.slice(0, 200)
+            })
+        });
+
         storeObj.getInfo(encodeURI(goodsUrl) ,function(error, itemInfo){
             if(error){
                 res.json({
@@ -126,6 +136,15 @@ app.get('/i', function (req, res) {
 
     var storeObj = getStoreObj(goodsUrlHost);
     if(typeof storeObj == 'object'){
+        //语法错误捕获
+        process.on('uncaughtException', function (err) {
+            var stack = JSON.stringify(err.stack);
+            res.json({
+                Status: false,
+                Msg: stack.slice(0, 200)
+            })
+        });
+
         storeObj.getInfo(encodeURI(goodsUrl) ,function(error, itemInfo){
             if(error){
                 res.json({
