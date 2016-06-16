@@ -5,10 +5,12 @@
 // // var zlib = require('zlib');
 var fs = require('fs');
 var express = require('express'), app = express();
+var server = require('http').createServer(app);
 var compress = require('compression');
 var bodyParser = require('body-parser');
 var url = require('url');
 var request = require('request');
+var domain = require('domain');
 // var phantom = require('phantom');
 
 var taobao = require('./lib/taobao');
@@ -83,6 +85,36 @@ app.get('/test', function (req, res) {
     })
 })
 
+app.use(function (req, res, next) {
+    var reqDomain = domain.create();
+
+    reqDomain.on('error', function (e) {
+        try {
+            var killTimer = setTimeout(function () {
+                process.exit(1);
+            }, 30000);
+            killTimer.unref();
+            server.close();
+
+            var stack = JSON.stringify(e.stack);
+            res.json({
+                Status: false,
+                Msg: {
+                    Errors: {
+                        Code: 'Error',
+                        Message: stack.slice(0, 120)
+                    }
+                }
+            }).end();
+        } catch (e) {
+            console.log('error when exit', e.stack);
+        }
+    });
+
+    reqDomain.run(next);
+});
+
+
 
 app.get('/info', function (req, res) {
     var goodsUrl = req.query.url;
@@ -94,23 +126,14 @@ app.get('/info', function (req, res) {
 
     var storeObj = getStoreObj(goodsUrlHost);
     if(typeof storeObj == 'object'){
-        //语法错误捕获
-        process.on('uncaughtException', function (err) {
-            var stack = JSON.stringify(err.stack);
-            res.json({
-                Status: false,
-                Msg: stack.slice(0, 200)
-            })
-        });
-
         storeObj.getInfo(encodeURI(goodsUrl) ,function(error, itemInfo){
             if(error){
                 res.json({
                     Status: false,
                     Msg: error
-                })
+                }).end();
             }else{
-                res.json({ Status: true, Data: itemInfo});
+                res.json({ Status: true, Data: itemInfo}).end();
             }
         })
     }else{
@@ -122,7 +145,7 @@ app.get('/info', function (req, res) {
                     Message: '当前地址不支持爬取'
                 }
             }
-        })
+        }).end();
     }
 })
 
@@ -136,15 +159,6 @@ app.get('/i', function (req, res) {
 
     var storeObj = getStoreObj(goodsUrlHost);
     if(typeof storeObj == 'object'){
-        //语法错误捕获
-        process.on('uncaughtException', function (err) {
-            var stack = JSON.stringify(err.stack);
-            res.json({
-                Status: false,
-                Msg: stack.slice(0, 200)
-            })
-        });
-
         storeObj.getInfo(encodeURI(goodsUrl) ,function(error, itemInfo){
             if(error){
                 res.json({
@@ -201,6 +215,21 @@ app.get('/i', function (req, res) {
     }
 })
 
+// uncaughtException 避免程序崩溃
+process.on('uncaughtException', function (err) {
+    console.log(err);
+
+    try {
+        var killTimer = setTimeout(function () {
+            process.exit(1);
+        }, 30000);
+        killTimer.unref();
+
+        server.close();
+    } catch (e) {
+        console.log('error when exit', e.stack);
+    }
+});
 
 //获取商城对象
 function getStoreObj(host){
