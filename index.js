@@ -105,7 +105,7 @@ app.use(function (req, res, next) {
                         Message: stack.slice(0, 120)
                     }
                 }
-            }).end();
+            });
         } catch (e) {
             console.log('error when exit', e.stack);
         }
@@ -217,7 +217,7 @@ app.get('/i', function (req, res) {
 
 // uncaughtException 避免程序崩溃
 process.on('uncaughtException', function (err) {
-    console.log(err);
+    console.log('uncaughtException->',err);
 
     try {
         var killTimer = setTimeout(function () {
