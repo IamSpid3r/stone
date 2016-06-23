@@ -28,6 +28,7 @@ var yintai = require('./lib/yintai');
 var kaluli = require('./lib/kaluli');
 var footlocker = require('./lib/footlocker');
 var jd = require('./lib/jd');
+var underarmour = require('./lib/underarmour');
 
 
 app.use(compress());
@@ -270,6 +271,8 @@ function getStoreObj(urlInfo){
             return footlocker;
         case 'item.jd.com':
             return jd;
+        case 'www.underarmour.cn':
+            return underarmour;
         default:
             return '';
     }
