@@ -28,7 +28,6 @@ var yintai = require('./lib/yintai');
 var kaluli = require('./lib/kaluli');
 var footlocker = require('./lib/footlocker');
 var jd = require('./lib/jd');
-var underarmour = require('./lib/underarmour');
 
 
 app.use(compress());
@@ -250,7 +249,6 @@ function getStoreObj(urlInfo){
             var tuangouExp = /\/tuangou\/(\d+)/ig;
 
             if(xianhuoExp.exec(urlInfo.path) || haitaoExp.exec(urlInfo.path)){
-                console.log(222);
                 return shihuoHaitao;
             }else if(tuangouExp.exec(urlInfo.path)){
                 return shihuoTuangou;
@@ -271,8 +269,6 @@ function getStoreObj(urlInfo){
             return footlocker;
         case 'item.jd.com':
             return jd;
-        case 'www.underarmour.cn':
-            return underarmour;
         default:
             return '';
     }
