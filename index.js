@@ -19,6 +19,7 @@ var nikeStore = require('./lib/nikeStore');
 var yougou = require('./lib/yougou');
 var _6pm = require('./lib/6pm');
 var shihuoHaitao = require('./lib/shihuoHaitao');
+var shihuoTuangou = require('./lib/shihuoTuangou');
 var amazonJp = require('./lib/amazonJp');
 var amazonUsa = require('./lib/amazonUsa');
 var nbaStore = require('./lib/nbaStore');
@@ -118,13 +119,9 @@ app.use(function (req, res, next) {
 
 app.get('/info', function (req, res) {
     var goodsUrl = req.query.url;
-    var goodsUrlHost = '';
-    if(goodsUrl){
-        var urlInfo = url.parse(goodsUrl, true, true);
-        goodsUrlHost = urlInfo.host;
-    }
+    var urlInfo = goodsUrl ?  url.parse(goodsUrl, true, true) : {path:'',host:''};
 
-    var storeObj = getStoreObj(goodsUrlHost);
+    var storeObj = getStoreObj(urlInfo);
     if(typeof storeObj == 'object'){
         storeObj.getInfo(encodeURI(goodsUrl) ,function(error, itemInfo){
             if(error){
@@ -151,13 +148,9 @@ app.get('/info', function (req, res) {
 
 app.get('/i', function (req, res) {
     var goodsUrl = req.query.url;
-    var goodsUrlHost = '';
-    if(goodsUrl){
-        var urlInfo = url.parse(goodsUrl, true, true);
-        goodsUrlHost = urlInfo.host;
-    }
+    var urlInfo = goodsUrl ?  url.parse(goodsUrl, true, true) : {path:'',host:''};
 
-    var storeObj = getStoreObj(goodsUrlHost);
+    var storeObj = getStoreObj(urlInfo);
     if(typeof storeObj == 'object'){
         storeObj.getInfo(encodeURI(goodsUrl) ,function(error, itemInfo){
             if(error){
@@ -232,8 +225,8 @@ process.on('uncaughtException', function (err) {
 });
 
 //获取商城对象
-function getStoreObj(host){
-    switch(host){
+function getStoreObj(urlInfo){
+    switch(urlInfo.host){
         case 'www.amazon.cn':
             return amazonCn;
         case 'www.amazon.co.jp':
@@ -251,7 +244,18 @@ function getStoreObj(host){
         case 'seoul.yougou.com':
             return yougou;
         case 'www.shihuo.cn':
-            return shihuoHaitao;
+            var xianhuoExp = /\/xianhuo\/buy\/(\d+)(-(\d+)){0,1}\.html/ig;
+            var haitaoExp = /\/haitao\/buy\/(\d+)(-(\d+)){0,1}\.html/ig;
+            var tuangouExp = /\/tuangou\/(\d+)/ig;
+
+            if(xianhuoExp.exec(urlInfo.path) || haitaoExp.exec(urlInfo.path)){
+                console.log(222);
+                return shihuoHaitao;
+            }else if(tuangouExp.exec(urlInfo.path)){
+                return shihuoTuangou;
+            }else{
+                return '';
+            }
         case 'www.6pm.com':
             return _6pm;
         case 'store.nba.com':
