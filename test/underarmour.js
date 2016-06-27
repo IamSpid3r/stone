@@ -23,7 +23,7 @@ describe('underarmour', function() {
             })
         })
 
-        it('测试yohobuy不存在商品',function(done){
+        it('测试underarmour不存在商品',function(done){
             this.timeout(30000)
             yohobuy.getInfo('http://www.underarmour.cn/p1252132-0011.htm',function(err,data){
                 if(err)

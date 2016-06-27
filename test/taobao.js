@@ -18,14 +18,14 @@ describe('taobao', function() {
 
     it('测试已经下架的商品',function(done){
         this.timeout(60000)
-        taobao.getInfo('https://item.taobao.com/item.htm?spm=a230r.1.14.20.EFhUKi&id=43300414113',function(err,data){
+        taobao.getInfo('https://item.taobao.com/item.htm?id=524857221929',function(err,data){
             if(err)
             {
                 throw new Error(err);
             }
             // console.log(data)
             assert.equal('outOfStock',data.Status);
-            assert.equal('https://item.taobao.com/item.htm?id=43300414113',data.Url)
+            assert.equal('https://item.taobao.com/item.htm?id=524857221929',data.Url)
             done()
         })
     })

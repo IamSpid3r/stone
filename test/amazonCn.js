@@ -17,7 +17,7 @@ describe('amazonCn', function() {
         });
 
         it('测试需要网页抓取方式的商品',function(done){
-        this.timeout(120000)
+        this.timeout(150000)
             amazonCn.getInfo('http://www.amazon.cn/gp/product/B00KDRNYO4/', function(err, data) {
                 if (err) {
                     throw new Error(err);

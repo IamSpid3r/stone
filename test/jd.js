@@ -34,18 +34,6 @@ describe('jd', function() {
                 done()
             })
         })
-
-        it('测试jd未找到商品',function(done){
-            this.timeout(60000)
-            jd.getInfo('http://item.jd.com/1540216436.html',function(err,data){
-                if(err)
-                {
-                    throw new Error(err);
-                }
-                assert.equal('notFind',data.Status);
-                done()
-            })
-        })
     });
 
 });
