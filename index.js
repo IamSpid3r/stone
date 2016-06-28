@@ -29,6 +29,7 @@ var kaluli = require('./lib/kaluli');
 var footlocker = require('./lib/footlocker');
 var jd = require('./lib/jd');
 var underarmour = require('./lib/underarmour');
+var xtep = require('./lib/xtep');
 
 
 app.use(compress());
@@ -272,6 +273,8 @@ function getStoreObj(urlInfo){
             return jd;
         case 'www.underarmour.cn':
             return underarmour;
+        case 'www.xtep.com.cn':
+            return xtep;
         default:
             return '';
     }
