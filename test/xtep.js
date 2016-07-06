@@ -1,18 +1,18 @@
 var assert = require('assert');
-var yohobuy = require('../lib/xtep');
+var xtep = require('../lib/xtep');
 
 
 describe('xtep', function() {
     describe('#getItemInfo', function () {
         it('测试xtep正常商品',function(done){
             this.timeout(30000)
-            yohobuy.getInfo('http://www.xtep.com.cn/goods/do_index?goods_sn=984219119511',function(err,data){
+            xtep.getInfo('http://www.xtep.com.cn/goods/do_index?goods_sn=984219116068',function(err,data){
                 if(err)
                 {
                     throw new Error(err);
                 }
                 assert.equal('inStock',data.Status);
-                assert.equal('cn.underarmour.984219119511',data.Unique);
+                assert.equal('cn.xtep.984219116068',data.Unique);
                 assert.ok(data.Variations.length > 0,'data.Variations.length is 0');
                 assert.ok(data.Variations[0].Values.length > 0,'data.Variations[0].Values is 0');
                 assert.ok(data.Items.length > 0,'data.Items.length is 0')

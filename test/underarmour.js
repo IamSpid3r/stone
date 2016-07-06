@@ -1,18 +1,18 @@
 var assert = require('assert');
-var yohobuy = require('../lib/underarmour');
+var underarmour = require('../lib/underarmour');
 
 
 describe('underarmour', function() {
     describe('#getItemInfo', function () {
         it('测试underarmour正常商品',function(done){
             this.timeout(30000)
-            yohobuy.getInfo('http://www.underarmour.cn/p1252132-001.htm',function(err,data){
+            underarmour.getInfo('http://www.underarmour.cn/p1274425-400.htm',function(err,data){
                 if(err)
                 {
                     throw new Error(err);
                 }
                 assert.equal('inStock',data.Status);
-                assert.equal('cn.underarmour.1252132',data.Unique);
+                assert.equal('cn.underarmour.1274425',data.Unique);
                 assert.ok(data.Variations.length > 0,'data.Variations.length is 0');
                 assert.ok(data.Variations[0].Values.length > 0,'data.Variations[0].Values is 0');
                 assert.ok(data.Items.length > 0,'data.Items.length is 0')
@@ -23,9 +23,22 @@ describe('underarmour', function() {
             })
         })
 
+        it('测试underarmour已下架商品',function(done){
+            this.timeout(30000)
+            underarmour.getInfo('http://www.underarmour.cn/p1252132-001.htm',function(err,data){
+                if(err)
+                {
+                    throw new Error(err);
+                }
+                assert.equal('outOfStock',data.Status);
+                assert.equal('cn.underarmour.1252132',data.Unique);
+                done()
+            })
+        })
+
         it('测试underarmour不存在商品',function(done){
             this.timeout(30000)
-            yohobuy.getInfo('http://www.underarmour.cn/p1252132-0011.htm',function(err,data){
+            underarmour.getInfo('http://www.underarmour.cn/p1252132-0011.htm',function(err,data){
                 if(err)
                 {
                     throw new Error(err);
