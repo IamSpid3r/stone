@@ -12,7 +12,7 @@ describe('nikeStore', function() {
                     throw new Error(err);
                 }
                 assert.equal('inStock',data.Status);
-                assert.equal('cn.nikestore.11294588.10946325',data.Unique);
+                assert.equal('cn.nikestore.11294588',data.Unique);
                 assert.ok(data.Variations.length > 0,'data.Variations.length is 0');
                 assert.ok(data.Variations[0].Values.length > 0,'data.Variations[0].Values is 0');
                 assert.ok(data.Items.length > 0,'data.Items.length is 0')
@@ -25,12 +25,25 @@ describe('nikeStore', function() {
 
         it('测试nikeStore定制化商品',function(done){
             this.timeout(80000)
-            nikeStore.getInfo(encodeURI('http://store.nike.com/cn/zh_cn/product/lunarepic-flyknit-id/?piid=42164&pbid=350687392'),function(err,data){
+            nikeStore.getInfo(encodeURI('http://store.nike.com/cn/zh_cn/product/air-zoom-pegasus-33-id-shoe/?piid=42691&pbid=649797738#?pbid=649797738'),function(err,data){
                 if(err)
                 {
                     throw new Error(err);
                 }
                 assert.equal('inStock',data.Status);
+                assert.equal('cn.nikestore.piid.air-zoom-pegasus-33-id-shoe',data.Unique);
+                done()
+            })
+        })
+
+        it('测试nikeStore下架商品',function(done){
+            this.timeout(80000)
+            nikeStore.getInfo(encodeURI('http://store.nike.com/cn/zh_cn/product/lunarepic-flyknit-id/?piid=42164&pbid=350687392'),function(err,data){
+                if(err)
+                {
+                    throw new Error(err);
+                }
+                assert.equal('outOfStock',data.Status);
                 assert.equal('cn.nikestore.piid.lunarepic-flyknit-id',data.Unique);
                 done()
             })
