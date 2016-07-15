@@ -31,7 +31,7 @@ describe('nikeStore', function() {
                     throw new Error(err);
                 }
                 assert.equal('inStock',data.Status);
-                assert.equal('cn.nikestore.piid.air-zoom-pegasus-33-id-shoe',data.Unique);
+                assert.equal('cn.nikestore.pid.11296726',data.Unique);
                 done()
             })
         })
@@ -44,7 +44,7 @@ describe('nikeStore', function() {
                     throw new Error(err);
                 }
                 assert.equal('outOfStock',data.Status);
-                assert.equal('cn.nikestore.piid.lunarepic-flyknit-id',data.Unique);
+                assert.equal('cn.nikestore.pid.lunarepic-flyknit-id',data.Unique);
                 done()
             })
         })
