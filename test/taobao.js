@@ -18,27 +18,27 @@ describe('taobao', function() {
 
     it('测试已经下架的商品',function(done){
         this.timeout(60000)
-        taobao.getInfo('https://item.taobao.com/item.htm?id=524857221929',function(err,data){
+        taobao.getInfo('https://detail.tmall.com/item.htm?id=520961950299',function(err,data){
             if(err)
             {
                 throw new Error(err);
             }
             // console.log(data)
             assert.equal('outOfStock',data.Status);
-            assert.equal('https://item.taobao.com/item.htm?id=524857221929',data.Url)
+            assert.equal('https://detail.tmall.com/item.htm?id=520961950299',data.Url)
             done()
         })
     })
 
     it('测试淘宝商品',function(done){
         this.timeout(60000)
-        taobao.getInfo('https://item.taobao.com/item.htm?spm=a230r.1.14.58.9cCqkV&id=45122936450&ns=1&abbucket=4#detail',function(err,data){
+        taobao.getInfo('https://detail.tmall.com/item.htm?id=529095218045&pvid=30a9cd34-0165-44ac-b86a-4c8e19f9e56f&abbucket=_AB-M32_B4&acm=03054.1003.1.971095&aldid=oysOt56q&abtest=_AB-LR32-PR32&scm=1007.12559.40794.100200300000000&pos=1&sku_properties=1627207:80882',function(err,data){
             if(err)
             {
                 throw new Error(err);
             }
             assert.equal('inStock',data.Status);
-            assert.equal('cn.taobao.45122936450',data.Unique);
+            assert.equal('cn.taobao.529095218045',data.Unique);
             assert.ok(data.Variations.length > 0,'data.Variations.length is 0');
             assert.ok(data.Variations[0].Values.length > 0,'data.Variations[0].Values is 0');
             assert.ok(data.Items.length > 0,'data.Items.length is 0')

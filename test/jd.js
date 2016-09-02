@@ -6,13 +6,13 @@ describe('jd', function() {
     describe('#getItemInfo', function () {
         it('测试jd商品',function(done){
             this.timeout(60000)
-            jd.getInfo('http://item.jd.com/2644110.html',function(err,data){
+            jd.getInfo('http://item.jd.com/10119581451.html',function(err,data){
                 if(err)
                 {
                     throw new Error(err);
                 }
                 assert.equal('inStock',data.Status);
-                assert.equal('cn.jd.2644110',data.Unique);
+                assert.equal('cn.jd.10119581451',data.Unique);
                 assert.ok(data.Variations.length > 0,'data.Variations.length is 0');
                 assert.ok(data.Variations[0].Values.length > 0,'data.Variations[0].Values is 0');
                 assert.ok(data.Items.length > 0,'data.Items.length is 0')
