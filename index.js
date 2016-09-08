@@ -30,6 +30,7 @@ var footlocker = require('./lib/footlocker');
 var jd = require('./lib/jd');
 var underarmour = require('./lib/underarmour');
 var xtep = require('./lib/xtep');
+var kaola = require('./lib/kaola');
 
 
 app.use(compress());
@@ -37,55 +38,7 @@ app.use(bodyParser.json());
 app.use(express.static('mochawesome-reports'));
 
 app.get('/test', function (req, res) {
-  /* taobao.getInfo('https://item.taobao.com/item.htm?spm=a230r.1.14.20.EFhUKi&id=45122936450',function(error,itemInfo){
-         if(error){
-             res.send(error);
-         }else{
-             res.send(itemInfo);
-         }
-     })*/
-   /* amazon.getInfo('http://www.amazon.cn/gp/product/B013OOT614/ref=s9_cngwdyfloorv2-s9?pf_rd_m=A1AJ19PSB66TGU&pf_rd_s=desktop-1&pf_rd_r=0NXVQ726G3DZPAQBVMTQ&pf_rd_t=36701&pf_rd_p=B013OOT614&pf_rd_i=desktop',function(error,itemInfo){
-        res.send(itemInfo);
-    })*/
-    /* nikeStore.getInfo('http://store.nike.com/cn/zh_cn/pd/air-max-2016-%E8%B7%91%E6%AD%A5%E9%9E%8B/pid-10865050/pgid-10345833',function(error,itemInfo){
-        if(error){
-             res.send(error);
-         }else{
-             res.send(itemInfo);
-         }
-    })*/
 
-   /* yougou.getInfo('http://seoul.yougou.com/c-chrischristy/sku-kcxalrc1041-100343796.shtml#ref=search&po=search',function(error,itemInfo){
-        if(error){
-            res.send(error);
-        }else{
-            res.send(itemInfo);
-        }
-    })*/
-
-   /* _6pm.getInfo('http://www.6pm.com/product/8550462/color/567398',function(error,itemInfo){
-        if(error){
-            res.send(error);
-        }else{
-            res.send(itemInfo);
-        }
-    })*/
-
- /*   shihuoHaitao.getInfo('http://www.shihuo.cn/haitao/buy/84755.html',function(error,itemInfo){
-        if(error){
-            res.send(error);
-        }else{
-            res.send(itemInfo);
-        }
-    })*/
-
-    yohobuy.getInfo('http://item.yohobuy.com/product/pro_289611_371709',function(error,itemInfo){
-        if(error){
-            res.send(error);
-        }else{
-            res.send(itemInfo);
-        }
-    })
 })
 
 app.use(function (req, res, next) {
@@ -275,6 +228,8 @@ function getStoreObj(urlInfo){
             return underarmour;
         case 'www.xtep.com.cn':
             return xtep;
+        case 'www.kaola.com':
+            return kaola;
         default:
             return '';
     }
