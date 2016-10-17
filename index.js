@@ -11,7 +11,7 @@ var bodyParser = require('body-parser');
 var url = require('url');
 var request = require('request');
 var domain = require('domain');
-// var phantom = require('phantom');
+
 
 var taobao = require('./lib/taobao');
 var amazonCn = require('./lib/amazonCn');
@@ -31,7 +31,6 @@ var jd = require('./lib/jd');
 var underarmour = require('./lib/underarmour');
 var xtep = require('./lib/xtep');
 var kaola = require('./lib/kaola');
-
 
 app.use(compress());
 app.use(bodyParser.json());

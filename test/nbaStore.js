@@ -38,7 +38,7 @@ describe('nbaStore', function() {
 
         it('测试nbaStore正常商品',function(done){
             this.timeout(80000)
-            nbaStore.getInfo(' http://store.nba.com/Cleveland_Cavaliers_Gear/Mens_Cleveland_Cavaliers_adidas_Gray_2016_NBA_Finals_Champions_Locker_Room_T-Shirt',function(err,data){
+            nbaStore.getInfo('http://store.nba.com/Cleveland_Cavaliers_Gear/Mens_Cleveland_Cavaliers_adidas_Gray_2016_NBA_Finals_Champions_Locker_Room_T-Shirt',function(err,data){
                 if(err)
                 {
                     throw new Error(err);
