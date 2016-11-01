@@ -12,7 +12,6 @@ var url = require('url');
 var request = require('request');
 var domain = require('domain');
 
-
 var taobao = require('./lib/taobao');
 var amazonCn = require('./lib/amazonCn');
 var nikeStore = require('./lib/nikeStore');
@@ -31,6 +30,7 @@ var jd = require('./lib/jd');
 var underarmour = require('./lib/underarmour');
 var xtep = require('./lib/xtep');
 var kaola = require('./lib/kaola');
+var taobaos11 = require('./lib/shuang11/taobao');
 
 app.use(compress());
 app.use(bodyParser.json());
@@ -161,6 +161,24 @@ app.get('/i', function (req, res) {
         })
     }
 })
+
+app.get('/s11', function (req, res) {
+    var url = req.query.url;
+    taobaos11.getInfo(encodeURI(url) ,function(error, itemInfo){
+        if(error){
+            res.json({
+                Status: false,
+                Msg: error
+            })
+        }else{
+            res.json({
+                Status: true,
+                Data: itemInfo
+            })
+        }
+    })
+})
+
 
 // uncaughtException 避免程序崩溃
 process.on('uncaughtException', function (err) {
