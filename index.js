@@ -30,7 +30,7 @@ var jd = require('./lib/jd');
 var underarmour = require('./lib/underarmour');
 var xtep = require('./lib/xtep');
 var kaola = require('./lib/kaola');
-var taobaos11 = require('./lib/shuang11/taobao');
+var taobaos11 = require('./lib/shuang11/taobaoV2');
 
 app.use(compress());
 app.use(bodyParser.json());
