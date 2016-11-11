@@ -18,14 +18,14 @@ describe('taobao', function() {
 
     it('测试已经下架的商品',function(done){
         this.timeout(60000)
-        taobao.getInfo('https://detail.tmall.com/item.htm?id=520961950299',function(err,data){
+        taobao.getInfo('https://detail.tmall.com/item.htm?id=526012031109',function(err,data){
             if(err)
             {
                 throw new Error(err);
             }
             // console.log(data)
             assert.equal('outOfStock',data.Status);
-            assert.equal('https://detail.tmall.com/item.htm?id=520961950299',data.Url)
+            assert.equal('https://detail.tmall.com/item.htm?id=526012031109',data.Url)
             done()
         })
     })

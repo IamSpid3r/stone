@@ -6,7 +6,7 @@ describe('yohobuy', function() {
     describe('#getItemInfo', function () {
         it('测试yohobuy正常商品',function(done){
             this.timeout(30000)
-            yohobuy.getInfo('http://item.yohobuy.com/product/pro_374993_343422/LIFEAFTERLIFEDuanXiuTXuLALA602TE64.html',function(err,data){
+            yohobuy.getInfo('http://item.yohobuy.com/product/pro_525162_652920/DCChaoXiYaoLiRongZhuiXingTianJingKuEDYFB03027KVJ0.html?from=list-c-26_1_2',function(err,data){
                 if(err)
                 {
                     throw new Error(err);
@@ -32,19 +32,6 @@ describe('yohobuy', function() {
                 }
                 assert.equal('outOfStock',data.Status);
                 assert.equal('cn.yohobuy.69744',data.Unique);
-                done()
-            })
-        })
-
-        it('测试yohobuy不存在商品',function(done){
-            this.timeout(30000)
-            yohobuy.getInfo('http://item.yohobuy.com/product/pro_6464646464',function(err,data){
-                if(err)
-                {
-                    throw new Error(err);
-                }
-                assert.equal('notFind',data.Status);
-                assert.equal('cn.yohobuy.6464646464',data.Unique);
                 done()
             })
         })

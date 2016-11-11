@@ -6,12 +6,12 @@ describe('kaola', function() {
     describe('#getItemInfo', function () {
         it('测试kaola商品',function(done){
             this.timeout(30000)
-            kaola.getInfo('http://www.kaola.com/product/1339671.html',function(err,data){
+            kaola.getInfo('http://www.kaola.com/product/1378082.html?ri=home&zid=87979&zp=worldNew-3&zn=worldNew',function(err,data){
                 if(err) {
                     throw new Error(err);
                 }
                 assert.equal('inStock',data.Status);
-                assert.equal('cn.kaola.1339671',data.Unique);
+                assert.equal('cn.kaola.1378082',data.Unique);
                 assert.ok(data.Variations.length > 0,'data.Variations.length is 0');
                 assert.ok(data.Variations[0].Values.length > 0,'data.Variations[0].Values is 0');
                 assert.ok(data.Items.length > 0,'data.Items.length is 0')
