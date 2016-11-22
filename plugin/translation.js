@@ -13,7 +13,7 @@ var translationObj = {
             variation.Name =  that.changeName(variation.Name)
             if(variation.Name == '尺码'){
                 variation.Values.forEach(function (value) {
-                    value.Name = that.changeSize(value.Name, shop, productGroup, department)
+                    //value.Name = that.changeSize(value.Name, shop, productGroup, department)
                 })
             }
         })
@@ -22,7 +22,7 @@ var translationObj = {
                 attr.N =  that.changeName(attr.N);
 
                 if(attr.N == '尺码'){
-                    attr.V =  that.changeSize(attr.V, shop, productGroup, department);
+                    //attr.V =  that.changeSize(attr.V, shop, productGroup, department);
                 }
             })
         })
