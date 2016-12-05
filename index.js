@@ -31,6 +31,7 @@ var underarmour = require('./lib/underarmour');
 var xtep = require('./lib/xtep');
 var kaola = require('./lib/kaola');
 var taobaos11 = require('./lib/shuang11/taobaoV2');
+var taobaos12 = require('./lib/shuang12/taobao');
 
 app.use(compress());
 app.use(bodyParser.json());
@@ -165,6 +166,23 @@ app.get('/i', function (req, res) {
 app.get('/s11', function (req, res) {
     var url = req.query.url;
     taobaos11.getInfo(encodeURI(url) ,function(error, itemInfo){
+        if(error){
+            res.json({
+                Status: false,
+                Msg: error
+            })
+        }else{
+            res.json({
+                Status: true,
+                Data: itemInfo
+            })
+        }
+    })
+})
+
+app.get('/s12', function (req, res) {
+    var url = req.query.url;
+    taobaos12.getInfo(encodeURI(url) ,function(error, itemInfo){
         if(error){
             res.json({
                 Status: false,
