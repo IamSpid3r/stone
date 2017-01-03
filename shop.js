@@ -7,7 +7,7 @@ var taobao = require('./lib/shop/taobaoShop');
 
 
 app.get('/t',function(req,res){
-    taobao.getInfo('https://auxdq.tmall.com',function(error,itemInfo){
+    taobao.getInfo('https://auxdq.tmall.com',1,function(error,itemInfo){
         if(error){
             res.send(error);
         }else{
