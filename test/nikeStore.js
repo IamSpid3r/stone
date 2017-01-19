@@ -6,13 +6,13 @@ describe('nikeStore', function() {
     describe('#getItemInfo', function () {
         it('测试nikeStore正常商品',function(done){
             this.timeout(60000)
-            nikeStore.getInfo('http://store.nike.com/cn/zh_cn/pd/mercurial-superfly-5-ag-pro-%E5%88%BA%E5%AE%A2%E7%B3%BB%E5%88%97%E7%94%B7%E5%AD%90%E4%BA%BA%E9%80%A0%E8%8D%89%E5%9C%B0%E8%B6%B3%E7%90%83%E9%9E%8B/pid-10946325/pgid-11294588',function(err,data){
+            nikeStore.getInfo('http://stone.shihuo.cn/info?url=http://store.nike.com/cn/zh_cn/pd/lunarepic-low-flyknit-%E7%94%B7%E5%AD%90%E8%B7%91%E6%AD%A5%E9%9E%8B/pid-11055903/pgid-11493501',function(err,data){
                 if(err)
                 {
                     throw new Error(err);
                 }
                 assert.equal('inStock',data.Status);
-                assert.equal('cn.nikestore.11294588',data.Unique);
+                assert.equal('cn.nikestore.11493501',data.Unique);
                 assert.ok(data.Variations.length > 0,'data.Variations.length is 0');
                 assert.ok(data.Variations[0].Values.length > 0,'data.Variations[0].Values is 0');
                 assert.ok(data.Items.length > 0,'data.Items.length is 0')

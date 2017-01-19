@@ -5,7 +5,7 @@ var xtep = require('../lib/xtep');
 describe('xtep', function() {
     describe('#getItemInfo', function () {
         it('测试xtep正常商品',function(done){
-            this.timeout(30000)
+            this.timeout(13000)
             xtep.getInfo('http://www.xtep.com.cn/goods/do_index?goods_sn=984219116068',function(err,data){
                 if(err)
                 {

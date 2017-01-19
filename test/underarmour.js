@@ -5,7 +5,7 @@ var underarmour = require('../lib/underarmour');
 describe('underarmour', function() {
     describe('#getItemInfo', function () {
         it('测试underarmour正常商品',function(done){
-            this.timeout(30000)
+            this.timeout(40000)
             underarmour.getInfo('http://www.underarmour.cn/p1274425-400.htm',function(err,data){
                 if(err)
                 {
@@ -24,7 +24,7 @@ describe('underarmour', function() {
         })
 
         it('测试underarmour已下架商品',function(done){
-            this.timeout(30000)
+            this.timeout(40000)
             underarmour.getInfo('http://www.underarmour.cn/p1252132-001.htm',function(err,data){
                 if(err)
                 {
@@ -37,7 +37,7 @@ describe('underarmour', function() {
         })
 
         it('测试underarmour不存在商品',function(done){
-            this.timeout(30000)
+            this.timeout(40000)
             underarmour.getInfo('http://www.underarmour.cn/p1252132-0011.htm',function(err,data){
                 if(err)
                 {
