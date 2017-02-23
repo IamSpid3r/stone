@@ -6,13 +6,13 @@ describe('yohobuy', function() {
     describe('#getItemInfo', function () {
         it('测试yohobuy正常商品',function(done){
             this.timeout(30000)
-            yohobuy.getInfo('http://item.yohobuy.com/product/pro_525162_652920/DCChaoXiYaoLiRongZhuiXingTianJingKuEDYFB03027KVJ0.html?from=list-c-26_1_2',function(err,data){
+            yohobuy.getInfo('http://item.yohobuy.com/product/pro_682396_838802/NBA%20STYLE%20ACCESSORY%20CAP%20N172AP888P.html',function(err,data){
                 if(err)
                 {
                     throw new Error(err);
                 }
                 assert.equal('inStock',data.Status);
-                assert.equal('cn.yohobuy.525162',data.Unique);
+                assert.equal('cn.yohobuy.682396',data.Unique);
                 assert.ok(data.Variations.length > 0,'data.Variations.length is 0');
                 assert.ok(data.Variations[0].Values.length > 0,'data.Variations[0].Values is 0');
                 assert.ok(data.Items.length > 0,'data.Items.length is 0')
