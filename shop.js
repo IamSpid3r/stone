@@ -4,6 +4,8 @@ var request = require('request');
 
 
 var taobao = require('./lib/shop/taobaoShop');
+var nikeStore = require('./lib/shop/nikeShop');
+var amazoncnStore = require('./lib/shop/amazoncnShop');
 
 
 app.get('/t',function(req,res){
@@ -52,7 +54,11 @@ app.get('/info', function (req, res) {
 
 //获取商城对象
 function getStoreObj(host){
-
+        if (host.indexOf('nike.com') > 0){
+            return nikeStore;
+        }else if(host.indexOf('amazon.cn') > 0){
+            return amazoncnStore;
+        }
         return taobao;
 
 }
