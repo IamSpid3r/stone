@@ -43,10 +43,6 @@ describe('amazonJp', function() {
                 assert.equal('inStock',data.Status);
                 assert.equal('jp.amazon.B015FFC0HK',data.Unique);
                 assert.equal(data.Variations.length , 0,'data.Variations.length is 0');
-                assert.ok(data.Items.length > 0,'data.Items.length is 0')
-                assert.equal(data.Items[0].Attr.length , 0,'data.Items[0].Attr.length is 0')
-                assert.ok(data.Items[0].Offers.length > 0,'data.Items[0].Attr[0].Offers.length is 0')
-                assert.ok(data.Items[0].Offers[0].List[0].Price > 0,'data.Items[0].Attr[0].Offers[0].list[0].price is 0')
                 done()
             })
         });

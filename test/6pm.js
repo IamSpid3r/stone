@@ -6,12 +6,12 @@ describe('6pm', function() {
     describe('#getItemInfo', function() {
         it('测试1',function(done){
             this.timeout(50000)
-            _6pm.getInfo('http://www.6pm.com/tommy-hilfiger-hilfiger-color-block-mini-duffel-navy-red', function(err, data) {
+            _6pm.getInfo('http://www.6pm.com/p/cole-haan-beckett-tote-blazer-blue-ivory-stripe/product/8703439/color/687936', function(err, data) {
                 if (err) {
                     throw new Error(err);
                 }
                 assert.equal('inStock', data.Status);
-                assert.equal('com.6pm.8765395',data.Unique);
+                assert.equal('com.6pm.8703439',data.Unique);
                 assert.ok(data.Variations.length > 0, 'data.Variations.length is 1');
                 assert.ok(data.Variations[0].Values.length > 0, 'data.Variations[0].Values is 0');
                 assert.ok(data.Items.length > 0, 'data.Items.length is 0')

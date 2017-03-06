@@ -25,7 +25,7 @@ describe('underarmour', function() {
 
         it('测试underarmour已下架商品',function(done){
             this.timeout(40000)
-            underarmour.getInfo('http://www.underarmour.cn/p1252132-001.htm',function(err,data){
+            underarmour.getInfo('http://www.underarmour.cn/p1252132-0011.htm',function(err,data){
                 if(err)
                 {
                     throw new Error(err);
@@ -38,13 +38,13 @@ describe('underarmour', function() {
 
         it('测试underarmour不存在商品',function(done){
             this.timeout(40000)
-            underarmour.getInfo('http://www.underarmour.cn/p1252132-0011.htm',function(err,data){
+            underarmour.getInfo('http://www.underarmour.cn/p22222-0011.htm',function(err,data){
                 if(err)
                 {
                     throw new Error(err);
                 }
-                assert.equal('notFind',data.Status);
-                assert.equal('cn.underarmour.1252132',data.Unique);
+                assert.equal('outOfStock',data.Status);
+                assert.equal('cn.underarmour.22222',data.Unique);
                 done()
             })
         })

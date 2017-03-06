@@ -6,7 +6,7 @@ describe('kaola', function() {
     describe('#getItemInfo', function () {
         it('测试kaola商品',function(done){
             this.timeout(30000)
-            kaola.getInfo('http://www.kaola.com/product/1378082.html?ri=home&zid=87979&zp=worldNew-3&zn=worldNew',function(err,data){
+            kaola.getInfo('http://www.kaola.com/product/1378082.html',function(err,data){
                 if(err) {
                     throw new Error(err);
                 }
