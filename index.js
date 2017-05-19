@@ -32,6 +32,7 @@ var xtep = require('./lib/xtep');
 var kaola = require('./lib/kaola');
 var taobaos11 = require('./lib/shuang11/taobaoV2');
 var taobaos12 = require('./lib/shuang12/taobao');
+var suning = require('./lib/suning');
 
 app.use(compress());
 app.use(bodyParser.json());
@@ -265,6 +266,8 @@ function getStoreObj(urlInfo){
             return xtep;
         case 'www.kaola.com':
             return kaola;
+        case 'product.suning.com':
+            return suning;
         default:
             return '';
     }
