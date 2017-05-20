@@ -33,6 +33,7 @@ var kaola = require('./lib/kaola');
 var taobaos11 = require('./lib/shuang11/taobaoV2');
 var taobaos12 = require('./lib/shuang12/taobao');
 var suning = require('./lib/suning');
+var gome = require('./lib/gome');
 
 app.use(compress());
 app.use(bodyParser.json());
@@ -268,6 +269,8 @@ function getStoreObj(urlInfo){
             return kaola;
         case 'product.suning.com':
             return suning;
+        case 'item.gome.com.cn':
+            return gome;
         default:
             return '';
     }
