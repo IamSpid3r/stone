@@ -260,6 +260,7 @@ function getStoreObj(urlInfo){
         case 'www.footlocker.com':
             return footlocker;
         case 'item.jd.com':
+        case 'item.jd.hk':
             return jd;
         case 'www.underarmour.cn':
             return underarmour;
