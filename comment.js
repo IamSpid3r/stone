@@ -3,10 +3,13 @@ var compress = require('compression');
 var url = require('url');
 var request = require('request');
 
-
+//需要支持 淘宝|天猫 亚马逊  识货  京东 国美
 var taobao = require('./lib/comment/taobaoComment');
 var amazonCn = require('./lib/comment/amazonCnComment');
 var shihuoHaitao = require('./lib/comment/shihuoHaitaoComment');
+var gome = require('./lib/comment/gomeComment');
+var jd = require('./lib/comment/jdComment');
+
 
 app.get('/t',function(req,res){
     taobao.getInfo('https://detail.tmall.com/item.htm?spm=a230r.1.14.9.4LFEYQ&id=524753097959&ns=1&abbucket=15',function(error,itemInfo){
@@ -83,6 +86,10 @@ function getStoreObj(host){
             return _6pm;
         case 'store.nba.com':
             return nbaStore;
+        case 'item.gome.com.cn':
+            return gome;
+        case 'item.jd.com':
+            return jd;
         default:
             return '';
     }
