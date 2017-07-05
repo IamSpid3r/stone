@@ -247,6 +247,14 @@ function getStoreObj(urlInfo){
             }else{
                 return '';
             }
+        case 'www.haitaodashi.cn':
+            var haitaoExp = /\/haitao\/buy\/(\d+)(-(\d+)){0,1}\.html/ig;
+
+            if(haitaoExp.exec(urlInfo.path)){
+                return shihuoHaitao;
+            }else{
+                return '';
+            }
         case 'www.6pm.com':
             return _6pm;
         case 'store.nba.com':
