@@ -17,8 +17,10 @@ app.get('/t',function(req,res){
 app.get('/info', function (req, res) {
     var activityId = req.query.activityId;
     var itemId = req.query.itemId;
+    var sellerId = req.query.sellerId;
+    var key = req.query.key;
 
-    taobao.getInfo(activityId , itemId, function(error, itemInfo){
+    taobao.getInfo(activityId , itemId, sellerId, key, function(error, itemInfo){
         if(error){
             res.json({
                 Status: false,
