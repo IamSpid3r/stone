@@ -34,6 +34,7 @@ var taobaos11 = require('./lib/shuang11/taobaoV2');
 var taobaos12 = require('./lib/shuang12/taobao');
 var suning = require('./lib/suning');
 var gome = require('./lib/gome');
+var du = require('./lib/du');
 
 app.use(compress());
 app.use(bodyParser.json());
@@ -280,6 +281,8 @@ function getStoreObj(urlInfo){
             return suning;
         case 'item.gome.com.cn':
             return gome;
+        case 'du.hupu.com':
+            return du;
         default:
             return '';
     }
