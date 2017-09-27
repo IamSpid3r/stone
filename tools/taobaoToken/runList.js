@@ -3,7 +3,7 @@ var initTbApi = require('./tbApi.js');
 var request = require('request');
 var fun = require(process.cwd()+'/lib/fun.js');
 var Q = require('q');
-var loginTabao = require(process.cwd()+'/tools/loginTabao/index')
+//var loginTabao = require(process.cwd()+'/tools/loginTabao/index')
 
 var runList = function(params, cookiePath, callback) {
     var requestNum = 0;
