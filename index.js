@@ -13,6 +13,7 @@ var request = require('request');
 var domain = require('domain');
 
 var taobao = require('./lib/taobao');
+var taobaoV2 = require('./lib/taobaoV2');
 var amazonCn = require('./lib/amazonCn');
 var nikeStore = require('./lib/nikeStore');
 var yougou = require('./lib/yougou');
@@ -40,9 +41,6 @@ app.use(compress());
 app.use(bodyParser.json());
 app.use(express.static('mochawesome-reports'));
 
-app.get('/test', function (req, res) {
-
-})
 
 app.use(function (req, res, next) {
     var reqDomain = domain.create();
@@ -201,6 +199,25 @@ app.get('/s12', function (req, res) {
 })
 
 
+app.get('/test', function (req, res) {
+    var url = req.query.url;
+    console.log(url)
+    taobaoV2.getInfo(encodeURI(url) ,function(error, itemInfo){
+        if(error){
+            res.json({
+                Status: false,
+                Msg: error
+            })
+        }else{
+            res.json({
+                Status: true,
+                Data: itemInfo
+            })
+        }
+    })
+})
+
+
 // uncaughtException 避免程序崩溃
 process.on('uncaughtException', function (err) {
     console.log('uncaughtException->',err);
@@ -229,7 +246,7 @@ function getStoreObj(urlInfo){
         case 'item.taobao.com':
         case 'detail.tmall.com':
         case 'detail.tmall.hk':
-            return taobao;
+            return taobaoV2;
         case 'store.nike.com':
         case 'www.nike.com':
             return nikeStore;
@@ -282,6 +299,7 @@ function getStoreObj(urlInfo){
         case 'item.gome.com.cn':
             return gome;
         case 'du.hupu.com':
+        case 'dev.du.hupu.com':
             return du;
         default:
             return '';
