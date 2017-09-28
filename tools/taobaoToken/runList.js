@@ -68,7 +68,7 @@ var runList = function(params, cookiePath, callback) {
                         switch (params.api) {
                             //商品详情页
                             case 'mtop.taobao.detail.getdetail':
-                                if (resJson.ret instanceof Array) {
+                                if (resJson.ret instanceof Array && resJson.ret[0].indexOf('代理软件') == -1) {
                                     callback(resJson);
                                 }else{
                                     if (response.headers['set-cookie']) {
