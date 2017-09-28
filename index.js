@@ -246,7 +246,8 @@ function getStoreObj(urlInfo){
         case 'item.taobao.com':
         case 'detail.tmall.com':
         case 'detail.tmall.hk':
-            return taobaoV2;
+            return taobao;
+            //return taobaoV2;
         case 'store.nike.com':
         case 'www.nike.com':
             return nikeStore;
