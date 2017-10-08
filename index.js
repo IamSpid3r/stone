@@ -102,6 +102,23 @@ app.get('/info', function (req, res) {
     }
 })
 
+app.get('/taobao', function (req, res) {
+    var goodsUrl = req.query.url;
+    var urlInfo = goodsUrl ?  url.parse(goodsUrl, true, true) : {path:'',host:''};
+
+    taobaoV2.getInfo(encodeURI(goodsUrl) ,function(error, itemInfo){
+        if(error){
+            res.json({
+                Status: false,
+                Msg: error
+            }).end();
+        }else{
+            res.json({ Status: true, Data: itemInfo}).end();
+        }
+    })
+})
+
+
 app.get('/i', function (req, res) {
     var goodsUrl = req.query.url;
     var urlInfo = goodsUrl ?  url.parse(goodsUrl, true, true) : {path:'',host:''};
