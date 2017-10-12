@@ -3,7 +3,9 @@ var initTbApi = require('./tbApi.js');
 var request = require('request');
 var fun = require(process.cwd()+'/lib/fun.js');
 var Q = require('q');
-//var loginTabao = require(process.cwd()+'/tools/loginTabao/index')
+var loginTabao = require(process.cwd()+'/tools/loginTabao/index')
+var login = 0;
+var lastLoginTime = 0;
 
 var runList = function(params, cookiePath, callback) {
     var requestNum = 0;
@@ -84,6 +86,23 @@ var runList = function(params, cookiePath, callback) {
                                     }
                                 }
                                 break;
+                            case 'mtop.alimama.union.hsf.coupon.get':
+                                if (resJson.ret instanceof Array && resJson.ret[0].indexOf('SUCCESS') > -1) {
+                                    callback(resJson);
+                                }else{
+                                    if (response.headers['set-cookie']) {
+                                        var sc = response.headers['set-cookie'];
+                                        sc = sc.join('; ');
+                                        let cookieObj = new parseCookie(sc).parsetoJSON();
+                                        cookie = new parseCookie(cookieObj).parsetoSTR();
+
+                                        fun.writeLog(cookiePath, cookie);
+                                        requestBody(cookie);
+                                    }else{
+                                        callback(null, '抓取服务器错误');
+                                    }
+                                }
+                                break;
                             //默认页面
                             default:
                                 if (resJson.ret instanceof Array) {
@@ -94,12 +113,20 @@ var runList = function(params, cookiePath, callback) {
                                         callback(null, '不支持的商品');
                                         return;
                                     }else{
-                                        loginTabao();
+                                        var timestamp = (new Date())/1000;
+                                        if(timestamp - lastLoginTime > 300){
+                                            lastLoginTime = timestamp;
+                                            loginTabao();
+                                        }
                                         callback(null, '正在登录,请稍后再试');
                                         return;
                                     }
                                 }else{
-                                    loginTabao();
+                                    var timestamp = (new Date())/1000;
+                                    if(timestamp - lastLoginTime > 300){
+                                        lastLoginTime = timestamp;
+                                        loginTabao();
+                                    }
                                     callback(null, '正在登录,请稍后再试');
                                     return;
                                 }
