@@ -3,7 +3,6 @@ var url = require('url');
 var request = require('request');
 
 var taobao = require('./lib/ticket/taobao');
-var taobaoV2 = require('./lib/ticket/taobaoV2');
 
 app.get('/t',function(req,res){
     taobao.getInfo('https://auxdq.tmall.com', function(error, itemInfo){
