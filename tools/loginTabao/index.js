@@ -38,8 +38,6 @@ function login_alimama(){
                     console.log('登录拉')
                     //callback(cookie);
                     fun.writeLog('taobaoLogin.txt', cookie)
-
-                    phantom.exit();
                 }
             }
             oLogin.fLogin('shihuo', oPhantom, oCallBack);
