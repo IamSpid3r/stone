@@ -36,6 +36,7 @@ var taobaos12 = require('./lib/shuang12/taobao');
 var suning = require('./lib/suning');
 var gome = require('./lib/gome');
 var du = require('./lib/du');
+var iherb = require('./lib/iherb');
 
 app.use(compress());
 app.use(bodyParser.json());
@@ -219,6 +220,7 @@ app.get('/s12', function (req, res) {
 app.get('/test', function (req, res) {
     var url = req.query.url;
     console.log(url)
+    console.log(1111)
     taobaoV2.getInfo(encodeURI(url) ,function(error, itemInfo){
         if(error){
             res.json({
@@ -319,6 +321,8 @@ function getStoreObj(urlInfo){
         case 'du.hupu.com':
         case 'dev.du.hupu.com':
             return du;
+        case 'cn.iherb.com':
+            return iherb;
         default:
             return '';
     }
