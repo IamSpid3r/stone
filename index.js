@@ -37,6 +37,7 @@ var suning = require('./lib/suning');
 var gome = require('./lib/gome');
 var du = require('./lib/du');
 var iherb = require('./lib/iherb');
+var chemistdirect = require('./lib/chemistdirect');
 
 app.use(compress());
 app.use(bodyParser.json());
@@ -76,7 +77,7 @@ app.use(function (req, res, next) {
 
 app.get('/info', function (req, res) {
     var goodsUrl = req.query.url;
-    var urlInfo = goodsUrl ?  url.parse(goodsUrl, true, true) : {path:'',host:''};
+    var urlInfo =   goodsUrl ?  url.parse(goodsUrl, true, true) : {path:'',host:''};
 
     var storeObj = getStoreObj(urlInfo);
     if(typeof storeObj == 'object'){
@@ -323,6 +324,8 @@ function getStoreObj(urlInfo){
             return du;
         case 'cn.iherb.com':
             return iherb;
+        case 'cn.chemistdirect.com.au':
+            return chemistdirect;
         default:
             return '';
     }
