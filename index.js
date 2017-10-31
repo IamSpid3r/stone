@@ -325,6 +325,7 @@ function getStoreObj(urlInfo){
         case 'cn.iherb.com':
             return iherb;
         case 'cn.chemistdirect.com.au':
+        case 'cn.pharmacy4less.com.au':
             return chemistdirect;
         default:
             return '';
