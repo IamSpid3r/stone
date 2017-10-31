@@ -326,6 +326,10 @@ function getStoreObj(urlInfo){
             return iherb;
         case 'cn.chemistdirect.com.au':
         case 'cn.pharmacy4less.com.au':
+        case 'cn.pharmacyonline.com.au':
+        case 'cn.pharmacydirect.co.nz':
+        case 'cn.discount-apotheke.de':
+        case 'cn.amcal.com.au':
             return chemistdirect;
         default:
             return '';
