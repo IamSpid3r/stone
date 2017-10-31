@@ -30,7 +30,16 @@ var footlocker = require('./lib/footlocker');
 var jd = require('./lib/jd');
 var underarmour = require('./lib/underarmour');
 var xtep = require('./lib/xtep');
-var kaola = require('./lib/kaola');
+// var kaola = require('./lib/kaola');
+// 适合卡路里的考拉拉取方式
+var kaola = require('./lib/kaluli/newkaola');
+var beibei = require('./lib/kaluli/beibei');
+
+
+
+
+
+
 var taobaos11 = require('./lib/shuang11/taobaoV2');
 var taobaos12 = require('./lib/shuang12/taobao');
 var suning = require('./lib/suning');
@@ -264,7 +273,7 @@ function getStoreObj(urlInfo){
         case 'detail.tmall.com':
         case 'detail.tmall.hk':
             return taobao;
-            //return taobaoV2;
+        //return taobaoV2;
         case 'store.nike.com':
         case 'www.nike.com':
             return nikeStore;
@@ -311,7 +320,16 @@ function getStoreObj(urlInfo){
         case 'www.xtep.com.cn':
             return xtep;
         case 'www.kaola.com':
+        case 'www.kaola.com.hk':
             return kaola;
+
+        // 贝贝网
+        case 'global.beibei.com':
+        case 'www.beibei.com':
+            return beibei;
+
+
+
         case 'product.suning.com':
             return suning;
         case 'item.gome.com.cn':
@@ -325,6 +343,6 @@ function getStoreObj(urlInfo){
 }
 
 app.listen(3000,function(){
-   console.log('listen 3000');
+    console.log('listen 3000');
 })
 
