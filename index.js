@@ -37,6 +37,8 @@ var suning = require('./lib/suning');
 var gome = require('./lib/gome');
 var du = require('./lib/du');
 
+var taobaos112017 = require('./lib/shuang112017/taobao');
+
 app.use(compress());
 app.use(bodyParser.json());
 app.use(express.static('mochawesome-reports'));
@@ -215,6 +217,23 @@ app.get('/s12', function (req, res) {
     })
 })
 
+
+app.get('/s112017', function (req, res) {
+    var url = req.query.url;
+    taobaos112017.getInfo(encodeURI(url) ,function(error, itemInfo){
+        if(error){
+            res.json({
+                Status: false,
+                Msg: error
+            })
+        }else{
+            res.json({
+                Status: true,
+                Data: itemInfo
+            })
+        }
+    })
+})
 
 app.get('/test', function (req, res) {
     var url = req.query.url;
