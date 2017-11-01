@@ -326,6 +326,7 @@ function getStoreObj(urlInfo){
         // 贝贝网
         case 'global.beibei.com':
         case 'www.beibei.com':
+        case 'you.beibei.com':
             return beibei;
 
 
