@@ -34,6 +34,7 @@ var xtep = require('./lib/xtep');
 // 适合卡路里的考拉拉取方式
 var kaola = require('./lib/kaluli/newkaola');
 var beibei = require('./lib/kaluli/beibei');
+var meitun = require('./lib/kaluli/meitun');
 
 
 
@@ -328,7 +329,9 @@ function getStoreObj(urlInfo){
         case 'www.beibei.com':
         case 'you.beibei.com':
             return beibei;
-
+        //美囤网
+        case 'http://item.meitun.com':
+            return meitun;
 
 
         case 'product.suning.com':
