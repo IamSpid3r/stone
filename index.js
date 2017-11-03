@@ -330,7 +330,7 @@ function getStoreObj(urlInfo){
         case 'you.beibei.com':
             return beibei;
         //美囤网
-        case 'http://item.meitun.com':
+        case 'item.meitun.com':
             return meitun;
 
 
