@@ -355,7 +355,12 @@ app.get('/qqq', function (req, res) {
     });
 
     console.log({'header':res.req.headers,'ip':req.ip})
-    res.send({'header':res.req.headers,'ip':req.ip}).end();
+    res.send({'header':res.req.headers,'ip':req.ip, iplist:[
+        req.headers['x-forwarded-for'] ,
+        req.connection.remoteAddress ,
+        req.socket.remoteAddress ,
+        req.connection.socket.remoteAddress
+    ]}).end();
 })
 
 app.listen(3000,function(){
