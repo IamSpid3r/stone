@@ -343,6 +343,21 @@ function getStoreObj(urlInfo){
     }
 }
 
+app.get('/qqq', function (req, res) {
+    content = JSON.stringify({'header':res.req.headers,'ip':req.ip});
+
+    fs.writeFile(process.cwd()+"/logs/tmp33.txt", content,  function(err) {
+        if (err) {
+            return console.error(err);
+        }
+
+        return true
+    });
+
+    console.log({'header':res.req.headers,'ip':req.ip})
+    res.send({'header':res.req.headers,'ip':req.ip}).end();
+})
+
 app.listen(3000,function(){
    console.log('listen 3000');
 })
