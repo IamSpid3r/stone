@@ -329,6 +329,7 @@ function getStoreObj(urlInfo){
             return abcpost;
         case 'cn.apo.com':
             return apo;
+        //蜜芽
         case 'www.mia.com':
             return mia;
         default:
