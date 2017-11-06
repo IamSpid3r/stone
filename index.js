@@ -30,11 +30,11 @@ var footlocker = require('./lib/footlocker');
 var jd = require('./lib/jd');
 var underarmour = require('./lib/underarmour');
 var xtep = require('./lib/xtep');
-// var kaola = require('./lib/kaola');
 // 适合卡路里的考拉拉取方式
-var kaola = require('./lib/kaluli/newkaola');
+var kaola = require('./lib/kaola');
 var beibei = require('./lib/kaluli/beibei');
 var meitun = require('./lib/kaluli/meitun');
+var xiji = require('./lib/kaluli/xiji');
 
 
 
@@ -332,6 +332,9 @@ function getStoreObj(urlInfo){
         //美囤网
         case 'item.meitun.com':
             return meitun;
+        //西集网
+        case 'www.xiji.com':
+            return xiji;
 
 
         case 'product.suning.com':

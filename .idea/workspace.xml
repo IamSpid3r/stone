@@ -2,11 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bd7fea86-9906-4e6b-b939-408dc3801e06" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/kaluli/xiji.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.js" afterPath="$PROJECT_DIR$/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/kaluli/beibei.js" afterPath="$PROJECT_DIR$/lib/kaluli/beibei.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/kaluli/meitun.js" afterPath="$PROJECT_DIR$/lib/kaluli/meitun.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/kaluli/newkaola.js" afterPath="$PROJECT_DIR$/lib/kaluli/newkaola.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/kaola.js" afterPath="$PROJECT_DIR$/lib/kaola.js" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -17,26 +16,46 @@
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.6094104">
+    <splitter split-orientation="horizontal" split-proportion="0.55052876">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file leaf-file-name="meitun.js" pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/lib/kaluli/meitun.js">
+          <file leaf-file-name="suning.js" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/lib/suning.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="65">
-                  <caret line="257" column="14" lean-forward="true" selection-start-line="257" selection-start-column="14" selection-end-line="257" selection-end-column="14" />
+                <state relative-caret-position="437">
+                  <caret line="23" column="38" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="756" selection-end-column="0" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="kaola.js" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/lib/kaola.js">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="271">
+                  <caret line="280" column="9" lean-forward="true" selection-start-line="280" selection-start-column="9" selection-end-line="280" selection-end-column="9" />
                   <folding>
-                    <element signature="e#7028#7037#0" expanded="false" />
+                    <element signature="e#11#7620#0" expanded="false" />
                   </folding>
                 </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="proxyRequest.js" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/lib/proxyRequest.js">
+          <file leaf-file-name="xiji.js" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/lib/kaluli/xiji.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="798">
-                  <caret line="42" column="34" lean-forward="false" selection-start-line="42" selection-start-column="34" selection-end-line="42" selection-end-column="34" />
+                <state relative-caret-position="3515">
+                  <caret line="253" column="10" lean-forward="true" selection-start-line="253" selection-start-column="10" selection-end-line="253" selection-end-column="10" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="index.js" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/index.js">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="566">
+                  <caret line="39" column="0" lean-forward="true" selection-start-line="39" selection-start-column="0" selection-end-line="39" selection-end-column="0" />
                   <folding />
                 </state>
               </provider>
@@ -45,32 +64,12 @@
         </leaf>
       </split-first>
       <split-second>
-        <leaf>
-          <file leaf-file-name="jd.js" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/lib/jd.js">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="3423">
-                  <caret line="293" column="39" lean-forward="false" selection-start-line="293" selection-start-column="29" selection-end-line="293" selection-end-column="39" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
+        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
           <file leaf-file-name="newkaola.js" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/lib/kaluli/newkaola.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="93">
-                  <caret line="226" column="84" lean-forward="false" selection-start-line="226" selection-start-column="75" selection-end-line="226" selection-end-column="84" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="taobao.js" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/lib/taobao.js">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="76">
-                  <caret line="4" column="33" lean-forward="true" selection-start-line="4" selection-start-column="33" selection-end-line="4" selection-end-column="33" />
+                <state relative-caret-position="133">
+                  <caret line="7" column="11" lean-forward="true" selection-start-line="7" selection-start-column="11" selection-end-line="7" selection-end-column="11" />
                   <folding />
                 </state>
               </provider>
@@ -79,8 +78,8 @@
           <file leaf-file-name="beibei.js" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/lib/kaluli/beibei.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="0">
-                  <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+                <state relative-caret-position="185">
+                  <caret line="278" column="28" lean-forward="false" selection-start-line="278" selection-start-column="8" selection-end-line="278" selection-end-column="28" />
                   <folding />
                 </state>
               </provider>
@@ -99,26 +98,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>itemInfo</find>
-      <find>Items</find>
-      <find>attribute</find>
-      <find>UNi</find>
-      <find>JSON</find>
-      <find>exec</find>
-      <find>*</find>
-      <find>propertyIndex</find>
-      <find>md5</find>
-      <find>Price</find>
-      <find>get</find>
-      <find>findIndex</find>
-      <find>cheerio</find>
-      <find>then</find>
-      <find>getHtml</find>
-      <find>getShopMain</find>
-      <find>err</find>
-      <find>daili</find>
-      <find>dail</find>
-      <find>da</find>
       <find>d</find>
       <find>dai'li</find>
       <find>代理</find>
@@ -129,6 +108,26 @@
       <find>代理ipsh</find>
       <find>代理ips</find>
       <find>代理ip</find>
+      <find>JSOn</find>
+      <find>cheerio</find>
+      <find>JSON</find>
+      <find>defer</find>
+      <find>getShopMain</find>
+      <find>items</find>
+      <find>itema</find>
+      <find>price</find>
+      <find>MshopId</find>
+      <find>then</find>
+      <find>get</find>
+      <find>function</find>
+      <find>priceSkus</find>
+      <find>ep</find>
+      <find>getPcmain</find>
+      <find>return defer.resolve</find>
+      <find>callback</find>
+      <find>var</find>
+      <find>gethtml</find>
+      <find>getHtml</find>
     </findStrings>
     <dirStrings>
       <dir>$PROJECT_DIR$</dir>
@@ -141,10 +140,12 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/.gitignore" />
-        <option value="$PROJECT_DIR$/index.js" />
-        <option value="$PROJECT_DIR$/lib/kaluli/beibei.js" />
-        <option value="$PROJECT_DIR$/lib/kaluli/newkaola.js" />
         <option value="$PROJECT_DIR$/lib/kaluli/meitun.js" />
+        <option value="$PROJECT_DIR$/lib/kaluli/beibei.js" />
+        <option value="$PROJECT_DIR$/lib/kaluli/xiji.js" />
+        <option value="$PROJECT_DIR$/lib/kaluli/newkaola.js" />
+        <option value="$PROJECT_DIR$/lib/kaola.js" />
+        <option value="$PROJECT_DIR$/index.js" />
       </list>
     </option>
   </component>
@@ -178,7 +179,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -226,6 +226,7 @@
         </subPane>
       </pane>
       <pane id="Scratches" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -237,6 +238,7 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/lib/kaluli" />
       <recent name="$PROJECT_DIR$/lib" />
     </key>
   </component>
@@ -369,34 +371,35 @@
       <workItem from="1509502073185" duration="17806000" />
       <workItem from="1509528094413" duration="3859000" />
       <workItem from="1509532353557" duration="755000" />
-      <workItem from="1509587413318" duration="34770000" />
+      <workItem from="1509587413318" duration="63521000" />
+      <workItem from="1509939376546" duration="4429000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="77596000" />
+    <option name="totallyTimeSpent" value="110776000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1440" y="-41" width="1920" height="1080" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Remote Host" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14791666" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Remote Host" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.11354167" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1732817" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18005808" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="File Transfer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2071636" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="File Transfer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2071636" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -417,38 +420,19 @@
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/lib/kaluli/beibei.js</url>
           <line>164</line>
-          <properties />
           <option name="timeStamp" value="43" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/lib/kaluli/beibei.js</url>
+          <line>260</line>
+          <option name="timeStamp" value="85" />
+        </line-breakpoint>
       </breakpoints>
-      <option name="time" value="71" />
+      <option name="time" value="113" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/lib/kaluli/beibei.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3515">
-          <caret line="185" column="33" lean-forward="true" selection-start-line="185" selection-start-column="33" selection-end-line="185" selection-end-column="33" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="6061">
-          <caret line="323" column="25" lean-forward="true" selection-start-line="323" selection-start-column="25" selection-end-line="323" selection-end-column="25" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/lib/JavaScriptLanguage.jar!/com/intellij/lang/javascript/index/predefined/EcmaScript5.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3515">
-          <caret line="185" column="0" lean-forward="false" selection-start-line="185" selection-start-column="0" selection-end-line="185" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/lib/kaluli/newkaola.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3724">
@@ -461,7 +445,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -600,7 +583,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-2001">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -745,7 +727,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -753,15 +734,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="76">
           <caret line="4" column="19" lean-forward="true" selection-start-line="4" selection-start-column="19" selection-end-line="4" selection-end-column="19" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="358">
-          <caret line="332" column="14" lean-forward="false" selection-start-line="332" selection-start-column="14" selection-end-line="332" selection-end-column="14" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -769,39 +741,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3423">
           <caret line="293" column="39" lean-forward="false" selection-start-line="293" selection-start-column="29" selection-end-line="293" selection-end-column="39" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/kaola.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="328">
-          <caret line="220" column="0" lean-forward="true" selection-start-line="220" selection-start-column="0" selection-end-line="220" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/kaluli/beibei.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/taobao.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="76">
-          <caret line="4" column="33" lean-forward="true" selection-start-line="4" selection-start-column="33" selection-end-line="4" selection-end-column="33" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/kaluli/newkaola.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="93">
-          <caret line="226" column="84" lean-forward="false" selection-start-line="226" selection-start-column="75" selection-end-line="226" selection-end-column="84" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -809,17 +748,72 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="798">
           <caret line="42" column="34" lean-forward="false" selection-start-line="42" selection-start-column="34" selection-end-line="42" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/taobao.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="267">
+          <caret line="76" column="33" lean-forward="false" selection-start-line="76" selection-start-column="29" selection-end-line="76" selection-end-column="33" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/lib/kaluli/meitun.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="65">
-          <caret line="257" column="14" lean-forward="true" selection-start-line="257" selection-start-column="14" selection-end-line="257" selection-end-column="14" />
+        <state relative-caret-position="6694">
+          <caret line="359" column="1" lean-forward="true" selection-start-line="359" selection-start-column="1" selection-end-line="359" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/kaluli/jquery.js" />
+    <entry file="file://$PROJECT_DIR$/lib/kaluli/beibei.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="185">
+          <caret line="278" column="28" lean-forward="false" selection-start-line="278" selection-start-column="8" selection-end-line="278" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/kaluli/xiji.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3515">
+          <caret line="253" column="10" lean-forward="true" selection-start-line="253" selection-start-column="10" selection-end-line="253" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/kaluli/newkaola.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="133">
+          <caret line="7" column="11" lean-forward="true" selection-start-line="7" selection-start-column="11" selection-end-line="7" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/suning.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="437">
+          <caret line="23" column="38" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="756" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/kaola.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="271">
+          <caret line="280" column="9" lean-forward="true" selection-start-line="280" selection-start-column="9" selection-end-line="280" selection-end-column="9" />
           <folding>
-            <element signature="e#7028#7037#0" expanded="false" />
+            <element signature="e#11#7620#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="566">
+          <caret line="39" column="0" lean-forward="true" selection-start-line="39" selection-start-column="0" selection-end-line="39" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
