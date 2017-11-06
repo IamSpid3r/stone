@@ -11,7 +11,7 @@ var _ = require('lodash');
 
 var runList = function(params, cookiePath, callback) {
     var requestNum = 0;
-    var maxRequestNum = 3;
+    var maxRequestNum = 2;
     var requestBody = function (globalCookies) {
         tbAPI = initTbApi(globalCookies);
         maxRequest = maxRequestNum;
@@ -29,7 +29,7 @@ var runList = function(params, cookiePath, callback) {
 
         h.then(function(l) {
             var apiUrl = 'https:' + l.data.url;
-            console.log(apiUrl)
+            //console.log(apiUrl)
             var requestCookie = globalCookies;
 
             var developUrl = 'http://121.41.100.22:3333/proxyGet?add=1';
@@ -55,7 +55,6 @@ var runList = function(params, cookiePath, callback) {
             options.url = apiUrl;
             options.gzip = true;
 
-            console.log(options)
             request(options, function (error, response, body) {
                 if(error) {
                     callback(null, error);
