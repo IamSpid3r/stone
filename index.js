@@ -42,6 +42,8 @@ var apo = require('./lib/cnapo');
 var mia = require('./lib/mia');
 var chemistdirect = require('./lib/chemistdirect');
 
+var taobaos112017 = require('./lib/shuang112017/taobao');
+
 app.use(compress());
 app.use(bodyParser.json());
 app.use(express.static('mochawesome-reports'));
@@ -221,6 +223,23 @@ app.get('/s12', function (req, res) {
 })
 
 
+app.get('/s112017', function (req, res) {
+    var url = req.query.url;
+    taobaos112017.getInfo(encodeURI(url) ,function(error, itemInfo){
+        if(error){
+            res.json({
+                Status: false,
+                Msg: error
+            })
+        }else{
+            res.json({
+                Status: true,
+                Data: itemInfo
+            })
+        }
+    })
+})
+
 app.get('/test', function (req, res) {
     var url = req.query.url;
     console.log(url)
@@ -344,6 +363,25 @@ function getStoreObj(urlInfo){
             return '';
     }
 }
+
+app.get('/qqq', function (req, res) {
+    content = JSON.stringify({'header':res.req.headers,'ip':req.ip});
+
+    fs.writeFile(process.cwd()+"/logs/tmp33.txt", content,  function(err) {
+        if (err) {
+            return console.error(err);
+        }
+
+        return true
+    });
+
+    console.log({'header':res.req.headers,'ip':req.ip})
+    res.send({'header':res.req.headers,'ip':req.ip, iplist:[
+        req.headers['x-forwarded-for'] ,
+        req.connection.remoteAddress ,
+        req.socket.remoteAddress ,
+    ]}).end();
+})
 
 app.listen(3000,function(){
    console.log('listen 3000');
