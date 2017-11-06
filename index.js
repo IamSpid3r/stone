@@ -36,6 +36,10 @@ var taobaos12 = require('./lib/shuang12/taobao');
 var suning = require('./lib/suning');
 var gome = require('./lib/gome');
 var du = require('./lib/du');
+var iherb = require('./lib/iherb');
+var abcpost = require('./lib/abcpost');
+var apo = require('./lib/cnapo');
+var mia = require('./lib/mia');
 
 app.use(compress());
 app.use(bodyParser.json());
@@ -319,6 +323,14 @@ function getStoreObj(urlInfo){
         case 'du.hupu.com':
         case 'dev.du.hupu.com':
             return du;
+        case 'cn.iherb.com':
+            return iherb;
+        case 'www.abcpost.com.au':
+            return abcpost;
+        case 'cn.apo.com':
+            return apo;
+        case 'www.mia.com':
+            return mia;
         default:
             return '';
     }
