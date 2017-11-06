@@ -1,4 +1,5 @@
 /node_modules/*
 /lib/amazonCn2.js
-.idea
-.idea/*
+/.idea/*
+/demo/*
+

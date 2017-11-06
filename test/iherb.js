@@ -1,18 +1,18 @@
 var assert = require('assert');
-var yougou = require('../lib/yougou');
+var kaola = require('../lib/iherb');
 
 
-describe('yougou', function() {
+describe('iherb', function() {
     describe('#getItemInfo', function () {
-        it('测试yougou商品',function(done){
-            this.timeout(60000)
-            yougou.getInfo('http://www.yougou.com/c-tata/sku-fg242dd6-100474808.shtml#ref=list&po=list',function(err,data){
-                if(err)
-                {
+        it('测试kaola商品',function(done){
+            this.timeout(30000)
+            kaola.getInfo('http://www.kaola.com/product/1378082.html',function(err,data){
+                if(err) {
                     throw new Error(err);
                 }
+                console.log("data="+JSON.stringify(data));
                 assert.equal('inStock',data.Status);
-                assert.equal('cn.yougou.fg242dd6',data.Unique);
+                assert.equal('cn.kaola.1378082',data.Unique);
                 assert.ok(data.Variations.length > 0,'data.Variations.length is 0');
                 assert.ok(data.Variations[0].Values.length > 0,'data.Variations[0].Values is 0');
                 assert.ok(data.Items.length > 0,'data.Items.length is 0')
@@ -23,14 +23,24 @@ describe('yougou', function() {
             })
         })
 
-        it('测试yougou下架商品',function(done){
-            this.timeout(100000)
-            yougou.getInfo('http://www.yougou.com/c-nike/sku-554954-100268270.shtml#ref=list&po=list',function(err,data){
-                if(err)
-                {
+        it('测试kaola下架商品',function(done){
+            this.timeout(30000)
+            kaola.getInfo('http://www.kaola.com/product/18283.html',function(err,data){
+                if(err) {
                     throw new Error(err);
                 }
                 assert.equal('outOfStock',data.Status);
+                done()
+            })
+        })
+
+        it('测试kaola不存在商品',function(done){
+            this.timeout(30000)
+            kaola.getInfo('http://www.kaola.com/product/44.html',function(err,data){
+                if(err) {
+                    throw new Error(err);
+                }
+                assert.equal('notFind',data.Status);
                 done()
             })
         })
