@@ -6,6 +6,7 @@ var Q = require('q');
 var loginTabao = require(process.cwd()+'/tools/loginTabao/index')
 var login = 0;
 var lastLoginTime = 0;
+var _ = require('lodash');
 
 var runList = function(params, cookiePath, callback) {
     var requestNum = 0;
@@ -140,8 +141,7 @@ var runList = function(params, cookiePath, callback) {
         })
     }
 
-    var cookie = fun.readLog(cookiePath);
-
+    var cookie = _.trim(fun.readLog(cookiePath));
     requestBody(cookie);
 }
 
