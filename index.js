@@ -37,6 +37,9 @@ var suning = require('./lib/suning');
 var gome = require('./lib/gome');
 var du = require('./lib/du');
 var iherb = require('./lib/iherb');
+var abcpost = require('./lib/abcpost');
+var apo = require('./lib/cnapo');
+var mia = require('./lib/mia');
 var chemistdirect = require('./lib/chemistdirect');
 
 app.use(compress());
@@ -77,7 +80,7 @@ app.use(function (req, res, next) {
 
 app.get('/info', function (req, res) {
     var goodsUrl = req.query.url;
-    var urlInfo =   goodsUrl ?  url.parse(goodsUrl, true, true) : {path:'',host:''};
+    var urlInfo = goodsUrl ?  url.parse(goodsUrl, true, true) : {path:'',host:''};
 
     var storeObj = getStoreObj(urlInfo);
     if(typeof storeObj == 'object'){
@@ -221,7 +224,6 @@ app.get('/s12', function (req, res) {
 app.get('/test', function (req, res) {
     var url = req.query.url;
     console.log(url)
-    console.log(1111)
     taobaoV2.getInfo(encodeURI(url) ,function(error, itemInfo){
         if(error){
             res.json({
@@ -331,6 +333,13 @@ function getStoreObj(urlInfo){
         case 'cn.discount-apotheke.de':
         case 'cn.amcal.com.au':
             return chemistdirect;
+        case 'www.abcpost.com.au':
+            return abcpost;
+        case 'cn.apo.com':
+            return apo;
+        //蜜芽
+        case 'www.mia.com':
+            return mia;
         default:
             return '';
     }
