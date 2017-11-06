@@ -31,6 +31,7 @@ var jd = require('./lib/jd');
 var underarmour = require('./lib/underarmour');
 var xtep = require('./lib/xtep');
 // 适合卡路里的考拉拉取方式
+// var kaola = require('./lib/kaola');
 var kaola = require('./lib/kaola');
 var beibei = require('./lib/kaluli/beibei');
 var meitun = require('./lib/kaluli/meitun');
