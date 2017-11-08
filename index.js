@@ -383,6 +383,8 @@ function getStoreObj(urlInfo){
         case 'cn.apo.com':
             return apo;
         //蜜芽
+
+        case 'www.miyabaobei.hk':
         case 'www.mia.com':
             return mia;
         default:
