@@ -11,7 +11,8 @@ var gome = require('./lib/comment/gomeComment');
 var jd = require('./lib/comment/jdComment');
 
 
-var kaola = require('./lib/comment/kaluli/kaolaComment');
+var kaola = require('./lib/comment/kaluli/kaolaComment');//考拉
+var mia = require('./lib/comment/kaluli/miaComment111');//蜜芽
 
 
 
@@ -100,6 +101,10 @@ function getStoreObj(host){
         case 'www.kaola.com':
         case 'www.kaola.com.hk':
             return kaola;
+        //蜜芽
+        case 'www.mia.com':
+        case 'www.miyabaobei.hk':
+            return mia;
         default:
             return '';
     }
