@@ -12,7 +12,7 @@ var jd = require('./lib/comment/jdComment');
 
 
 var kaola = require('./lib/comment/kaluli/kaolaComment');//考拉
-var mia = require('./lib/comment/kaluli/miaComment111');//蜜芽
+var mia = require('./lib/comment/kaluli/miaComment');//蜜芽
 
 
 
