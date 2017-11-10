@@ -29,7 +29,11 @@ var runList = function(params, cookiePath, callback) {
 
         h.then(function(l) {
             var apiUrl = 'https:' + l.data.url;
-            //console.log(apiUrl)
+            if (params.api == 'mtop.taobao.detail.getdetail') {
+                apiUrl = apiUrl.replace(/api\.m/g, 'h5api.\m');
+            }
+
+            console.log(apiUrl)
             var requestCookie = globalCookies;
 
             var developUrl = 'http://121.41.100.22:3333/proxyGet?add=1';
@@ -60,7 +64,7 @@ var runList = function(params, cookiePath, callback) {
                     callback(null, error);
                 }else{
                     let resStr = response.body.replace('mtopjsonp1(','')
-                    let res = resStr.substring(0,resStr.length-1)
+                    let res = resStr.substring(0,resStr.length-1);
                     let resJson = JSON.parse(res);
 
                     switch (params.api) {
