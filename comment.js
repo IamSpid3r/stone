@@ -11,6 +11,11 @@ var gome = require('./lib/comment/gomeComment');
 var jd = require('./lib/comment/jdComment');
 
 
+var kaola = require('./lib/comment/kaluli/kaolaComment');//考拉
+var mia = require('./lib/comment/kaluli/miaComment');//蜜芽
+
+
+
 app.get('/t',function(req,res){
     taobao.getInfo('https://detail.tmall.com/item.htm?spm=a230r.1.14.9.4LFEYQ&id=524753097959&ns=1&abbucket=15',function(error,itemInfo){
         if(error){
@@ -89,7 +94,17 @@ function getStoreObj(host){
         case 'item.gome.com.cn':
             return gome;
         case 'item.jd.com':
+        case 'item.jd.hk':
             return jd;
+
+        // 考拉
+        case 'www.kaola.com':
+        case 'www.kaola.com.hk':
+            return kaola;
+        //蜜芽
+        case 'www.mia.com':
+        case 'www.miyabaobei.hk':
+            return mia;
         default:
             return '';
     }

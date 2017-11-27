@@ -30,7 +30,18 @@ var footlocker = require('./lib/footlocker');
 var jd = require('./lib/jd');
 var underarmour = require('./lib/underarmour');
 var xtep = require('./lib/xtep');
+// 适合卡路里的考拉拉取方式
+// var kaola = require('./lib/kaola');
 var kaola = require('./lib/kaola');
+var beibei = require('./lib/kaluli/beibei');
+var meitun = require('./lib/kaluli/meitun');
+var xiji = require('./lib/kaluli/xiji');
+
+
+
+
+
+
 var taobaos11 = require('./lib/shuang11/taobaoV2');
 var taobaos12 = require('./lib/shuang12/taobao');
 var suning = require('./lib/suning');
@@ -40,6 +51,7 @@ var iherb = require('./lib/iherb');
 var abcpost = require('./lib/abcpost');
 var apo = require('./lib/cnapo');
 var mia = require('./lib/mia');
+var chemistdirect = require('./lib/chemistdirect');
 
 var taobaos112017 = require('./lib/shuang112017/taobao');
 
@@ -287,7 +299,7 @@ function getStoreObj(urlInfo){
         case 'detail.tmall.com':
         case 'detail.tmall.hk':
             return taobao;
-            //return taobaoV2;
+        //return taobaoV2;
         case 'store.nike.com':
         case 'www.nike.com':
             return nikeStore;
@@ -334,7 +346,22 @@ function getStoreObj(urlInfo){
         case 'www.xtep.com.cn':
             return xtep;
         case 'www.kaola.com':
+        case 'www.kaola.com.hk':
             return kaola;
+
+        // 贝贝网
+        case 'global.beibei.com':
+        case 'www.beibei.com':
+        case 'you.beibei.com':
+            return beibei;
+        //美囤网
+        case 'item.meitun.com':
+            return meitun;
+        //西集网
+        case 'www.xiji.com':
+            return xiji;
+
+
         case 'product.suning.com':
             return suning;
         case 'item.gome.com.cn':
@@ -344,11 +371,20 @@ function getStoreObj(urlInfo){
             return du;
         case 'cn.iherb.com':
             return iherb;
+        case 'cn.chemistdirect.com.au':
+        case 'cn.pharmacy4less.com.au':
+        case 'cn.pharmacyonline.com.au':
+        case 'cn.pharmacydirect.co.nz':
+        case 'cn.discount-apotheke.de':
+        case 'cn.amcal.com.au':
+            return chemistdirect;
         case 'www.abcpost.com.au':
             return abcpost;
         case 'cn.apo.com':
             return apo;
         //蜜芽
+
+        case 'www.miyabaobei.hk':
         case 'www.mia.com':
             return mia;
         default:
@@ -376,6 +412,6 @@ app.get('/qqq', function (req, res) {
 })
 
 app.listen(3000,function(){
-   console.log('listen 3000');
+    console.log('listen 3000');
 })
 
