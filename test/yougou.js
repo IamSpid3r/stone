@@ -6,13 +6,13 @@ describe('yougou', function() {
     describe('#getItemInfo', function () {
         it('测试yougou商品',function(done){
             this.timeout(60000)
-            yougou.getInfo('http://www.yougou.com/c-adidas/sku-keh53-100469144.shtml',function(err,data){
+            yougou.getInfo('http://www.yougou.com/c-tata/sku-fg242dd6-100474808.shtml#ref=list&po=list',function(err,data){
                 if(err)
                 {
                     throw new Error(err);
                 }
                 assert.equal('inStock',data.Status);
-                assert.equal('cn.yougou.keh53',data.Unique);
+                assert.equal('cn.yougou.fg242dd6',data.Unique);
                 assert.ok(data.Variations.length > 0,'data.Variations.length is 0');
                 assert.ok(data.Variations[0].Values.length > 0,'data.Variations[0].Values is 0');
                 assert.ok(data.Items.length > 0,'data.Items.length is 0')

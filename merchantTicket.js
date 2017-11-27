@@ -8,6 +8,7 @@ var request = require('request');
 var domain = require('domain');
 
 var taobao = require('./lib/merchant_ticket/taobao');
+var jd = require('./lib/merchant_ticket/jd');
 
 app.use(compress());
 app.use(bodyParser.json());
@@ -44,12 +45,11 @@ app.use(function (req, res, next) {
 
 
 app.get('/info', function (req, res) {
-    var goodsUrl = req.query.url;
-    var urlInfo = goodsUrl ?  url.parse(goodsUrl, true, true) : {path:'',host:''};
+    var urlStr = req.query.url;
+    var storeObj = getStoreObj(urlStr);
 
-    var storeObj = getStoreObj(urlInfo);
     if(typeof storeObj == 'object'){
-        storeObj.getInfo(encodeURI(goodsUrl) ,function(error, itemInfo){
+        storeObj.getInfo(urlStr ,function(error, itemInfo){
             if(error){
                 res.json({
                     Status: false,
@@ -77,8 +77,6 @@ app.get('/info', function (req, res) {
 
 // uncaughtException 避免程序崩溃
 process.on('uncaughtException', function (err) {
-    console.log('uncaughtException->',err);
-
     try {
         var killTimer = setTimeout(function () {
             process.exit(1);
@@ -92,15 +90,17 @@ process.on('uncaughtException', function (err) {
 });
 
 //获取商城对象
-function getStoreObj(urlInfo){
-    switch(urlInfo.host){
-        case 'item.taobao.com':
-        case 'detail.tmall.com':
-        case 'detail.tmall.hk':
-            return taobao;
-        default:
-            return '';
+function getStoreObj(urlStr){
+    var taobaoReg = /(taobao|tmall)\.com/ig;
+    var jdReg = /jd\.com/ig;
+
+    if (taobaoReg.exec(urlStr)) {
+        return taobao;
     }
+    if (jdReg.exec(urlStr)) {
+        return jd;
+    }
+    return null;
 }
 
 app.listen(3012,function(){
