@@ -5,65 +5,63 @@ var request = require('request');
 
 //需要支持 淘宝|天猫 亚马逊  识货  京东 国美
 var taobao = require('./lib/comment/taobaoComment');
+var tbNew = require('./lib/comment/tbNewComment');  //淘宝新抓取 
 var amazonCn = require('./lib/comment/amazonCnComment');
 var shihuoHaitao = require('./lib/comment/shihuoHaitaoComment');
 var gome = require('./lib/comment/gomeComment');
 var jd = require('./lib/comment/jdComment');
 
-
 var kaola = require('./lib/comment/kaluli/kaolaComment');//考拉
 var mia = require('./lib/comment/kaluli/miaComment');//蜜芽
 
 
+//错误 json 
+var err_info = {
+    Status: false,
+    Msg: {
+        Errors: [{
+            Code: '请求地址不在抓取访问',
+            Message: '请求地址不在抓取访问'
+        }]
+    }
+};
 
-app.get('/t',function(req,res){
-    taobao.getInfo('https://detail.tmall.com/item.htm?spm=a230r.1.14.9.4LFEYQ&id=524753097959&ns=1&abbucket=15',function(error,itemInfo){
-        if(error){
-            res.send(error);
-        }else{
-            res.send(itemInfo);
-        }
-    })
 
-    /*amazonCn.getInfo('http://www.amazon.cn/adidas-%E9%98%BF%E8%BF%AA%E8%BE%BE%E6%96%AF-TENNIS-CULTURE-%E4%B8%AD%E6%80%A7-%E7%BD%91%E7%90%83%E9%9E%8BGVP-CANVAS-STR/dp/B00KV6CITE/ref=cm_cr_pr_product_top?ie=UTF8',function(error,itemInfo){
-        if(error){
-            res.send(error);
-        }else{
-            res.send(itemInfo);
-        }
-    })*/
-})
 
-app.get('/info', function (req, res) {
+app.get('/info',async function (req, res) {
     var goodsUrl = req.query.url;
     var goodsUrlHost = '';
+    
     if(goodsUrl){
         var urlInfo = url.parse(goodsUrl, true, true);
         goodsUrlHost = urlInfo.host;
     }
-
-    var storeObj = getStoreObj(goodsUrlHost);
-    if(typeof storeObj == 'object'){
-        storeObj.getInfo(goodsUrl ,function(error, itemInfo){
-            if(error){
-                res.json({
-                    Status: false,
-                    Msg: error
-                })
-            }else{
-                res.json({ Status: true, Data: itemInfo});
-            }
-        })
-    }else{
-        res.json({
-            Status: false,
-            Msg: {
-                Errors: [{
-                    Code: '请求地址不在抓取访问',
-                    Message: '请求地址不在抓取访问'
-                }]
-            }
-        })
+    //抓取数据
+    var storeObj = [],
+    itemInfo = [];
+    //如果是淘宝单独处理
+    if(goodsUrlHost == 'item.taobao.com' || goodsUrlHost == 'detail.tmall.com') {
+        console.log('通过puppeteer抓取'+goodsUrlHost);
+        try { 
+            itemInfo = await tbNew.getInfo(goodsUrl);
+            res.json({ Status: true, Data: itemInfo});
+        }catch(e) {
+            res.json({ Status: false,Msg: e});
+        }
+    } else {
+        console.log("普通抓取"+goodsUrlHost);
+        storeObj = getStoreObj(goodsUrlHost);
+        if(typeof storeObj == 'object'){
+            storeObj.getInfo(goodsUrl ,function(error, itemInfo){
+                if(error){
+                    res.json({ Status: false,Msg: error});
+                }else{
+                    res.json({ Status: true, Data: itemInfo});
+                }
+            })
+        }else{
+            res.json(err_info);
+        }
     }
 })
 
@@ -96,7 +94,6 @@ function getStoreObj(host){
         case 'item.jd.com':
         case 'item.jd.hk':
             return jd;
-
         // 考拉
         case 'www.kaola.com':
         case 'www.kaola.com.hk':
@@ -109,5 +106,5 @@ function getStoreObj(host){
             return '';
     }
 }
-
 app.listen(3001);
+console.log("listening 3001");
