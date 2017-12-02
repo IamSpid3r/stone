@@ -36,9 +36,11 @@ var kaola = require('./lib/kaola');
 var beibei = require('./lib/kaluli/beibei');
 var meitun = require('./lib/kaluli/meitun');
 var xiji = require('./lib/kaluli/xiji');
-
-
-
+var delemei = require('./lib/delemei');
+var ba = require('./lib/ba');
+var kiwi = require('./lib/kiwi');
+var uka = require('./lib/uka');
+var discovery = require('./lib/discovery');
 
 
 
@@ -383,10 +385,19 @@ function getStoreObj(urlInfo){
         case 'cn.apo.com':
             return apo;
         //蜜芽
-
         case 'www.miyabaobei.hk':
         case 'www.mia.com':
             return mia;
+        case 'www.delemei.de':
+            return delemei;
+        case 'www.ba.de':
+            return ba;
+        case 'www.kiwistarcare.com':
+            return kiwi;
+        case 'cn.unserekleineapotheke.de':
+            return uka;
+        case 'cn.kiwidiscovery.co.nz':
+            return discovery;
         default:
             return '';
     }
