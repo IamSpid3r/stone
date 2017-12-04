@@ -1,0 +1,24 @@
+{
+  "db": {
+    "stone": {
+      "host": "rm-bp14g5uo635nza203.mysql.rds.aliyuncs.com",
+      "user": "tradekunlun",
+      "password": "GJe28S4Ge8lQ2NdXh2",
+      "database": "trade_stone",
+      "port": 3306
+    },
+    "redis": {
+      "host": "70210d8550f941a7.redis.rds.aliyuncs.com",
+      "user": "70210d8550f941a7",
+      "password": "ryzf4KbpwhDESK22KN",
+      "database": 6,
+      "port": 6379
+    },
+    "tablestore": {
+      "accessKeyId": "SMrZnbH2y99YHUy0",
+      "secretAccessKey": "cz0VKm4RJetiNpgMtd5ji5LW4A5W0O",
+      "endpoint": "cz0VKm4RJetiNpgMtd5ji5LW4A5W0O",
+      "instancename": "gwyy-test"
+    }
+  }
+}
