@@ -14,7 +14,8 @@ var client = new TableStore.Client({
 var Long = TableStore.Long;
 var currentTimeStamp = Date.now();
 
-//console.log(TableStore.ComparatorType)
+
+console.log(client)
 
 //  params = {
 //     tableName: "han",
@@ -57,41 +58,41 @@ var currentTimeStamp = Date.now();
 // });
 
 
-
+//
 // params = {
 //     tableName: "han",
 //     primaryKey: [{ 'task_Id': Long.fromNumber(1) }, { 'update_time': Long.fromNumber(1) }],
 //     maxVersions: 2
 // };
 
-// var params = {
-//     tableName: "han",
-//     direction: TableStore.Direction.FORWARD,
-//     inclusiveStartPrimaryKey: [{ 'task_Id': Long.fromNumber(1) }, { "update_time": TableStore.INF_MIN }],
-//     exclusiveEndPrimaryKey: [{ "task_Id":Long.fromNumber(2) }, { "update_time": TableStore.INF_MAX }],
-//     limit: 1,
-//     maxVersions:1
-// };
-//
-// console.log(TableStore)
-//
-// var condition = new TableStore.CompositeCondition(TableStore.LogicalOperator.AND);
-// condition.addSubCondition(new TableStore.SingleColumnCondition('store', '京东', TableStore.ComparatorType.EQUAL));
-// condition.addSubCondition(new TableStore.SingleColumnCondition('store', '京东', TableStore.ComparatorType.EQUAL));
-// params.columnFilter = condition;
-//
-// client.getRange(params, function (err, data) {
-//     if (err) {
-//         console.log('error:', err);
-//         return;
-//     }
-//     //如果data.next_start_primary_key不为空，说明需要继续读取
-//     if (data.next_start_primary_key) {
-//     }
-//     console.log(data);
-//     data.rows.forEach(function (val) {
-//         console.log('success:', val.attributes[0]);
-//         console.log('success:', val.primaryKey[0].value.toString());
-//         console.log('success:', val.attributes[0].timestamp.toString());
-//     })
-//})
+var params = {
+    tableName: "han",
+    direction: TableStore.Direction.FORWARD,
+    inclusiveStartPrimaryKey: [{ 'task_Id': Long.fromNumber(1) }, { "update_time": TableStore.INF_MIN }],
+    exclusiveEndPrimaryKey: [{ "task_Id":Long.fromNumber(2) }, { "update_time": TableStore.INF_MAX }],
+    limit: 1,
+    maxVersions:1
+};
+
+console.log(TableStore)
+
+var condition = new TableStore.CompositeCondition(TableStore.LogicalOperator.AND);
+condition.addSubCondition(new TableStore.SingleColumnCondition('store', '京东', TableStore.ComparatorType.EQUAL));
+condition.addSubCondition(new TableStore.SingleColumnCondition('store', '京东', TableStore.ComparatorType.EQUAL));
+params.columnFilter = condition;
+
+client.getRange(params, function (err, data) {
+    if (err) {
+        console.log('error:', err);
+        return;
+    }
+    //如果data.next_start_primary_key不为空，说明需要继续读取
+    if (data.next_start_primary_key) {
+    }
+    console.log(data);
+    data.rows.forEach(function (val) {
+        console.log('success:', val.attributes[0]);
+        console.log('success:', val.primaryKey[0].value.toString());
+        console.log('success:', val.attributes[0].timestamp.toString());
+    })
+})
