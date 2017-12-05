@@ -36,12 +36,12 @@ var kaola = require('./lib/kaola');
 var beibei = require('./lib/kaluli/beibei');
 var meitun = require('./lib/kaluli/meitun');
 var xiji = require('./lib/kaluli/xiji');
-var delemei = require('./lib/delemei');
-var ba = require('./lib/ba');
+var delemei = require('./lib/kaluli/delemei');
+var ba = require('./lib/kaluli/ba');
 var kiwi = require('./lib/kiwi');
 var uka = require('./lib/uka');
-var discovery = require('./lib/discovery');
-
+var discovery = require('./lib/kaluli/discovery');
+var dod = require('./lib/kaluli/dod');
 
 
 var taobaos11 = require('./lib/shuang11/taobaoV2');
@@ -50,8 +50,8 @@ var suning = require('./lib/suning');
 var gome = require('./lib/gome');
 var du = require('./lib/du');
 var iherb = require('./lib/iherb');
-var abcpost = require('./lib/abcpost');
-var apo = require('./lib/cnapo');
+var abcpost = require('./lib/kaluli/abcpost');
+var apo = require('./lib/kaluli/cnapo');
 var mia = require('./lib/mia');
 var chemistdirect = require('./lib/chemistdirect');
 
@@ -398,6 +398,8 @@ function getStoreObj(urlInfo){
             return uka;
         case 'cn.kiwidiscovery.co.nz':
             return discovery;
+        case 'cn.dod.nl':
+            return dod;
         default:
             return '';
     }
