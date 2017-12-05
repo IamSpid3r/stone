@@ -1,6 +1,7 @@
 /node_modules/*
 /lib/amazonCn2.js
 /demo/*
-/.idea/*
+.idea/*
 .DS_Store
+
 
