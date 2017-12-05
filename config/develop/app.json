@@ -1,0 +1,24 @@
+{
+    "db":{
+       "stone":{
+            "host"     : "shihuo-db-01.offline.hupu.com",
+            "user"     : "shihuomain",
+            "password" : "E67uD100",
+            "database" : "trade_stone",
+            "port"     :  3306
+       },
+       "redis":{
+           "host"     : "10.64.56.130",
+           "user"     : "",
+           "password" : "",
+           "database" : "6",
+           "port"     :  6380
+       },
+      "tablestore": {
+          "accessKeyId": "SMrZnbH2y99YHUy0",
+          "secretAccessKey": "cz0VKm4RJetiNpgMtd5ji5LW4A5W0O",
+          "endpoint": "cz0VKm4RJetiNpgMtd5ji5LW4A5W0O",
+          "instancename": "gwyy-test"
+      }
+    }
+}
