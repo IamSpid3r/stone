@@ -97,7 +97,7 @@ app.get('/info', function (req, res) {
 
     var storeObj = getStoreObj(urlInfo);
     if(typeof storeObj == 'object'){
-        storeObj.getInfo(encodeURI(goodsUrl) ,function(error, itemInfo){
+        storeObj.getInfo(goodsUrl ,function(error, itemInfo){
             if(error){
                 res.json({
                     Status: false,
