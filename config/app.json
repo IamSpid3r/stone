@@ -17,8 +17,9 @@
     "tablestore": {
       "accessKeyId": "SMrZnbH2y99YHUy0",
       "secretAccessKey": "cz0VKm4RJetiNpgMtd5ji5LW4A5W0O",
-      "endpoint": "cz0VKm4RJetiNpgMtd5ji5LW4A5W0O",
-      "instancename": "gwyy-test"
+      "endpoint": "http://gwyy-test.cn-hangzhou.ots.aliyuncs.com",
+      "instancename": "gwyy-test",
+      "tableName": "stone2"
     }
   }
 }

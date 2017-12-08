@@ -37,11 +37,6 @@ var beibei = require('./lib/kaluli/beibei');
 var meitun = require('./lib/kaluli/meitun');
 var xiji = require('./lib/kaluli/xiji');
 
-
-
-
-
-
 var taobaos11 = require('./lib/shuang11/taobaoV2');
 var taobaos12 = require('./lib/shuang12/taobao');
 var suning = require('./lib/suning');
@@ -267,6 +262,18 @@ app.get('/test', function (req, res) {
             })
         }
     })
+})
+
+//接收推送
+var pushUrlhandler = require('./apps/evolution/pushUrl').handler;
+app.post('/push', function (req, res) {
+    pushUrlhandler(req, res);
+})
+
+//按taskid获取信息
+var getTaskInfohandler = require('./apps/evolution/getTaskInfo').handler;
+app.post('/getTaskInfo', function (req, res) {
+    getTaskInfohandler(req, res);
 })
 
 
