@@ -285,7 +285,7 @@ process.on('uncaughtException', function (err) {
         console.log('error when exit', e.stack);
     }
 });
-process.setMaxListeners(0);
+process.setMaxListeners(80);
 
 //获取商城对象
 function getStoreObj(urlInfo){
