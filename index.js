@@ -285,28 +285,33 @@ process.on('uncaughtException', function (err) {
         console.log('error when exit', e.stack);
     }
 });
-process.setMaxListeners(80);
 
 //获取商城对象
 function getStoreObj(urlInfo){
     switch(urlInfo.host){
         case 'www.amazon.cn':
             return amazonCn;
+            break;
         case 'www.amazon.co.jp':
             return amazonJp;
+            break;
         case 'www.amazon.com':
             return amazonUsa;
+            break;
         case 'item.taobao.com':
         case 'detail.tmall.com':
         case 'detail.tmall.hk':
             return taobao;
+            break;
         //return taobaoV2;
         case 'store.nike.com':
         case 'www.nike.com':
             return nikeStore;
+            break;
         case 'www.yougou.com':
         case 'seoul.yougou.com':
             return yougou;
+            break;
         case 'www.shihuo.cn':
             var xianhuoExp = /\/xianhuo\/buy\/(\d+)(-(\d+)){0,1}\.html/ig;
             var haitaoExp = /\/haitao\/buy\/(\d+)(-(\d+)){0,1}\.html/ig;
@@ -319,6 +324,7 @@ function getStoreObj(urlInfo){
             }else{
                 return '';
             }
+            break;
         case 'www.haitaodashi.cn':
             var haitaoExp = /\/haitao\/buy\/(\d+)(-(\d+)){0,1}\.html/ig;
 
@@ -327,49 +333,64 @@ function getStoreObj(urlInfo){
             }else{
                 return '';
             }
+            break;
         case 'www.6pm.com':
             return _6pm;
+            break;
         case 'store.nba.com':
             return nbaStore;
+            break;
         case 'item.yohobuy.com':
             return yohobuy;
+            break;
         case 'item.yintai.com':
             return yintai;
+            break;
         case 'www.kaluli.com':
             return kaluli;
+            break;
         case 'www.footlocker.com':
             return footlocker;
+            break;
         case 'item.jd.com':
         case 'item.jd.hk':
             return jd;
+            break;
         case 'www.underarmour.cn':
             return underarmour;
+            break;
         case 'www.xtep.com.cn':
             return xtep;
         case 'www.kaola.com':
         case 'www.kaola.com.hk':
             return kaola;
+            break;
 
         // 贝贝网
         case 'global.beibei.com':
         case 'www.beibei.com':
         case 'you.beibei.com':
             return beibei;
+            break;
         //美囤网
         case 'item.meitun.com':
             return meitun;
+            break;
         //西集网
         case 'www.xiji.com':
             return xiji;
-
+            break;
 
         case 'product.suning.com':
             return suning;
+            break;
         case 'item.gome.com.cn':
             return gome;
+            break;
         case 'du.hupu.com':
         case 'dev.du.hupu.com':
             return du;
+            break;
         case 'cn.iherb.com':
             return iherb;
         case 'cn.chemistdirect.com.au':
@@ -379,17 +400,22 @@ function getStoreObj(urlInfo){
         case 'cn.discount-apotheke.de':
         case 'cn.amcal.com.au':
             return chemistdirect;
+            break;
         case 'www.abcpost.com.au':
             return abcpost;
+            break;
         case 'cn.apo.com':
             return apo;
+            break;
         //蜜芽
 
         case 'www.miyabaobei.hk':
         case 'www.mia.com':
             return mia;
+            break;
         default:
             return '';
+            break;
     }
 }
 
