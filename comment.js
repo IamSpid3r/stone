@@ -76,6 +76,7 @@ function getStoreObj(host){
             return amazonUsa;
         case 'item.taobao.com':
         case 'detail.tmall.com':
+        case 'detail.tmall.hk':
             return taobao;
         case 'store.nike.com':
         case 'www.nike.com':
