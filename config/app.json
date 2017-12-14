@@ -20,6 +20,14 @@
       "endpoint": "http://gwyy-test.cn-hangzhou.ots.aliyuncs.com",
       "instancename": "gwyy-test",
       "tableName": "stone2"
+    },
+    "elasticsearch" : {
+      "host" : "121.196.203.47",
+      "user" : "elastic",
+      "pass" : "7791782hxlqqQ"
     }
+  },
+  "kunlun" : {
+      "receiveUrl" : "http://kunlun.shihuo.cn/receive"
   }
 }

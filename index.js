@@ -52,6 +52,7 @@ var taobaos112017 = require('./lib/shuang112017/taobao');
 
 app.use(compress());
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('mochawesome-reports'));
 
 
@@ -265,9 +266,9 @@ app.get('/test', function (req, res) {
 })
 
 //接收推送
-var pushUrlhandler = require('./apps/evolution/pushUrl').handler;
+var writeTaskhandler = require('./apps/evolution/writeTask').handler;
 app.post('/push', function (req, res) {
-    pushUrlhandler(req, res);
+    writeTaskhandler(req, res);
 })
 
 //按taskid获取信息
