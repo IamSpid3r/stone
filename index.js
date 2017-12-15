@@ -49,6 +49,10 @@ var mia = require('./lib/mia');
 var chemistdirect = require('./lib/chemistdirect');
 
 var taobaos112017 = require('./lib/shuang112017/taobao');
+var getcrawltask = require('./apps/evolution/getcrawltask');
+var savecrawlinfo = require('./apps/evolution/saveCrawlInfo');
+
+
 
 app.use(compress());
 app.use(bodyParser.json());
@@ -277,6 +281,14 @@ app.post('/getTaskInfo', function (req, res) {
     getTaskInfohandler(req, res);
 })
 
+//获取抓取任务
+app.get('/getCrawlTask', function (req, res) {
+    getcrawltask.getMainList(req, res);
+})
+//保存抓取任务
+app.post('/saveCrawlInfo', function (req, res) {
+    savecrawlinfo.saveData(req, res);
+})
 
 // uncaughtException 避免程序崩溃
 process.on('uncaughtException', function (err) {

@@ -43,7 +43,37 @@ function StoneTasks() {
     });
 }
 
+//抓取主表CrawlMain
+const CrawlMain = sequelize.define('stone_crawlmains', {
+      id: {  
+        type: Sequelize.INTEGER(11),  
+        allowNull: false,  
+        autoIncrement: true,  
+        primaryKey: true  
+      }, 
+      task_id: {
+        type: Sequelize.STRING(32)
+      },
+      url: {
+        type: Sequelize.STRING(512)
+      },
+      store: {
+        type: Sequelize.STRING(64)
+      },
+      sku_info: {
+        type: Sequelize.TEXT
+      },
+      status: {
+        type: Sequelize.INTEGER(1)
+      },
+      update_err_num: {
+        type: Sequelize.INTEGER(11)
+      },
+});
+
+
 exports.db = {
     sequelize: sequelize,
     StoneTasks: StoneTasks,
+    CrawlMain: CrawlMain,
 };
