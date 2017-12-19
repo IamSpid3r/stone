@@ -100,12 +100,9 @@ var dealerrorcallback = function(taskId,error){
     var response = {Status:false,Msg:{Errors:[{Code:'Error',Message:error}]}}
             //callback
             controller.callbackData(crawltaskConfig.postUrl,taskId,response,'error').then(function (res) {
-                //start
-                deal();
+                console.log(res)
             },function (err) {
                 console.log(err.message)
-                //start
-                deal();
             })
 }
 
