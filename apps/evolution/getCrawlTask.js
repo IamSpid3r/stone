@@ -7,8 +7,6 @@ const tableStore = require(process.cwd()+"/apps/lib/tablestore.js").tableStore;
 const Q = require("q");
 const _ = require('lodash');
 var url  = require('url');
-var jd = require('../../lib/jd');
-var url  = require('url');
 
 var RedLock = require('redlock-node');
 var client = require('redis').createClient(redisConfig.port,redisConfig.host);

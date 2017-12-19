@@ -29,5 +29,9 @@
   },
   "kunlun" : {
       "receiveUrl" : "http://kunlun.shihuo.cn/receive"
+  },
+  "crawltask":{
+    "getUrl" : "http://stone.shihuo.cn/getCrawlTask",
+    "postUrl" : "http://stone.shihuo.cn/saveCrawlInfo"
   }
 }

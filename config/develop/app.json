@@ -29,5 +29,9 @@
     },
   "kunlun" : {
     "receiveUrl" : "http://192.168.11.185:3500/receive"
+  },
+  "crawltask":{
+    "getUrl" : "http://127.0.0.1:3000/getCrawlTask",
+    "postUrl" : "http://127.0.0.1:3000/saveCrawlInfo"
   }
 }

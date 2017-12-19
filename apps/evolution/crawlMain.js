@@ -5,31 +5,54 @@ var fun  = require('../lib/fun');
 const Q = require("q");
 
 exports.saveTask = function(param, callback) {
-    if(param.task_id == undefined || param.url == undefined){
-        callback({
-            "Errors":{
-                'Code': 'Fatal',
-                "Message": 'param Error'
+    try{
+        param.forEach(function (row,index) {
+            if(row.task_id == undefined || row.url == undefined){
+                throw new Error('task_id和url不可为空');
+                return '';
+            }else{
+                param[index].store = fun.getStore(row.url);
             }
-        });
-        return '';
+        })
+
+        controller.saveBulkData(param).then(function (data) {
+            var response = [];
+            if (data.status){
+                data.data.forEach(function (row) {
+                    if (row.id){
+                        response.push(
+                            {task_id:row.task_id,status:true,msg:'success'}
+                        );
+                    } else {
+                        response.push(
+                            {task_id:row.task_id,status:false,msg:'该任务已经存在'}
+                        );
+                    }
+                    
+                })
+            }
+            var msg = {
+                'Code': 'Success',
+                "Message": '',
+                'data':response
+            }
+            callback(msg);
+        },function (err) {
+            throw new Error(err.message);
+            return '';
+        })
+    }catch(err){
+        var msg = {
+                'Code': 'Error',
+                "Message": err.message
+            }
+        callback(msg)
     }
-    // var urlInfo = param.url ?  url.parse(param.url, true, true) : {path:'',host:''};
-    // var status = 0;
-    // if(urlInfo.host == 'item.jd.com'){//京东的需要特殊处理
-    //     status = 0;
-    // } 
-    controller.saveData(param).then(function (data) {
-        callback(null)
-    },function (err) {
-        callback(err.message)
-    })
-    
+    return;
 }
 
 var controller = {
     saveData:function(param){
-        console.log(param)
         var defer = Q.defer();
         SequelizeDb.CrawlMain
             .findOne({where : {task_id:param.task_id }})
@@ -47,10 +70,26 @@ var controller = {
                             return defer.reject(new Error('保存数据库错误'));
                         }
                         return defer.resolve({
-                            status : true
+                            status : true,
+                            task_id: param.task_id
                         });
                     });
                 }
+            }
+        ).catch(err => {
+            return defer.reject(err);
+        });
+        return defer.promise;
+    },
+    saveBulkData:function(param){
+        var defer = Q.defer();
+        SequelizeDb.CrawlMain
+            .bulkCreate(param, { ignoreDuplicates : true })
+            .then(crawlmain => {
+                return defer.resolve({
+                    status : true,
+                    data: crawlmain
+                });
             }
         ).catch(err => {
             return defer.reject(err);

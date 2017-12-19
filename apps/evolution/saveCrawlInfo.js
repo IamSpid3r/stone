@@ -18,13 +18,14 @@ var handler = function (request, response){
         return;
     }
     var taskId = body.task_id;
+    var status = body.status;
     var  dataStr= body.data;
     if (!dataStr){
         response.json({code: 400, msg: '参数有误'});
         return;
     }
     
-	controller.updateData(taskId,dataStr).then(function (data) {
+	controller.updateData(taskId,dataStr,status).then(function (data) {
     	if(data){
             console.log(receiveQueue)
             //通知给晓林
@@ -41,15 +42,15 @@ var handler = function (request, response){
 }
 
 var controller = {
-    updateData:function(taskId, data){
+    updateData:function(taskId, data, status){
         var defer = Q.defer();
         SequelizeDb.CrawlMain
-            .findOne({where:{task_id:taskId }})
+            .findOne({where:{task_id:taskId,status:{[Op.in]:[0,1,3]} }})
             .then(crawlmain => {
                 if (crawlmain){
                     crawlmain.update({
                         sku_info:data,
-                        status:2//更新成功
+                        status: status == 'success' ? 2 : 3//更新成功
                       }).then(row=>{
                         if (!row) {
                             return defer.reject(new Error('保存数据库错误'));
@@ -60,7 +61,7 @@ var controller = {
                         });
                     });
                 } else {
-                    return defer.reject(new Error('不存在此任务'));
+                    return defer.reject(new Error('不存在此任务或者此任务已完成更新'));
                 }
             }
         ).catch(err => {
