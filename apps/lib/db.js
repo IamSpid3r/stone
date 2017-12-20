@@ -69,6 +69,12 @@ const CrawlMain = sequelize.define('stone_crawlmains', {
       update_err_num: {
         type: Sequelize.INTEGER(11)
       },
+      callback_status: {
+        type: Sequelize.INTEGER(1)
+      },
+      callback_err_num: {
+        type: Sequelize.INTEGER(11)
+      },
 });
 
 

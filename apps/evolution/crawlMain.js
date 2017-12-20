@@ -1,8 +1,10 @@
 var SequelizeDb = require('../lib/db').db;
+const Op = SequelizeDb.sequelize.Op;
 var url  = require('url');
 var fun  = require('../lib/fun');
 
 const Q = require("q");
+var limit = 500;//最大任务
 
 exports.saveTask = function(param, callback) {
     try{
@@ -15,25 +17,38 @@ exports.saveTask = function(param, callback) {
             }
         })
 
-        controller.saveBulkData(param).then(function (data) {
-            var response = [];
-            if (data.status){
-                data.data.forEach(function (row) {
-                    if (row.id){
-                        response.push(
-                            {task_id:row.task_id,status:true,msg:'success'}
-                        );
-                    } else {
-                        response.push(
-                            {task_id:row.task_id,status:false,msg:'该任务已经存在'}
-                        );
-                    }
-                    
-                })
+        //判断当前抓取任务的数量
+        controller.getDataCount().then(function (count) {
+            if (count.status){
+                if (count.data >= limit){
+                    callback('抓取任务已达最大'+limit,null)
+                    return '';
+                } else {
+                    controller.saveBulkData(param).then(function (data) {
+                        var response = [];
+                        if (data.status){
+                            data.data.forEach(function (row) {
+                                if (row.id){
+                                    response.push(
+                                        {task_id:row.task_id,status:true,msg:'success'}
+                                    );
+                                } else {
+                                    response.push(
+                                        {task_id:row.task_id,status:false,msg:'该任务已经存在'}
+                                    );
+                                }
+                                
+                            })
+                        }
+                        callback(null, response);
+                    },function (err) {
+                        callback(err.message,null)
+                        return '';
+                    })
+                }   
             }
-            callback(null, response);
         },function (err) {
-            throw new Error(err.message);
+            callback(err.message,null)
             return '';
         })
     }catch(err){
@@ -76,6 +91,21 @@ var controller = {
         var defer = Q.defer();
         SequelizeDb.CrawlMain
             .bulkCreate(param, { ignoreDuplicates : true })
+            .then(crawlmain => {
+                return defer.resolve({
+                    status : true,
+                    data: crawlmain
+                });
+            }
+        ).catch(err => {
+            return defer.reject(err);
+        });
+        return defer.promise;
+    },
+    getDataCount:function(){
+        var defer = Q.defer();
+        SequelizeDb.CrawlMain
+            .count({where:{status:{[Op.in]:[0,1]}}})
             .then(crawlmain => {
                 return defer.resolve({
                     status : true,

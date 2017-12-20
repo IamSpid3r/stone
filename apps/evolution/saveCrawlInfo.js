@@ -1,4 +1,3 @@
-var receiveQueue = require('./receiveQueue.js');
 var SequelizeDb = require('../lib/db').db;
 const Op = SequelizeDb.sequelize.Op;
 const Q = require("q");
@@ -29,9 +28,9 @@ var handler = function (request, response){
     	if(data){
             console.log(receiveQueue)
             //通知给晓林
-            receiveQueue.handler(data.data.task_id, data.data.url,  data.data.sku_info, function(error, info){
-                console.log(error)
-            });
+            // receiveQueue.handler(data.data.task_id, data.data.url,  data.data.sku_info, function(error, info){
+            //     console.log(error)
+            // });
     		response.json({code: 200, msg: 'success',data:''});
     	} 
     },function (err) {
