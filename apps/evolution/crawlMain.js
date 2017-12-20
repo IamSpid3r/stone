@@ -21,7 +21,12 @@ exports.saveTask = function(param, callback) {
         controller.getDataCount().then(function (count) {
             if (count.status){
                 if (count.data >= limit){
-                    callback('抓取任务已达最大'+limit,null)
+                    var msg = {
+                            'Code':'limit',
+                            'msg':'抓取任务已达最大'+limit,
+                            'data':null
+                        }
+                    callback(null,msg)
                     return '';
                 } else {
                     controller.saveBulkData(param).then(function (data) {
@@ -40,7 +45,12 @@ exports.saveTask = function(param, callback) {
                                 
                             })
                         }
-                        callback(null, response);
+                        var msg = {
+                            'Code':'ok',
+                            'msg':'',
+                            'data':response
+                        }
+                        callback(null, msg);
                     },function (err) {
                         callback(err.message,null)
                         return '';

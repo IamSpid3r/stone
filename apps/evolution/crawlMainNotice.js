@@ -13,7 +13,7 @@ var deal = function(){
                 data.data.forEach(function (row) {
                     if (row.id){
                         //通知给晓林
-                        receiveQueue.handler(row.task_id, row.url,  row.sku_info, function(error, info){
+                        receiveQueue.handler(row.task_id, row.url,  JSON.parse(row.sku_info), function(error, info){
                             if(error){
                                 //失败
                                 controller.updateDataError(row.id,parseInt(row.callback_err_num)+1).then(function (data) {})

@@ -26,11 +26,6 @@ var handler = function (request, response){
     
 	controller.updateData(taskId,dataStr,status).then(function (data) {
     	if(data){
-            console.log(receiveQueue)
-            //通知给晓林
-            // receiveQueue.handler(data.data.task_id, data.data.url,  data.data.sku_info, function(error, info){
-            //     console.log(error)
-            // });
     		response.json({code: 200, msg: 'success',data:''});
     	} 
     },function (err) {

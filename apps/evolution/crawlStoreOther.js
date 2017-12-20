@@ -138,9 +138,11 @@ var deal = function(){
 				                    console.log('success')
 				                    //callback
 				                    controller.callbackData(crawltaskConfig.postUrl,res.data.task_id,dataJson,'success').then(function (res) {
+				                    	console.log(res)
 				                    	//start
 										deal();
 				                    },function (err) {
+				                    	console.log(err)
 				                    	//dealerrorcallback(res.data.task_id, err.message);
 									})
 				                }
