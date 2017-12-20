@@ -118,7 +118,7 @@ var dealerrorcallback = function(taskId,error){
 var deal = function(){
 	console.log('start')
 	
-		controller.getData(crawltaskConfig.getUrl+'?store=other').then(function (res) {
+		controller.getData(crawltaskConfig.getUrl+'?store=guonei').then(function (res) {
 		    if (res.code == 200){
 		    
 		    	console.log(res.data.url)

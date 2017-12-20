@@ -20,7 +20,37 @@ var lock;
 //特殊处理的商城
 var storeArr = [
 	{'name':'京东'},
-	{'name':'日本亚马逊'},
+];
+var guowaiArr = [
+	{'name':'美亚'},
+	{'name':'日亚'},
+	{'name':'6pm'},
+	{'name':'nbaStore'},
+	{'name':'footlocker官网'},
+	{'name':'UA官网'},
+];
+var guoneiArr = [
+	{'name':'淘宝'},
+	{'name':'天猫'},
+	{'name':'中亚'},
+	{'name':'优购'},
+	{'name':'NIKE官网'},
+	{'name':'识货海淘'},
+	{'name':'识货团购'},
+	{'name':'有货'},
+	{'name':'银泰'},
+	{'name':'识货自营'},
+	{'name':'卡路里商城'},
+	{'name':'特步官网'},
+	{'name':'考拉海购'},
+	{'name':'国美在线'},
+	{'name':'苏宁易购'},
+	{'name':'毒'},
+	{'name':'西集'},
+	{'name':'美囤妈妈'},
+	{'name':'贝贝'},
+	{'name':'蜜芽'},
+	{'name':'其他'},
 ];
 
 
@@ -68,7 +98,7 @@ var handler = function (request, response){
 		redlock.lock('stone_get_crawl_task_'+ store, 3).done(//锁3秒
 		  function(lock){
 		  	//拿到锁以后获取一条数据
-	    	controller.getDataOther().then(function (data) {
+	    	controller.getDataOther(store).then(function (data) {
 		    	if(data){
 		    		//获取完把状态更新成1（处理中）
 		    		controller.updateData(data.data.id).then(function (datas) {
@@ -121,17 +151,26 @@ var controller = {
         });
         return defer.promise;
     },
-    getDataOther:function(){
-    	var storeStr = _.chain(storeArr)
-		  .map(function(mall){
-		    return mall.name;
-		  })
-		  .value();
-		  console.log(storeStr)
+    getDataOther:function(store){
+    	if(store == 'guonei'){
+    		var storeStr = _.chain(guoneiArr)
+			  .map(function(mall){
+			    return mall.name;
+			  })
+			  .value();
+    	} else {
+    		var storeStr = _.chain(guowaiArr)
+			  .map(function(mall){
+			    return mall.name;
+			  })
+			  .value();
+    	}
+    	console.log(storeStr)
+
         var defer = Q.defer();
         SequelizeDb.CrawlMain
             .findOne({
-	            	where: {store: {[Op.notIn]:storeStr},status:0},
+	            	where: {store: {[Op.in]:storeStr},status:0},
 	            	order: [['updatedAt','asc']]
              	}
         	)
