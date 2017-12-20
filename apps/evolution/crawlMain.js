@@ -31,22 +31,13 @@ exports.saveTask = function(param, callback) {
                     
                 })
             }
-            var msg = {
-                'Code': 'Success',
-                "Message": '',
-                'data':response
-            }
-            callback(msg);
+            callback(null, response);
         },function (err) {
             throw new Error(err.message);
             return '';
         })
     }catch(err){
-        var msg = {
-                'Code': 'Error',
-                "Message": err.message
-            }
-        callback(msg)
+        callback(err.message, null)
     }
     return;
 }
