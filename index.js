@@ -38,9 +38,10 @@ var meitun = require('./lib/kaluli/meitun');
 var xiji = require('./lib/kaluli/xiji');
 var delemei = require('./lib/kaluli/delemei');
 var ba = require('./lib/kaluli/ba');
-var kiwi = require('./lib/kiwi');
+// var kiwi = require('./lib/kiwi');
+var kiwistarcare = require('./lib/kaluli/kiwistarcare');
 var uka = require('./lib/uka');
-var discovery = require('./lib/kaluli/discovery');
+// var discovery = require('./lib/kaluli/discovery');
 var dod = require('./lib/kaluli/dod');
 
 
@@ -393,11 +394,11 @@ function getStoreObj(urlInfo){
         case 'www.ba.de':
             return ba;
         case 'www.kiwistarcare.com':
-            return kiwi;
+            return kiwistarcare;
         case 'cn.unserekleineapotheke.de':
             return uka;
-        case 'cn.kiwidiscovery.co.nz':
-            return discovery;
+        // case 'cn.kiwidiscovery.co.nz':
+        //     return discovery;
         case 'cn.dod.nl':
             return dod;
         default:
