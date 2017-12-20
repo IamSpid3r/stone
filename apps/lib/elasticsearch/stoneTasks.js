@@ -152,7 +152,7 @@ function mapping(callback) {
                 "type":   "date",
                 "format": "yyyy-MM-dd HH:mm:ss"
             },
-            "updated_at" : {
+            "created_at" : {
                 "type":   "date",
                 "format": "yyyy-MM-dd HH:mm:ss"
             }

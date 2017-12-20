@@ -7,10 +7,10 @@ const stoneTaskES = require(process.cwd()+"/apps/lib/elasticsearch/stoneTasks").
 const fun = require(process.cwd()+"/apps/lib/fun.js");
 const tableStore = require(process.cwd()+"/apps/lib/tablestore.js").tableStore;
 
-function handler(taskId, url,  data, callack) {
+function handler(taskId, url,  data, callback) {
     try {
         if (!taskId || !url || !data) {
-            throw new Error('参数错误');
+            return callback('参数错误');
         }
 
         //存入数据库
@@ -18,22 +18,21 @@ function handler(taskId, url,  data, callack) {
             //写入tablestore
             controller.insertTableStore(taskId, url, data, function (err, rows) {
                 if (err) {
-                    callack(err.message)
+                    return  callback(err.message)
                 } else {
-                    callack(null, 'ok')
+                    return  callback(null, 'ok')
                 }
             })
         },function (err) {
             fun.stoneLog('stone_db', 'error', err.message);
 
-            callack(err.message)
+            return callback(err.message)
         })
     } catch (err) {
         console.log(err.message);
 
-        callack(err.message)
+        return callback(err.message)
     }
-
 }
 
 var controller = {
@@ -81,7 +80,7 @@ var controller = {
             updateInfo.items = updateData.Items.length;
             updateInfo.vals = updateData.Variations.length;
         } else {
-            updateInfo.err = JSON.stringify(data.Msg).slice(0, 220);
+            updateInfo.err = JSON.stringify(data.Msg).slice(0, 180);
             updateErrStatus = 1;
         }
 
@@ -259,7 +258,7 @@ var controller = {
 //     }
 // };
 //
-// handler('50ad27b8947a0709334d54e819bcc13b', 'https://detail.tmall.com/item.htm?id=540219887479', data, function (err, data) {
+// handler('485795cb73026bbb11e5952ab7a0b05b', "https://item.taobao.com/item.htm?id=44696285660", data, function (err, data) {
 //     console.log(err, data)
 // });
 exports.handler = handler;

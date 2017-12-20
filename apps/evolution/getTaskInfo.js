@@ -3,7 +3,7 @@
 const Q = require("q");
 const SequelizeDb = require(process.cwd()+"/apps/lib/db.js").db;
 const fun = require(process.cwd()+"/apps/lib/fun.js");
-const tableStore = require(process.cwd()+"/apps/lib/tablestore.js").tableStore;;
+const tableStore = require(process.cwd()+"/apps/lib/tablestore.js").tableStore;
 
 function handler(request, response) {
     var body = request.body;

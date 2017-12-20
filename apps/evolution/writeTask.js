@@ -2,7 +2,6 @@
 
 const md5 = require('md5');
 const Q = require('q');
-//const events = require('events');
 const _ = require('lodash');
 const dateFormat = require('dateformat');
 
@@ -56,7 +55,8 @@ var controller = {
             var taskId = that.generateTaskId(url);
             var store = fun.getStore(url);
 
-            urlToTaskId.taskId = url;
+            urlToTaskId[taskId] = url;
+
             return {
                 "task_id" : taskId,
                 "url" : url,
@@ -76,7 +76,7 @@ var controller = {
 
             res.items.forEach(function (item) {
                 taskId = item.create._id;
-                url = urlToTaskId.taskId;
+                url = urlToTaskId[taskId];
 
                 if (item.create.created) {
                     taskIds.push({
