@@ -82,14 +82,37 @@ var controller = {
                     console.log(unique_id+' error')
                 }else{
                     body = JSON.parse(body);
-                    var subtitle = '';
-                    if (body.hasOwnProperty('ads')){
-                        subtitle = body.ads[0].ad
+                    if (body){
+                        var subtitle = '';
+                        if (body.hasOwnProperty('ads')){
+                            subtitle = body.ads[0].ad
+                        }
+                        var dd=subtitle.replace(/<\/?.+?>/g,"");
+                        subtitle=dd.replace(/ /g,"");
+                        //保存到tablestore
+                        controller.updateTableStore(taskId,'cn.jd.'+unique_id,subtitle,callback);
+                    } else {
+                        console.log('切换识货proxy')
+                        getHtmlShihuo(url, function(err, body){
+                            if(err){
+                                console.log(unique_id+' error')
+                            }else{
+                                body = JSON.parse(body);
+                                if (body){
+                                    var subtitle = '';
+                                    if (body.hasOwnProperty('ads')){
+                                        subtitle = body.ads[0].ad
+                                    }
+                                    var dd=subtitle.replace(/<\/?.+?>/g,"");
+                                    subtitle=dd.replace(/ /g,"");
+                                    //保存到tablestore
+                                    controller.updateTableStore(taskId,'cn.jd.'+unique_id,subtitle,callback);
+                                } else {
+                                    console.log('识货proxy 抓取error')
+                                }
+                            }
+                        })
                     }
-                    var dd=subtitle.replace(/<\/?.+?>/g,"");
-                    subtitle=dd.replace(/ /g,"");
-                    //保存到tablestore
-                    controller.updateTableStore(taskId,'cn.jd.'+unique_id,subtitle,callback);
                 }
             })
         })
@@ -147,12 +170,61 @@ function getHtml(urlStr, callback){
     });
 }
 
+/*
+ *获取html
+ **/
+function getHtmlShihuo(urlStr, callback){
+
+    var options = {};
+    options.url = urlStr;
+    options.headers = {
+         'User-Agent':'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/40.0.2214.93 Safari/537.36',
+         "Accept":'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+         "Accept-Encoding":"deflate, sdch",
+         "Accept-Language":"zh-CN,zh;q=0.8",
+         "cookie":":thw=cn; cna=fR+hDeeT50ICATr3cloaZbmD; miid=6345998908287345826; x=e%3D1%26p%3D*%26s%3D0%26c%3D0%26f%3D0%26g%3D0%26t%3D0%26__ll%3D-1%26_ato%3D0; lzstat_uv=8629291913329613887|2144678; tracknick=hxl724753832; _cc_=VT5L2FSpdA%3D%3D; tg=0; _m_h5_tk=a8c851e108396671a4a47fe2800f8b1c_1453691787833; _m_h5_tk_enc=cc4c05577d30d7d43b66584d2846a3d7; v=0; linezing_session=9q62Zftrxc6myk5U5wogiuSm_1453875476406Wc5G_1; isg=4BDE5B1133BD9B93442D2FA1B939DF07; _tb_token_=583e611e13374; mt=ci%3D-1_0; uc1=cookie14=UoWyjVdEi6VXIg%3D%3D; cookie2=1c7b75338f80538f4f0548e69714c245; t=17cb7c33aba0dc662a5d8eb53fdf6401; l=ApCQQCCBQfb994wdQkfa8wZJ4NDlzHTW"
+    };
+
+    var developUrl = 'http://121.41.100.22:3333/proxyGet?add=1';
+    Q('get').then(function(success){
+        var defer = Q.defer();
+        request({url:developUrl,timeout:2000}, function (error, response, body) {
+            if (!error && response.statusCode == 200) {
+                body = JSON.parse(body);
+                if(body.status == 'ok'){
+                    options.proxy = 'http://'+body.Ip.Ip+':'+body.Ip.Port;
+                    defer.resolve('success');
+                }
+            }else{
+                defer.reject('代理服务器错误');
+            }
+        })
+
+        return defer.promise;
+    }).then(function(success){
+        var chunks = [];
+        request(options,function(error,response,body) {
+            if (!error && response.statusCode == 200) {
+                var decodedBody = iconv.decode(Buffer.concat(chunks), 'gbk');
+                callback(null, decodedBody, response);
+            }else{
+                callback(error, null, null);
+            }
+        }).on('data', function(data) {
+            chunks.push(data);
+        });
+
+    },function(rejected){
+        callback(rejected, null, null);
+    })
+}
+
 
 var task_id;
 var crawl_num = 0;
 //处理
 var deal = function(){
-	console.log('start')
+	console.log('start jd')
     if (task_id){
         crawl(res.data.task_id);
     } else {
