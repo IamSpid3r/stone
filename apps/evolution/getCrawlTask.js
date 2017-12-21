@@ -165,8 +165,6 @@ var controller = {
 			  })
 			  .value();
     	}
-    	console.log(storeStr)
-
         var defer = Q.defer();
         SequelizeDb.CrawlMain
             .findOne({
