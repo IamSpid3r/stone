@@ -8,36 +8,30 @@ const fun = require(process.cwd()+"/apps/lib/fun.js");
 const tableStore = require(process.cwd()+"/apps/lib/tablestore.js").tableStore;
 
 function handler(taskId, url,  data, callback) {
-    try {
-        if (!taskId || !url || !data) {
-            return callback('参数错误');
+    if (!taskId || !url || !data) {
+        return callback('参数错误');
+    }
+
+    //存入数据库
+    controller.updateTask(taskId, data, function (err, result) {
+        if (err) {
+            console.log(err.message);
+            fun.stoneLog('stone_db', 'error', {
+                'param' : err.message,
+                'param2' : taskId,
+            });
+            return callback(err.message)
         }
 
-        //存入数据库
-        controller.updateTask(taskId, data, function (err, result) {
+        //写入tablestore
+        controller.insertTableStore(taskId, url, data, function (err, rows) {
             if (err) {
-                console.log(err.message);
-                fun.stoneLog('stone_db', 'error', {
-                    'param' : err.message,
-                    'param2' : taskId,
-                });
-                return callback(err.message)
+                return  callback(err.message)
+            } else {
+                return  callback(null, 'ok')
             }
-
-            //写入tablestore
-            controller.insertTableStore(taskId, url, data, function (err, rows) {
-                if (err) {
-                    return  callback(err.message)
-                } else {
-                    return  callback(null, 'ok')
-                }
-            })
         })
-    } catch (err) {
-        console.log(err.message);
-
-        return callback(err.message)
-    }
+    })
 }
 
 var controller = {

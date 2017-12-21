@@ -15,11 +15,11 @@
       "port": 6379
     },
     "tablestore": {
-      "accessKeyId": "SMrZnbH2y99YHUy0",
-      "secretAccessKey": "cz0VKm4RJetiNpgMtd5ji5LW4A5W0O",
-      "endpoint": "http://gwyy-test.cn-hangzhou.ots.aliyuncs.com",
-      "instancename": "gwyy-test",
-      "tableName": "stone2"
+      "accessKeyId": "LTAIMqpuvWAkLY7U",
+      "secretAccessKey": "dGu4qSUOXOD8fop3abdmWaXUsWOjF3",
+      "endpoint": "https://stone.cn-hangzhou.ots.aliyuncs.com",
+      "instancename": "stone",
+      "tableName": "stone"
     },
     "elasticsearch" : {
       "host" : "121.196.203.47",
