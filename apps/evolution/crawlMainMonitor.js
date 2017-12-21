@@ -7,6 +7,7 @@ const Q = require("q");
 
 
 var deal = function(){
+	console.log('start monitor')
 	var curr_time = Date.parse(new Date())/1000 - 15*60;
 	curr_time = getLocalTime(curr_time);
 	controller.getDataList(curr_time, 10).then(function (data) {

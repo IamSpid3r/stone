@@ -116,7 +116,7 @@ var dealerrorcallback = function(taskId,error){
 
 //处理
 var deal = function(){
-	console.log('start')
+	console.log('start guonei')
 	
 		controller.getData(crawltaskConfig.getUrl+'?store=guonei').then(function (res) {
 		    if (res.code == 200){

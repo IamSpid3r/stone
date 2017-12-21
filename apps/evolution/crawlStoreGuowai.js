@@ -116,7 +116,7 @@ var dealerrorcallback = function(taskId,error){
 
 //处理
 var deal = function(){
-	console.log('start')
+	console.log('start guowai')
 	
 		controller.getData(crawltaskConfig.getUrl+'?store=guowai').then(function (res) {
 		    if (res.code == 200){
