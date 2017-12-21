@@ -14,7 +14,16 @@ function handler(taskId, url,  data, callback) {
         }
 
         //存入数据库
-        controller.updateTask(taskId, data).then(function (res) {
+        controller.updateTask(taskId, data, function (err, result) {
+            if (err) {
+                console.log(err.message);
+                fun.stoneLog('stone_db', 'error', {
+                    'param' : err.message,
+                    'param2' : taskId,
+                });
+                return callback(err.message)
+            }
+
             //写入tablestore
             controller.insertTableStore(taskId, url, data, function (err, rows) {
                 if (err) {
@@ -23,10 +32,6 @@ function handler(taskId, url,  data, callback) {
                     return  callback(null, 'ok')
                 }
             })
-        },function (err) {
-            fun.stoneLog('stone_db', 'error', err.message);
-
-            return callback(err.message)
         })
     } catch (err) {
         console.log(err.message);
@@ -36,10 +41,12 @@ function handler(taskId, url,  data, callback) {
 }
 
 var controller = {
-    updateTask: function (taskId, data) {
-        var defer = Q.defer();
-
+    updateTask: function (taskId, data, callback) {
         var packageInfo = this.packageInfo(data)
+        if (!Array.isArray(packageInfo)) {
+            return callback(packageInfo);
+        }
+
         var updateInfo = packageInfo[0];
         var updateStatus = packageInfo[1];
         var updateErrStatus = packageInfo[2];
@@ -54,37 +61,38 @@ var controller = {
             'updated_at' : now
         }, function (err, res) {
             if (err) {
-                return defer.reject(err);
+                return callback(err);
             }
 
-            return defer.resolve(res);
+            return callback(null, res);
         })
-
-        return defer.promise;
     },
     packageInfo: function (data) {
-        if (!'Status' in data) {
-            throw new Error('数据包缺少Status参数');
-            return;
+        try {
+            if (!'Status' in data) {
+                throw new Error('数据包缺少Status参数');
+            }
+
+            var updateInfo = {};
+            var updateStatus = 0;
+            var updateErrStatus = 0;
+            if (data.Status) {
+                var updateData = data.Data;
+                updateStatus = (updateData.Status == 'inStock') ? 0 : 1;
+
+                updateInfo.unique = updateData.Unique;
+                updateInfo.md5 = updateData.Md5;
+                updateInfo.items = updateData.Items.length;
+                updateInfo.vals = updateData.Variations.length;
+            } else {
+                updateInfo.err = JSON.stringify(data.Msg).slice(0, 180);
+                updateErrStatus = 1;
+            }
+
+            return [updateInfo, updateStatus, updateErrStatus]
+        } catch (e){
+            return e;
         }
-
-        var updateInfo = {};
-        var updateStatus = 0;
-        var updateErrStatus = 0;
-        if (data.Status) {
-            var updateData = data.Data;
-            updateStatus = (updateData.Status == 'inStock') ? 0 : 1;
-
-            updateInfo.unique = updateData.Unique;
-            updateInfo.md5 = updateData.Md5;
-            updateInfo.items = updateData.Items.length;
-            updateInfo.vals = updateData.Variations.length;
-        } else {
-            updateInfo.err = JSON.stringify(data.Msg).slice(0, 180);
-            updateErrStatus = 1;
-        }
-
-        return [updateInfo, updateStatus, updateErrStatus]
     },
     insertTableStore : function (taskId, url, data, callback) {
         var attributes = [];

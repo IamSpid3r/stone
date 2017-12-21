@@ -49,7 +49,7 @@ var mia = require('./lib/mia');
 var chemistdirect = require('./lib/chemistdirect');
 
 var taobaos112017 = require('./lib/shuang112017/taobao');
-var getcrawltask = require('./apps/evolution/getcrawltask');
+var getcrawltask = require('./apps/evolution/getCrawlTask');
 var savecrawlinfo = require('./apps/evolution/saveCrawlInfo');
 
 
@@ -277,7 +277,7 @@ app.post('/push', function (req, res) {
 
 //按taskid获取信息
 var getTaskInfohandler = require('./apps/evolution/getTaskInfo').handler;
-app.post('/getTaskInfo', function (req, res) {
+app.get('/getTaskInfo', function (req, res) {
     getTaskInfohandler(req, res);
 })
 

@@ -1,13 +1,12 @@
 //获取关于taskid的信息
 
 const Q = require("q");
-const SequelizeDb = require(process.cwd()+"/apps/lib/db.js").db;
 const fun = require(process.cwd()+"/apps/lib/fun.js");
 const tableStore = require(process.cwd()+"/apps/lib/tablestore.js").tableStore;
+const stoneTaskES = require(process.cwd()+"/apps/lib/elasticsearch/stoneTasks.js").esClient;
 
 function handler(request, response) {
-    var body = request.body;
-    console.log(body)
+    var body = request.query;
     //验证
     if (!body || !('task_id' in body)) {
         response.json({code: 400, msg: '缺少task_id参数'});
@@ -15,63 +14,49 @@ function handler(request, response) {
     }
 
     var taskId = body.task_id;
-    controller.getTaskStatus(taskId).then(function (data) {
-        //正常的和状态
-        if (data.status) {
-            //tablestore
-            controller.getTablestoreData(taskId, function (err, tsdata) {
-                if (err) {
-                    response.json({code: 402, msg: err.message});
-                    return;
-                }
-
-                data.data = tsData;
-
-                response.json({code: 200, msg: 'ok', data: data});
-            })
-        } else {
-            response.json({code: 200, msg: 'ok', data : data});
+    controller.getTaskStatus(taskId, function (err, res) {
+        if (err) {
+            return response.json({code: 401, msg: err.message});
         }
-    },function (err) {
-        response.json({code: 401, msg: err.message});
+
+        //获取详情
+        controller.getTablestoreData(taskId, function (err, tsdata) {
+            if (err) {
+                return response.json({code: 402, msg: err.message});
+            }
+
+            return response.json({code: 200, msg: 'ok', data: tsData});
+        })
     })
 }
 
 var controller = {
     //获取任务状态
-    getTaskStatus: function (taskId) {
-        var defer = Q.defer();
-
-        SequelizeDb.StoneTasks().findOne({
-            where : {task_id : taskId},
-            attributes : ['task_id', 'status']
-        }).then(row => {
-            if (!row) {
-                return defer.reject(new Error('未找到此taskid任务'));
+    getTaskStatus: function (taskId, callback) {
+        stoneTaskES.search({
+            task_id : taskId,
+        }, function (err, res) {
+            if (err){
+                return callback(err);
             }
+            if (res.hits.hits.length <= 0) {
+                return callback(new Error('未找到此taskid相关数据'));
+            }
+            var status = res.hits.hits[0]._source.status;
 
-            if (row.status == 2 || row.status == 3) {
-                return defer.resolve({
-                    status : true
-                });
+            //ok的状态
+            if (status == 2 || status == 3) {
+                return callback(null, 'ok');
             } else {
-                return defer.resolve({
-                    status : false,
-                    msg : "任务尚未处理完成,当前状态码为"+row.status
-                });
+                return callback(new Error("任务尚未处理完成,当前状态码为"+status));
             }
-        }).catch(err => {
-            return defer.reject(err);
-        });
-
-        return defer.promise;
+        })
     },
     //获取tablestore中的数据
     getTablestoreData: function (taskId , callback) {
        tableStore.Query(taskId, function (err, data) {
            if(err){
-               callback(err);
-               return;
+               return callback(err);
            }
 
            tsData = {};

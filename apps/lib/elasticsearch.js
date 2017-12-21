@@ -5,7 +5,7 @@ const elasticsearch = require('elasticsearch');
 
 const client = new elasticsearch.Client({
     host: elasticConfig.user+':'+elasticConfig.pass+'@'+elasticConfig.host,
-    log: 'trace'
+    log: 'error'
 });
 
 

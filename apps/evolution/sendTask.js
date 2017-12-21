@@ -22,12 +22,14 @@ function handler() {
         } else {
             console.log('waiting..')
         }
+        return;
     },function (err) {
         console.log(err.message)
         fun.stoneLog('send_task', 'err', {
             "param" : err.message,
             "param2" : 'get_es_task'
         })
+        return;
     })
 }
 
@@ -63,20 +65,20 @@ var controller = {
     sendKunlun: function (data) {
         request.post({url : receiveUrl , form : {data : data}}, function (err, res, body) {
             if (err || res.statusCode != 200) {
-                fun.stoneLog('send_task', 'err', {
-                    "param" : err.message,
+                fun.stoneLog('send_task', 'error', {
+                    "param" :   err.message,
                     "param2" : 'send_error'
                 })
                 console.log(err.message);
-                return
+                return;
             }
             if (!fun.isJson(body)) {
-                fun.stoneLog('send_task', 'err', {
+                fun.stoneLog('send_task', 'error', {
                     "param" : 'not a json!',
                     "param2" : 'send_error'
                 })
                 console.log('not a json!');
-                return
+                return;
             }
 
             //更新状态 已发送
@@ -93,22 +95,24 @@ var controller = {
 
                 stoneTaskES.bulk(bulkData, 'update', function (err, res) {
                     if (err) {
-                        fun.stoneLog('send_task', 'err', {
+                        fun.stoneLog('send_task', 'error', {
                             "param" : err.message,
                             "param2" : 'es_bulk'
                         })
 
-                        console.log(err.message);return;
+                        console.log(err.message);
+                        return;
                     }
 
                     console.log('change status ok')
+                    return;
                 })
             }
+            return;
         })
     }
 };
 
 setInterval(function () {
-    console.log('deliver...')
     handler();
 }, 5000)

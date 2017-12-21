@@ -49,36 +49,42 @@ var controller = {
     },
     deliverQueue: function (data) {
         //投递至抓取处
-        crawlMain(data, function (result) {
-            if (result.Code == 'Error') {
-                console.log('deliver queue err '+err.message)
+        crawlMain(data, function (err, result) {
+            if (err) {
+                console.log('deliver queue err '+err)
                 fun.stoneLog('deliver_queue', 'err', {
-                    "param" : err.message
+                    "param" : err
                 })
                 return;
             }
+            console.log(result)
 
             //更新状态
-            var now = dateFormat(_.now(), "yyyy-mm-dd HH:MM:ss");
-            var body = data.map(function (val) {
-                return {
-                    task_id: val.task_id,
-                    status: 1,
-                    updated_at : now
-                }
-            })
-            stoneTaskES.bulk(body, 'update', function (err, res) {
-                if (err) {
-                    console.log('change status err '+err.message)
-                    fun.stoneLog('deliver_queue', 'err', {
-                        "param" : err.message
-                    })
-                    return;
-                }
+            if (result.Code == 'ok') {
+                var now = dateFormat(_.now(), "yyyy-mm-dd HH:MM:ss");
+                var body = data.map(function (val) {
+                    return {
+                        task_id: val.task_id,
+                        status: 1,
+                        updated_at : now
+                    }
+                })
+                stoneTaskES.bulk(body, 'update', function (err, res) {
+                    if (err) {
+                        console.log('change status err '+err.message)
+                        fun.stoneLog('deliver_queue', 'err', {
+                            "param" : err.message
+                        })
+                        return;
+                    }
 
-                console.log('change status ok')
-            })
-            return;
+                    console.log('change status ok')
+                })
+                return;
+            } else {
+                console.log(result.msg)
+                return;
+            }
         })
     }
 };

@@ -12,6 +12,7 @@ const sequelize = new Sequelize(dbConfig.database, dbConfig.user, dbConfig.passw
         idle: 10000
     },
     operatorsAliases: false,
+    logging : false,
     timezone: '+08:00' //东八时区
 });
 

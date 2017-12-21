@@ -29,15 +29,14 @@ function handler(request, response) {
 
         //队列阈值限制[from正常kunlun来源]
         if (res.hits.total > maxTaskNum && !from) {
-            response.json({code: 410, msg: '队列待处理数量为'+res.hits.total+',稍后再次投递'});
-            return;
+            return response.json({code: 410, msg: '队列待处理数量为'+res.hits.total+',稍后再次投递'});
         }
 
         //把url写入es
         controller.writeUrlTask(urls, from).then(function (taskIds) {
-            response.json({code: 200, msg: 'ok', data: taskIds});
+            return response.json({code: 200, msg: 'ok', data: taskIds});
         },function (err) {
-            response.json({code: 401, msg: err.message});
+            return response.json({code: 401, msg: err.message});
         })
     })
 }
