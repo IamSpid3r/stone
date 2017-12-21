@@ -139,11 +139,13 @@ var deal = function(){
 				                    //callback
 				                    controller.callbackData(crawltaskConfig.postUrl,res.data.task_id,dataJson,'success').then(function (res) {
 				                    	console.log(res)
-				                    	//start
-										deal();
+				                    	setTimeout(function(){
+                                            //start
+                                            deal();
+                                        },1000)
 				                    },function (err) {
 				                    	console.log(err)
-				                    	//dealerrorcallback(res.data.task_id, err.message);
+				                    	dealerrorcallback(res.data.task_id, err.message);
 									})
 				                }
 				            })
