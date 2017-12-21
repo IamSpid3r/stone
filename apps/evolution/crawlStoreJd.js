@@ -266,7 +266,7 @@ var crawl = function(taskId, url){
                                     if (content){
                                         content = JSON.parse(content);
                                         content.Data.Items.forEach(function (row_ststfeItem, row_index) {
-                                            content.Data.Items[row_index].Offers[0].Subtitle = {Name:tmpTitleArr[row_ststfeItem.Unique]}
+                                            content.Data.Items[row_index].Offers[0].Subtitle = tmpTitleArr[row_ststfeItem.Unique];
                                         })
                                     }
                                     //callback
@@ -315,7 +315,7 @@ var crawl = function(taskId, url){
                                                     if (content){
                                                         content = JSON.parse(content);
                                                         content.Data.Items.forEach(function (row_ststfeItem, row_index) {
-                                                            content.Data.Items[row_index].Offers[0].Subtitle = {Name:tmpTitleArr[row_ststfeItem.Unique]}
+                                                            content.Data.Items[row_index].Offers[0].Subtitle = tmpTitleArr[row_ststfeItem.Unique];
                                                         })
                                                     }
                                                     //callback
