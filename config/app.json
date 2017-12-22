@@ -22,9 +22,9 @@
       "tableName": "stone"
     },
     "elasticsearch" : {
-      "host" : "121.196.203.47",
+      "host" : "stone-es.shihuo.cn",
       "user" : "elastic",
-      "pass" : "7791782hxlqqQ"
+      "pass" : "kciKdi93Ldua1"
     }
   },
   "kunlun" : {
@@ -33,5 +33,12 @@
   "crawltask":{
     "getUrl" : "http://stone.shihuo.cn/getCrawlTask",
     "postUrl" : "http://stone.shihuo.cn/saveCrawlInfo"
+  },
+  "app" : {
+    "taskFrom" : {
+       "0" : "kunlun",
+       "1" : "kunlun_fast",
+       "2" : "shihuo_fast"
+    }
   }
 }

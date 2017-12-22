@@ -17,6 +17,7 @@ function handler() {
             console.log('waiting..')
         }
     },function (err) {
+        console.log(err.message)
         fun.stoneLog('deliver_queue', 'err', {
             "param" : err.message
         })
@@ -28,7 +29,9 @@ var controller = {
         var that = this;
         var defer = Q.defer();
         
-        stoneTaskES.search({ status: 0, size: 100}, function (err, res) {
+        stoneTaskES.search(
+            { status: 0, size: 100, sort: [['from', 'desc'],['created_at', 'asc']]
+        }, function (err, res) {
             if (err) {
                 return defer.reject(err);
             }
@@ -38,7 +41,8 @@ var controller = {
             rows.forEach(function (row) {
                 data.push({
                     task_id: row._source.task_id,
-                    url: row._source.url
+                    url: row._source.url,
+                    from : row._source.from
                 })
             })
 
@@ -57,7 +61,6 @@ var controller = {
                 })
                 return;
             }
-            console.log(result)
 
             //更新状态
             if (result.Code == 'ok') {

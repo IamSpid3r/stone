@@ -11,15 +11,23 @@ const fun = require(process.cwd()+'/apps/lib/fun.js');
 const maxTaskNum = 2000;
 
 function handler(request, response) {
-    var body = request.body;
-
-    //验证
-    if (!body || !('url' in body)) {
-        return response.json({code: 400, msg: '缺少url参数'});
+    if (request.method == 'POST') {
+        //验证
+        var body = request.body;
+        if (!body || !('url' in body)) {
+            return response.json({code: 400, msg: '缺少url参数'});
+        }
+        var urls = body.url;
+        var from = body.from || 0;
+        from = Number(from);
+    } else {
+        var url = request.query.url;
+        if (!url) {
+            return response.json({code: 400, msg: '缺少url参数'});
+        }
+        var urls = [url];
+        var from = body.from || 0;
     }
-    var urls = body.url;
-    var from = body.from || 0;
-    from = Number(from);
 
     //检测当前有多少未处理的任务
     stoneTaskES.search({'status': [0, 1], 'size': 0}, function (err, res) {

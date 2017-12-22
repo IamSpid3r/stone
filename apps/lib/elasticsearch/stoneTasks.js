@@ -8,7 +8,8 @@ function search(condition, callback) {
 
     body.query = {};
     body.size = condition.hasOwnProperty('size') ? condition.size : 30;
-    body.from = condition.hasOwnProperty('from') ? condition.from : 0;
+    //系统级别的from
+    body.from = condition.hasOwnProperty('offset') ? condition.offset : 0;
     if (condition.hasOwnProperty('status')) {
         boolMust.push(
             {
@@ -27,11 +28,29 @@ function search(condition, callback) {
             }
         )
     }
-
+    if (condition.hasOwnProperty('from')) {
+        boolMust.push(
+            {
+                "terms": {
+                    "from":  Array.isArray(condition.from) ? condition.from : [condition.from]
+                }
+            }
+        )
+    }
+    if (condition.hasOwnProperty('sort')) {
+        var sort = condition.sort;
+        body.sort = [];
+        sort.forEach(function (sortRow) {
+            var tmpSort = {};
+            tmpSort[sortRow[0]] = sortRow[1];
+            body.sort.push(tmpSort);
+        })
+    }
     if (boolMust) {
         body.query.bool = {};
         body.query.bool.must = boolMust;
     }
+
     var params = {
         index : _index,
         type  : _type,

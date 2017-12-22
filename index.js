@@ -52,8 +52,6 @@ var taobaos112017 = require('./lib/shuang112017/taobao');
 var getcrawltask = require('./apps/evolution/getCrawlTask');
 var savecrawlinfo = require('./apps/evolution/saveCrawlInfo');
 
-
-
 app.use(compress());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -274,6 +272,10 @@ var writeTaskhandler = require('./apps/evolution/writeTask').handler;
 app.post('/push', function (req, res) {
     writeTaskhandler(req, res);
 })
+var writeTaskhandler = require('./apps/evolution/writeTask').handler;
+app.get('/push', function (req, res) {
+
+})
 
 //按taskid获取信息
 var getTaskInfohandler = require('./apps/evolution/getTaskInfo').handler;
@@ -351,6 +353,7 @@ function getStoreObj(urlInfo){
         case 'store.nba.com':
             return nbaStore;
         case 'item.yohobuy.com':
+        case 'www.yohobuy.com':
             return yohobuy;
         case 'item.yintai.com':
             return yintai;
