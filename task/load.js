@@ -25,11 +25,11 @@ const binList = [
         'address' : 'guonei',
         'bin': {
             start: [
-                '/usr/bin/pm2 start ./apps/evolution/crawlStoreGuonei.js -n crawlStoreGuonei1',
-                '/usr/bin/pm2 start ./apps/evolution/crawlStoreGuonei.js -n crawlStoreGuonei2',
-                '/usr/bin/pm2 start ./apps/evolution/crawlStoreGuonei.js -n crawlStoreGuonei3',
-                '/usr/bin/pm2 start ./apps/evolution/crawlStoreGuonei.js -n crawlStoreGuonei4',
-                '/usr/bin/pm2 start ./apps/evolution/crawlStoreGuonei.js -n crawlStoreGuonei5',
+                '/usr/bin/pm2 start ./apps/evolution/crawlStoreGuonei.js -n crawlStoreGuonei1 -f',
+                '/usr/bin/pm2 start ./apps/evolution/crawlStoreGuonei.js -n crawlStoreGuonei2 -f',
+                '/usr/bin/pm2 start ./apps/evolution/crawlStoreGuonei.js -n crawlStoreGuonei3 -f',
+                '/usr/bin/pm2 start ./apps/evolution/crawlStoreGuonei.js -n crawlStoreGuonei4 -f',
+                '/usr/bin/pm2 start ./apps/evolution/crawlStoreGuonei.js -n crawlStoreGuonei5 -f',
             ],
             restart : [
                 '/usr/bin/pm2 restart crawlStoreGuonei1',
@@ -52,11 +52,11 @@ const binList = [
         'address' : 'guowai',
         'bin': {
             start: [
-                '/usr/bin/pm2 start ./apps/evolution/crawlStoreGuowai.js -n crawlStoreGuowai1',
-                '/usr/bin/pm2 start ./apps/evolution/crawlStoreGuowai.js -n crawlStoreGuowai2',
-                '/usr/bin/pm2 start ./apps/evolution/crawlStoreGuowai.js -n crawlStoreGuowai3',
-                '/usr/bin/pm2 start ./apps/evolution/crawlStoreGuowai.js -n crawlStoreGuowai4',
-                '/usr/bin/pm2 start ./apps/evolution/crawlStoreGuowai.js -n crawlStoreGuowai5',
+                '/usr/bin/pm2 start ./apps/evolution/crawlStoreGuowai.js -n crawlStoreGuowai1 -f',
+                '/usr/bin/pm2 start ./apps/evolution/crawlStoreGuowai.js -n crawlStoreGuowai2 -f',
+                '/usr/bin/pm2 start ./apps/evolution/crawlStoreGuowai.js -n crawlStoreGuowai3 -f',
+                '/usr/bin/pm2 start ./apps/evolution/crawlStoreGuowai.js -n crawlStoreGuowai4 -f',
+                '/usr/bin/pm2 start ./apps/evolution/crawlStoreGuowai.js -n crawlStoreGuowai5 -f',
             ],
             restart : [
 
