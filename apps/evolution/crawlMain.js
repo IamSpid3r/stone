@@ -54,7 +54,12 @@ exports.saveTask = function(param, callback) {
                                         );
                                         
                                     })
-                                callback(null,response)
+                                var msg = {
+                                    'Code':'ok',
+                                    'msg':'',
+                                    'data':response
+                                }
+                                callback(null, msg);
                                 return '';
                             } else {
                                 controller.saveBulkData(data_param).then(function (data) {
