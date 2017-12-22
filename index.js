@@ -37,11 +37,6 @@ var beibei = require('./lib/kaluli/beibei');
 var meitun = require('./lib/kaluli/meitun');
 var xiji = require('./lib/kaluli/xiji');
 
-
-
-
-
-
 var taobaos11 = require('./lib/shuang11/taobaoV2');
 var taobaos12 = require('./lib/shuang12/taobao');
 var suning = require('./lib/suning');
@@ -54,9 +49,14 @@ var mia = require('./lib/mia');
 var chemistdirect = require('./lib/chemistdirect');
 
 var taobaos112017 = require('./lib/shuang112017/taobao');
+var getcrawltask = require('./apps/evolution/getCrawlTask');
+var savecrawlinfo = require('./apps/evolution/saveCrawlInfo');
+var writeTaskhandler = require('./apps/evolution/writeTask').handler;
+var getTaskInfohandler = require('./apps/evolution/getTaskInfo').handler;
 
 app.use(compress());
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('mochawesome-reports'));
 
 
@@ -253,7 +253,6 @@ app.get('/s112017', function (req, res) {
 
 app.get('/test', function (req, res) {
     var url = req.query.url;
-    console.log(url)
     taobaoV2.getInfo(encodeURI(url) ,function(error, itemInfo){
         if(error){
             res.json({
@@ -269,6 +268,27 @@ app.get('/test', function (req, res) {
     })
 })
 
+//接收推送
+app.post('/push', function (req, res) {
+    writeTaskhandler(req, res);
+})
+app.get('/push', function (req, res) {
+    writeTaskhandler(req, res);
+})
+
+//按taskid获取信息
+app.get('/getTaskInfo', function (req, res) {
+    getTaskInfohandler(req, res);
+})
+
+//获取抓取任务
+app.get('/getCrawlTask', function (req, res) {
+    getcrawltask.getMainList(req, res);
+})
+//保存抓取任务
+app.post('/saveCrawlInfo', function (req, res) {
+    savecrawlinfo.saveData(req, res);
+})
 
 // uncaughtException 避免程序崩溃
 process.on('uncaughtException', function (err) {
@@ -341,6 +361,7 @@ function getStoreObj(urlInfo){
             return nbaStore;
             break;
         case 'item.yohobuy.com':
+        case 'www.yohobuy.com':
             return yohobuy;
             break;
         case 'item.yintai.com':
@@ -419,24 +440,24 @@ function getStoreObj(urlInfo){
     }
 }
 
-app.get('/qqq', function (req, res) {
-    content = JSON.stringify({'header':res.req.headers,'ip':req.ip});
-
-    fs.writeFile(process.cwd()+"/logs/tmp33.txt", content,  function(err) {
-        if (err) {
-            return console.error(err);
-        }
-
-        return true
-    });
-
-    console.log({'header':res.req.headers,'ip':req.ip})
-    res.send({'header':res.req.headers,'ip':req.ip, iplist:[
-        req.headers['x-forwarded-for'] ,
-        req.connection.remoteAddress ,
-        req.socket.remoteAddress ,
-    ]}).end();
-})
+// app.get('/qqq', function (req, res) {
+//     content = JSON.stringify({'header':res.req.headers,'ip':req.ip});
+//
+//     fs.writeFile(process.cwd()+"/logs/tmp33.txt", content,  function(err) {
+//         if (err) {
+//             return console.error(err);
+//         }
+//
+//         return true
+//     });
+//
+//     console.log({'header':res.req.headers,'ip':req.ip})
+//     res.send({'header':res.req.headers,'ip':req.ip, iplist:[
+//         req.headers['x-forwarded-for'] ,
+//         req.connection.remoteAddress ,
+//         req.socket.remoteAddress ,
+//     ]}).end();
+// })
 
 app.listen(3000,function(){
     console.log('listen 3000');

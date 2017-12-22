@@ -2,8 +2,8 @@
   "db": {
     "stone": {
       "host": "rm-bp14g5uo635nza203.mysql.rds.aliyuncs.com",
-      "user": "tradekunlun",
-      "password": "GJe28S4Ge8lQ2NdXh2",
+      "user": "tradestone",
+      "password": "pLXSqV1e5eyC+E#%h+_LvmnShhX8obW8",
       "database": "trade_stone",
       "port": 3306
     },
@@ -15,10 +15,30 @@
       "port": 6379
     },
     "tablestore": {
-      "accessKeyId": "SMrZnbH2y99YHUy0",
-      "secretAccessKey": "cz0VKm4RJetiNpgMtd5ji5LW4A5W0O",
-      "endpoint": "cz0VKm4RJetiNpgMtd5ji5LW4A5W0O",
-      "instancename": "gwyy-test"
+      "accessKeyId": "LTAIMqpuvWAkLY7U",
+      "secretAccessKey": "dGu4qSUOXOD8fop3abdmWaXUsWOjF3",
+      "endpoint": "https://stone.cn-hangzhou.ots.aliyuncs.com",
+      "instancename": "stone",
+      "tableName": "stone"
+    },
+    "elasticsearch" : {
+      "host" : "stone-es.shihuo.cn",
+      "user" : "elastic",
+      "pass" : "kciKdi93Ldua1"
+    }
+  },
+  "kunlun" : {
+      "receiveUrl" : "http://kunlun.shihuo.cn/receive"
+  },
+  "crawltask":{
+    "getUrl" : "http://stone.shihuo.cn/getCrawlTask",
+    "postUrl" : "http://stone.shihuo.cn/saveCrawlInfo"
+  },
+  "app" : {
+    "taskFrom" : {
+       "0" : "kunlun",
+       "1" : "kunlun_fast",
+       "2" : "shihuo_fast"
     }
   }
 }
