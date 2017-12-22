@@ -61,7 +61,7 @@ exports.getStore = function (urlStr) {
         ['识货海淘', ['www.shihuo.cn\/haitao']],
         ['识货团购', ['www.shihuo.cn\/tuangou']],
         ['nbaStore', ['store.nba.com']],
-        ['有货', ['item.yohobuy.com']],
+        ['有货', ['item.yohobuy.com', 'www.yohobuy.com']],
         ['银泰', ['item.yintai.com']],
         ['识货自营', ['www.shihuo.cn\/xianhuo']],
         ['卡路里商城', ['www.kaluli.com']],

@@ -42,7 +42,6 @@ var apo = require('../../lib/cnapo');
 var mia = require('../../lib/mia');
 var chemistdirect = require('../../lib/chemistdirect');
 
-var taobaos112017 = require('../../lib/shuang112017/taobao');
 
 var controller = {
     getData:function(url){

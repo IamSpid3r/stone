@@ -12,6 +12,7 @@ const crawlMain = require('./crawlMain').saveTask;
 function handler() {
     controller.getWaitList().then(function (data) {
         if (data.length > 0){
+            console.log('execute..')
             controller.deliverQueue(data);
         } else {
             console.log('waiting..')
@@ -21,7 +22,7 @@ function handler() {
         fun.stoneLog('deliver_queue', 'err', {
             "param" : err.message
         })
-    })
+    }).then(function () {},function (err) {console.log(err.message)})
 }
 
 var controller = {
@@ -65,27 +66,35 @@ var controller = {
             //更新状态
             if (result.Code == 'ok') {
                 var now = dateFormat(_.now(), "yyyy-mm-dd HH:MM:ss");
-                var body = data.map(function (val) {
-                    return {
-                        task_id: val.task_id,
-                        status: 1,
-                        updated_at : now
+                var body = result.data.map(function (val) {
+                    if (val.status) {
+                        return {
+                            task_id: val.task_id,
+                            status: 1,
+                            updated_at : now
+                        }
                     }
                 })
-                stoneTaskES.bulk(body, 'update', function (err, res) {
-                    if (err) {
-                        console.log('change status err '+err.message)
-                        fun.stoneLog('deliver_queue', 'err', {
-                            "param" : err.message
-                        })
-                        return;
+                body = body.filter(function (val) {
+                    if (val) {
+                        return val;
                     }
+                })
+                if (body.length > 0) {
+                    stoneTaskES.bulk(body, 'update', function (err, res) {
+                        if (err) {
+                            console.log('change status err '+err.message)
+                            fun.stoneLog('deliver_queue', 'err', {
+                                "param" : err.message
+                            })
+                            return;
+                        }
 
-                    console.log('change status ok')
-                })
+                        console.log('change status ok')
+                    })
+                }
                 return;
             } else {
-                console.log(result.msg)
                 return;
             }
         })

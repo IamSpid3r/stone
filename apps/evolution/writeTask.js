@@ -26,7 +26,8 @@ function handler(request, response) {
             return response.json({code: 400, msg: '缺少url参数'});
         }
         var urls = [url];
-        var from = body.from || 0;
+        var from = request.query.from || 0;
+        from = Number(from);
     }
 
     //检测当前有多少未处理的任务
