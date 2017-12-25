@@ -113,12 +113,10 @@ var dealerrorcallback = function(taskId,error){
 	var response = {Status:false,Msg:{Errors:[{Code:'Error',Message:error}]}}
 			//callback
 	        controller.callbackData(crawltaskConfig.postUrl,taskId,response,'error').then(function (res) {
-	        	//start
-				deal();
+	        	
 	        },function (err) {
 	        	console.log(err.message)
-				//start
-				deal();
+				
 			})
 }
 
@@ -147,11 +145,9 @@ var deal = function(){
 				                    //callback
 				                    controller.callbackData(crawltaskConfig.postUrl,res.data.task_id,dataJson,'success').then(function (res) {
 				                    	console.log(res)
-				                    	//start
-										deal();
 				                    },function (err) {
 				                    	console.log(err)
-				                    	//dealerrorcallback(res.data.task_id, err.message);
+				                    	dealerrorcallback(res.data.task_id, err.message);
 									})
 				                }
 				            })
@@ -162,17 +158,11 @@ var deal = function(){
 			    }
 
 		    } else {
-		    	setTimeout(function(){
-						//start
-						deal();
-				    },1000)
+
 		    }
 		},function (err) {
 		    console.log(err.message)
-		    setTimeout(function(){
-				//start
-				deal();
-		    },1000)
+            
 		})
 	
 }
@@ -297,7 +287,9 @@ function getStoreObj(urlInfo){
 }
 
 //start
-deal();
+setInterval(function(){
+    deal();
+},4000)
 
 
 
