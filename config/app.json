@@ -1,7 +1,7 @@
 {
   "db": {
     "stone": {
-      "host": "rm-bp14g5uo635nza203.mysql.rds.aliyuncs.com",
+      "host": "rm-bp104bft1rzm4l4ag.mysql.rds.aliyuncs.com",
       "user": "tradestone",
       "password": "pLXSqV1e5eyC+E#%h+_LvmnShhX8obW8",
       "database": "trade_stone",
