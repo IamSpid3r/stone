@@ -75,7 +75,22 @@ exports.getStore = function (urlStr) {
         ['西集', ['www.xiji.com']],
         ['美囤妈妈', ['item.meitun.com']],
         ['贝贝', ['www.beibei.com']],
-        ['蜜芽', ['www.mia.com']]
+        ['蜜芽', ['www.mia.com']],
+        // 卡路里抓取商城          海外
+        ['澳洲chemistdirect', ['cn.chemistdirect.com.au']],
+        ['澳洲pharmacy4less', ['cn.pharmacy4less.com.au']],
+        ['澳洲pharmacyonline', ['cn.pharmacyonline.com.au']],
+        ['新西兰pharmacydirect', ['cn.pharmacydirect.co.nz']],
+        ['德国discount-apotheke', ['cn.discount-apotheke.de']],
+        ['德国amcal', ['cn.amcal.com.au']],
+        ['德国apo', ['cn.apo.com']],
+        ['澳洲abcpost', ['www.abcpost.com.au']],
+        ['德国delemei', ['www.delemei.de']],
+        ['德国BA保镖', ['www.ba.de']],
+        ['新西兰Kiwistarcare', ['www.kiwistarcare.com']],
+        ['德国UKA', ['cn.unserekleineapotheke.de']],
+        ['荷兰DOD', ['cn.dod.nl']],
+
     ];
 
     var name = '其他';

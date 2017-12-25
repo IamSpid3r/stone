@@ -30,6 +30,14 @@ var kaola = require('../../lib/kaola');
 var beibei = require('../../lib/kaluli/beibei');
 var meitun = require('../../lib/kaluli/meitun');
 var xiji = require('../../lib/kaluli/xiji');
+var delemei = require('../../lib/kaluli/delemei');
+var ba = require('../../lib/kaluli/ba');
+var kiwi = require('../../lib/kaluli/kiwistarcare');
+var uka = require('../../lib/uka');
+var discovery = require('../../lib/kaluli/discovery');
+var dod = require('../../lib/kaluli/dod');
+
+
 
 var taobaos11 = require('../../lib/shuang11/taobaoV2');
 var taobaos12 = require('../../lib/shuang12/taobao');
@@ -251,6 +259,8 @@ function getStoreObj(urlInfo){
         case 'du.hupu.com':
         case 'dev.du.hupu.com':
             return du;
+
+        //卡路里抓取部分
         case 'cn.iherb.com':
             return iherb;
         case 'cn.chemistdirect.com.au':
@@ -265,10 +275,22 @@ function getStoreObj(urlInfo){
         case 'cn.apo.com':
             return apo;
         //蜜芽
-
         case 'www.miyabaobei.hk':
         case 'www.mia.com':
             return mia;
+
+        case 'www.delemei.de':
+            return delemei;
+        case 'www.ba.de':
+            return ba;
+        case 'www.kiwistarcare.com':
+            return kiwi;
+        case 'cn.unserekleineapotheke.de':
+            return uka;
+        case 'cn.kiwidiscovery.co.nz':
+            return discovery;
+        case 'cn.dod.nl':
+            return dod;
         default:
             return '';
     }

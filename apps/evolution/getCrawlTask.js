@@ -28,6 +28,20 @@ var guowaiArr = [
 	{'name':'nbaStore'},
 	{'name':'footlocker官网'},
 	{'name':'UA官网'},
+	// 卡路里国外
+  {'name':'澳洲chemistdirect'},
+  {'name':'澳洲pharmacy4less'},
+  {'name':'澳洲pharmacyonline'},
+  {'name':'新西兰pharmacydirect'},
+  {'name':'德国discount-apotheke'},
+  {'name':'德国amcal'},
+  {'name':'德国apo'},
+  {'name':'澳洲abcpost'},
+  {'name':'德国delemei'},
+  {'name':'德国BA保镖'},
+  {'name':'新西兰Kiwistarcare'},
+  {'name':'德国UKA'},
+  {'name':'荷兰DOD'},
 ];
 var guoneiArr = [
 	{'name':'淘宝'},
