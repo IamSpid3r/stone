@@ -62,8 +62,8 @@ var writeTaskhandler = require('./apps/evolution/writeTask').handler;
 var getTaskInfohandler = require('./apps/evolution/getTaskInfo').handler;
 
 app.use(compress());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.urlencoded({ limit: '50mb',extended: true }));
 app.use(express.static('mochawesome-reports'));
 
 
