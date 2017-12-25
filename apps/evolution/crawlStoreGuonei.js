@@ -30,6 +30,7 @@ var kaola = require('../../lib/kaola');
 var beibei = require('../../lib/kaluli/beibei');
 var meitun = require('../../lib/kaluli/meitun');
 var xiji = require('../../lib/kaluli/xiji');
+var abcpost = require('../../lib/kaluli/abcpost');
 
 var taobaos11 = require('../../lib/shuang11/taobaoV2');
 var taobaos12 = require('../../lib/shuang12/taobao');
@@ -37,7 +38,6 @@ var suning = require('../../lib/suning');
 var gome = require('../../lib/gome');
 var du = require('../../lib/du');
 var iherb = require('../../lib/iherb');
-var abcpost = require('../../lib/abcpost');
 var apo = require('../../lib/cnapo');
 var mia = require('../../lib/mia');
 var chemistdirect = require('../../lib/chemistdirect');
