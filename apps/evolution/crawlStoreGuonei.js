@@ -30,7 +30,14 @@ var kaola = require('../../lib/kaola');
 var beibei = require('../../lib/kaluli/beibei');
 var meitun = require('../../lib/kaluli/meitun');
 var xiji = require('../../lib/kaluli/xiji');
+var delemei = require('../../lib/kaluli/delemei');
+var ba = require('../../lib/kaluli/ba');
+var kiwi = require('../../lib/kaluli/kiwistarcare');
+var uka = require('../../lib/uka');
+var discovery = require('../../lib/kaluli/discovery');
+var dod = require('../../lib/kaluli/dod');
 var abcpost = require('../../lib/kaluli/abcpost');
+var apo = require('../../lib/kaluli/cnapo');
 
 var taobaos11 = require('../../lib/shuang11/taobaoV2');
 var taobaos12 = require('../../lib/shuang12/taobao');
@@ -38,7 +45,7 @@ var suning = require('../../lib/suning');
 var gome = require('../../lib/gome');
 var du = require('../../lib/du');
 var iherb = require('../../lib/iherb');
-var apo = require('../../lib/cnapo');
+
 var mia = require('../../lib/mia');
 var chemistdirect = require('../../lib/chemistdirect');
 

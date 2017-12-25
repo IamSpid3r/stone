@@ -36,7 +36,8 @@ var kiwi = require('../../lib/kaluli/kiwistarcare');
 var uka = require('../../lib/uka');
 var discovery = require('../../lib/kaluli/discovery');
 var dod = require('../../lib/kaluli/dod');
-
+var abcpost = require('../../lib/kaluli/abcpost');
+var apo = require('../../lib/kaluli/cnapo');
 
 
 var taobaos11 = require('../../lib/shuang11/taobaoV2');
@@ -45,8 +46,6 @@ var suning = require('../../lib/suning');
 var gome = require('../../lib/gome');
 var du = require('../../lib/du');
 var iherb = require('../../lib/iherb');
-var abcpost = require('../../lib/kaluli/abcpost');
-var apo = require('../../lib/cnapo');
 var mia = require('../../lib/mia');
 var chemistdirect = require('../../lib/chemistdirect');
 
