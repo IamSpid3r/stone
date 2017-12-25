@@ -19,10 +19,11 @@ function handler() {
         }
     },function (err) {
         console.log(err.message)
-        fun.stoneLog('deliver_queue', 'err', {
-            "param" : err.message
-        })
-    }).then(function () {},function (err) {console.log(err.message)})
+        fun.stoneLog('deliver_queue', 'error', {"param" : err.message})
+    }).then(function () {},function (err) {
+        console.log(err.message);
+        fun.stoneLog('deliver_queue', 'error', {"param" : err.message})
+    })
 }
 
 var controller = {
@@ -57,7 +58,7 @@ var controller = {
         crawlMain(data, function (err, result) {
             if (err) {
                 console.log('deliver queue err '+err)
-                fun.stoneLog('deliver_queue', 'err', {
+                fun.stoneLog('deliver_queue', 'error', {
                     "param" : err
                 })
                 return;
@@ -84,7 +85,7 @@ var controller = {
                     stoneTaskES.bulk(body, 'update', function (err, res) {
                         if (err) {
                             console.log('change status err '+err.message)
-                            fun.stoneLog('deliver_queue', 'err', {
+                            fun.stoneLog('deliver_queue', 'error', {
                                 "param" : err.message
                             })
                             return;
@@ -93,8 +94,6 @@ var controller = {
                         console.log('change status ok')
                     })
                 }
-                return;
-            } else {
                 return;
             }
         })

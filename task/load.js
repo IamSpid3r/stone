@@ -59,7 +59,6 @@ const binList = [
                 '/usr/bin/pm2 start ./apps/evolution/crawlStoreGuowai.js -n crawlStoreGuowai5',
             ],
             restart : [
-
                 '/usr/bin/pm2 restart crawlStoreGuowai1',
                 '/usr/bin/pm2 restart crawlStoreGuowai2',
                 '/usr/bin/pm2 restart crawlStoreGuowai3',

@@ -25,7 +25,7 @@ function handler() {
         return;
     },function (err) {
         console.log(err.message)
-        fun.stoneLog('send_task', 'err', {
+        fun.stoneLog('send_task', 'error', {
             "param" : err.message,
             "param2" : 'get_es_task'
         })
