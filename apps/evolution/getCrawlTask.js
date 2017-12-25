@@ -8,13 +8,28 @@ const Q = require("q");
 const _ = require('lodash');
 var url  = require('url');
 
+var os = require("os")
+
 var RedLock = require('redlock-node');
-var client = require('redis').createClient(redisConfig.port,redisConfig.host);
-if (!NODE_ENV){
-	//线上环境需要认证
-    client.auth(redisConfig.password);
+var ethInfo = os.networkInterfaces().eth1;
+
+var initFlag = true;
+if (!NODE_ENV &&  ethInfo != undefined){
+	if (ethInfo[0].address == '47.88.18.192' || ethInfo[0].address == '47.88.77.102'){
+		initFlag = false;
+	}
 }
-var redlock = new RedLock(client);
+if (initFlag){
+	var client = require('redis').createClient(redisConfig.port,redisConfig.host);
+	if (!NODE_ENV){
+		//线上环境需要认证
+	    client.auth(redisConfig.password);
+	}
+	var redlock = new RedLock(client);
+} else {
+	var redlock;
+}
+
 var lock;
 
 //特殊处理的商城
