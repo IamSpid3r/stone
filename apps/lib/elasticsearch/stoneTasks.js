@@ -122,7 +122,6 @@ function bulk(body, operate, callback) {
     var params = [];
 
     body.forEach(function (val) {
-        console.log(val)
         if ('create' == operate) {
             params.push({ 'create' :  { _index: _index, _type: _index, _id: val.task_id } });
             params.push(val);

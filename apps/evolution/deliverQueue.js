@@ -65,6 +65,7 @@ var controller = {
             }
 
             //更新状态
+            var errMsg = null;
             if (result.Code == 'ok') {
                 var now = dateFormat(_.now(), "yyyy-mm-dd HH:MM:ss");
                 var body = result.data.map(function (val) {
@@ -74,6 +75,8 @@ var controller = {
                             status: 1,
                             updated_at : now
                         }
+                    } else {
+                        errMsg = val.msg;
                     }
                 })
                 body = body.filter(function (val) {
@@ -93,6 +96,8 @@ var controller = {
 
                         console.log('change status ok')
                     })
+                } else {
+                    console.log(errMsg)
                 }
                 return;
             }
