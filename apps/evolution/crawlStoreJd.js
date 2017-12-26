@@ -348,7 +348,12 @@ setInterval(function(){
     deal(task_id);
 },10000)
 
-
+process.on('uncaughtException', function (err) {
+    console.log(err.message);
+    if (task_id){
+        dealerrorcallback(task_id, err.message);
+    }
+});
 
 
 

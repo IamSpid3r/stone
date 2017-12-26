@@ -49,6 +49,7 @@ var iherb = require('../../lib/iherb');
 var mia = require('../../lib/mia');
 var chemistdirect = require('../../lib/chemistdirect');
 
+var task_id;//当前在跑的任务id
 
 var controller = {
     getData:function(url){
@@ -124,12 +125,13 @@ var dealerrorcallback = function(taskId,error){
 
 //处理
 var deal = function(){
+    task_id = '';
 	console.log('start guonei')
 	
 		controller.getData(crawltaskConfig.getUrl+'?store=guonei').then(function (res) {
 		    if (res.code == 200){
-		    
-		    	console.log(res.data.url)
+                console.log(res.data.url)
+		        task_id = res.data.task_id;
 			    var urlInfo = res.data.url ?  url.parse(res.data.url, true, true) : {path:'',host:''};
 		    	var storeObj = getStoreObj(urlInfo);
 			    if(typeof storeObj == 'object'){
@@ -173,7 +175,13 @@ var deal = function(){
                     //start
                     deal();
                 },2000)
-		})
+		}).then(function(){},function(err){
+            console.log(err.message)
+            setTimeout(function(){
+                //start
+                deal();
+            },2000)
+        })
 	
 }
 
@@ -284,6 +292,13 @@ function getStoreObj(urlInfo){
 
 //start
 deal();
+
+process.on('uncaughtException', function (err) {
+    console.log(err.message);
+    if (task_id){
+        dealerrorcallback(task_id, err.message);
+    }
+});
 
 
 
