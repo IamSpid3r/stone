@@ -8,9 +8,9 @@
       "port": 3306
     },
     "redis": {
-      "host": "70210d8550f941a7.redis.rds.aliyuncs.com",
-      "user": "70210d8550f941a7",
-      "password": "ryzf4KbpwhDESK22KN",
+      "host": "r-bp17accf82d27144.redis.rds.aliyuncs.com",
+      "user": "",
+      "password": "r-bp17accf82d27144:ntE5J1hsmsanGV8D",
       "database": 6,
       "port": 6379
     },
