@@ -31,7 +31,7 @@ function handler(request, response) {
     }
 
     //检测当前有多少未处理的任务
-    stoneTaskES.search({'status': [0, 1], 'size': 0}, function (err, res) {
+    stoneTaskES.search({'status': [0], 'size': 0}, function (err, res) {
         if (err) {
             return response.json({code: 405, msg: err.message});
         }
