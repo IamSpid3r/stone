@@ -97,25 +97,26 @@ var handler = function (request, response){
     }
 
     if (_.findIndex(storeArr, {'name':store}) != -1){//是否是需要单独获取的商城
-    	redlock.lock('stone_get_crawl_task_'+ store, 3).done(//锁3秒
+    	redlock.lock('stone_get_crawl_task_'+ store, 4).done(//锁3秒
 		  function(lock){
 		  	//拿到锁以后获取一条数据
 	    	controller.getData(store).then(function (data) {
 		    	if(data){
 		    		//获取完把状态更新成1（处理中）
 		    		controller.updateData(data.data.id).then(function (datas) {
-		    			response.json({code: 200, msg: '',data:data.data});
 		    			redlock.unlock(lock);//释放锁
+		    			response.json({code: 200, msg: '',data:data.data});
 		    		}, function (errs) {
-				        response.json({code: 400, msg: err.message});
 				        redlock.unlock(lock);//释放锁
+				        response.json({code: 400, msg: err.message});
 				    })
 		    	} else {
 		    		redlock.unlock(lock);//释放锁
+		    		response.json({code: 400, msg: err.message});
 		    	}
 		    },function (err) {
+		    	redlock.unlock(lock);//释放锁
 		        response.json({code: 400, msg: err.message});
-		        redlock.unlock(lock);//释放锁
 		    })
 		  },function(err){
 		  	//没有获取到锁则循环获取
@@ -124,25 +125,27 @@ var handler = function (request, response){
 		  	},500)
 	      }); 
     } else {//其他的商城
-		redlock.lock('stone_get_crawl_task_'+ store, 3).done(//锁3秒
+		redlock.lock('stone_get_crawl_task_'+ store, 4).done(//锁3秒
 		  function(lock){
 		  	//拿到锁以后获取一条数据
 	    	controller.getDataOther(store).then(function (data) {
 		    	if(data){
 		    		//获取完把状态更新成1（处理中）
 		    		controller.updateData(data.data.id).then(function (datas) {
-		    			response.json({code: 200, msg: '',data:data.data});
 		    			redlock.unlock(lock);//释放锁
+		    			response.json({code: 200, msg: '',data:data.data});
 		    		}, function (errs) {
+		    			redlock.unlock(lock);//释放锁
 				        response.json({code: 400, msg: err.message});
-				        redlock.unlock(lock);//释放锁
 				    })
 		    	} else {
 		    		redlock.unlock(lock);//释放锁
+		    		response.json({code: 400, msg: err.message});
 		    	}
 		    },function (err) {
+		    	redlock.unlock(lock);//释放锁
 		        response.json({code: 400, msg: err.message});
-		        redlock.unlock(lock);//释放锁
+		        
 		    })
 		  },function(err){
 		  	//没有获取到锁则循环获取
