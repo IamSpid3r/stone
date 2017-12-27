@@ -89,7 +89,7 @@ app.use(function (req, res, next) {
                 }
             });
         } catch (e) {
-            console.log('error when exit', e.stack);
+            console.log('error when exit', e.message);
         }
     });
 
