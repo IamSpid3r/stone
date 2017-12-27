@@ -41,7 +41,7 @@ var controller = {
         stoneTaskES.search({
             status : 2,
             from : [0, 1],  //kunlun来源
-            size : 100,
+            size : 200,
             sort : [['updated_at', 'asc']]
         },function (err, res) {
             if (err) {
