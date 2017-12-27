@@ -351,7 +351,7 @@ setInterval(function(){
 process.on('uncaughtException', function (err) {
     console.log(err.message);
     if (task_id){
-        dealerrorcallback(task_id, err.message);
+        //dealerrorcallback(task_id, err.message);
     }
 });
 

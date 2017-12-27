@@ -123,8 +123,12 @@ var dealerrorcallback = function(taskId,error){
 			})
 }
 
+var deal_time;
+
 //处理
 var deal = function(){
+    deal_time = (new Date()).getTime();
+    console.log(deal_time)
     task_id = '';
 	console.log('start guonei')
 	
@@ -292,6 +296,13 @@ function getStoreObj(urlInfo){
 
 //start
 deal();
+
+setInterval(function(){
+    if ((new Date()).getTime() - deal_time > 120*1000){
+        //start
+        deal();
+    }
+}, 5000)
 
 process.on('uncaughtException', function (err) {
     console.log(err.message);
