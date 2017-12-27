@@ -30,6 +30,7 @@ const binList = [
                 '/usr/bin/pm2 start ./apps/evolution/crawlStoreGuonei.js -n crawlStoreGuonei3',
                 '/usr/bin/pm2 start ./apps/evolution/crawlStoreGuonei.js -n crawlStoreGuonei4',
                 '/usr/bin/pm2 start ./apps/evolution/crawlStoreGuonei.js -n crawlStoreGuonei5',
+                '/usr/bin/pm2 start ./apps/evolution/crawlStoreGuonei.js -n crawlStoreGuonei6',
             ],
             restart : [
                 '/usr/bin/pm2 restart crawlStoreGuonei1',
@@ -37,6 +38,7 @@ const binList = [
                 '/usr/bin/pm2 restart crawlStoreGuonei3',
                 '/usr/bin/pm2 restart crawlStoreGuonei4',
                 '/usr/bin/pm2 restart crawlStoreGuonei5',
+                '/usr/bin/pm2 restart crawlStoreGuonei6',
             ],
             stop : [
                 '/usr/bin/pm2 stop crawlStoreGuonei1',
@@ -44,6 +46,7 @@ const binList = [
                 '/usr/bin/pm2 stop crawlStoreGuonei3',
                 '/usr/bin/pm2 stop crawlStoreGuonei4',
                 '/usr/bin/pm2 stop crawlStoreGuonei5',
+                '/usr/bin/pm2 stop crawlStoreGuonei6',
             ],
         }
     },
@@ -78,9 +81,21 @@ const binList = [
         'name' : 'crawlStoreJd',
         'address' : 'guonei',
         'bin': {
-            start: '/usr/bin/pm2 start ./apps/evolution/crawlStoreJd.js -n crawlStoreJd',
-            restart : '/usr/bin/pm2 start crawlStoreJd',
-            stop : '/usr/bin/pm2 stop crawlStoreJd',
+            start: [
+                '/usr/bin/pm2 start ./apps/evolution/crawlStoreJd.js -n crawlStoreJd',
+                '/usr/bin/pm2 start ./apps/evolution/crawlStoreJd.js -n crawlStoreJd2',
+                '/usr/bin/pm2 start ./apps/evolution/crawlStoreJd.js -n crawlStoreJd3',
+            ],
+            restart : [
+                '/usr/bin/pm2 start crawlStoreJd',
+                '/usr/bin/pm2 start crawlStoreJd2',
+                '/usr/bin/pm2 start crawlStoreJd3'
+            ],
+            stop : [
+                '/usr/bin/pm2 stop crawlStoreJd',
+                '/usr/bin/pm2 stop crawlStoreJd2',
+                '/usr/bin/pm2 stop crawlStoreJd3'
+            ]
         }
     },
     {
