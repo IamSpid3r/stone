@@ -16,7 +16,7 @@ var deal = function(){
                         //通知给晓林
                         var skuInfo = row.sku_info;
                         if (skuinfo && !fun.isJson(skuInfo){){
-                            console.log(row.id+' callback error');
+                            console.log(row.id+' callback json error');
                             //失败
                             controller.updateDataError(row.id,parseInt(row.callback_err_num)+1).then(function (data) {})
                         } else {
