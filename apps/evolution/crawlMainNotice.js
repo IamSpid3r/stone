@@ -9,7 +9,7 @@ const Q = require("q");
 
 var deal = function(){
     console.log('start notice')
-	controller.getDataList(5).then(function (data) {
+	controller.getDataList(200).then(function (data) {
             if (data.status){
                 data.data.forEach(function (row) {
                     if (row.id){
