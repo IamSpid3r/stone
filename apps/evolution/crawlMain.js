@@ -202,7 +202,7 @@ var controller = {
     getDataCount:function(){
         var defer = Q.defer();
         SequelizeDb.CrawlMain
-            .count({where:{status:{[Op.in]:[0,1]}}})
+            .count({where:{status:{[Op.in]:[0]}}})
             .then(crawlmain => {
                 return defer.resolve({
                     status : true,

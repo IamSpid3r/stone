@@ -17,6 +17,7 @@ var deal = function(){
                         var skuInfo = row.sku_info;
                         if (skuInfo && !fun.isJson(skuInfo)){
                             console.log(row.id+' callback json error');
+                            fun.stoneLog('receiveQueue', 'error', {"param" : 'callback json error', "id":row.id})
                             //失败
                             controller.updateDataError(row.id,parseInt(row.callback_err_num)+1).then(function (data) {})
                         } else {
@@ -28,6 +29,7 @@ var deal = function(){
                             receiveQueue.handler(row.task_id, row.url,  skuInfo, function(error, info){
                                 if(error){
                                     console.log(row.id+' callback error');
+                                    fun.stoneLog('receiveQueue', 'error', {"param" : error, "id":row.id})
                                     //失败
                                     controller.updateDataError(row.id,parseInt(row.callback_err_num)+1).then(function (data) {})
                                 } else {
