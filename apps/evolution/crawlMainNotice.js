@@ -15,12 +15,16 @@ var deal = function(){
                     if (row.id){
                         //通知给晓林
                         var skuInfo = row.sku_info;
-                        if (!skuInfo){
-                            skuInfo = {Status:false,Msg:{Errors:[{Code:'Error',Message:'多次抓取失败'}]}}
+                        if (skuinfo && !fun.isJson(skuInfo){){
+                            console.log(row.id+' callback error');
+                            //失败
+                            controller.updateDataError(row.id,parseInt(row.callback_err_num)+1).then(function (data) {})
                         } else {
-                            skuInfo = JSON.parse(skuInfo);
-                        }
-                        if (fun.isJson(skuInfo)){
+                            if (!skuInfo){
+                                skuInfo = {Status:false,Msg:{Errors:[{Code:'Error',Message:'多次抓取失败'}]}}
+                            } else {
+                                skuInfo = JSON.parse(skuInfo);
+                            }
                             receiveQueue.handler(row.task_id, row.url,  skuInfo, function(error, info){
                                 if(error){
                                     console.log(row.id+' callback error');
@@ -32,13 +36,7 @@ var deal = function(){
                                     controller.updateDataSuccess(row.id).then(function (data) {})
                                 }
                             });
-                        } else {
-                            console.log(row.id+' callback error');
-                            //失败
-                            controller.updateDataError(row.id,parseInt(row.callback_err_num)+1).then(function (data) {})
                         }
-                        
-                        
                     } 
                     
                 })
