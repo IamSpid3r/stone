@@ -17,8 +17,10 @@ var deal = function(){
                         var skuInfo = row.sku_info;
                         if (!skuInfo){
                             skuInfo = {Status:false,Msg:{Errors:[{Code:'Error',Message:'多次抓取失败'}]}}
+                        } else {
+                            skuInfo = JSON.parse(skuInfo);
                         }
-                        receiveQueue.handler(row.task_id, row.url,  JSON.parse(skuInfo), function(error, info){
+                        receiveQueue.handler(row.task_id, row.url,  skuInfo, function(error, info){
                             if(error){
                                 //失败
                                 controller.updateDataError(row.id,parseInt(row.callback_err_num)+1).then(function (data) {})
