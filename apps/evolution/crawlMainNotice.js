@@ -20,15 +20,24 @@ var deal = function(){
                         } else {
                             skuInfo = JSON.parse(skuInfo);
                         }
-                        receiveQueue.handler(row.task_id, row.url,  skuInfo, function(error, info){
-                            if(error){
-                                //失败
-                                controller.updateDataError(row.id,parseInt(row.callback_err_num)+1).then(function (data) {})
-                            } else {
-                                //成功
-                                controller.updateDataSuccess(row.id).then(function (data) {})
-                            }
-                        });
+                        if (fun.isJson(skuInfo)){
+                            receiveQueue.handler(row.task_id, row.url,  skuInfo, function(error, info){
+                                if(error){
+                                    console.log(row.id+' callback error');
+                                    //失败
+                                    controller.updateDataError(row.id,parseInt(row.callback_err_num)+1).then(function (data) {})
+                                } else {
+                                    console.log(row.id+' callback success');
+                                    //成功
+                                    controller.updateDataSuccess(row.id).then(function (data) {})
+                                }
+                            });
+                        } else {
+                            console.log(row.id+' callback error');
+                            //失败
+                            controller.updateDataError(row.id,parseInt(row.callback_err_num)+1).then(function (data) {})
+                        }
+                        
                         
                     } 
                     
