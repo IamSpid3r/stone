@@ -15,7 +15,7 @@ var deal = function(){
                     if (row.id){
                         //通知给晓林
                         var skuInfo = row.sku_info;
-                        if (skuinfo && !fun.isJson(skuInfo)){
+                        if (skuInfo && !fun.isJson(skuInfo)){
                             console.log(row.id+' callback json error');
                             //失败
                             controller.updateDataError(row.id,parseInt(row.callback_err_num)+1).then(function (data) {})
@@ -43,6 +43,8 @@ var deal = function(){
             }
         },function (err) {
             
+        }).then(function () {},function (err) {
+             console.log(err.message);
         })
 }
 
