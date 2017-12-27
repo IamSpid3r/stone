@@ -96,6 +96,7 @@ var controller = {
         var defer = Q.defer();
         SequelizeDb.CrawlMain
             .findAll({
+                attributes: ['id', 'task_id', 'url', 'update_err_num', 'sku_info', 'callback_err_num'],
                 where:{
                     callback_status: 0,
                     callback_err_num:{[Op.lt]:5},
