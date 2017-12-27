@@ -9,7 +9,7 @@ const Q = require("q");
 
 var deal = function(){
     console.log('start notice')
-	controller.getDataList(200).then(function (data) {
+	controller.getDataList(5).then(function (data) {
             if (data.status){
                 data.data.forEach(function (row) {
                     if (row.id){
@@ -33,9 +33,12 @@ var deal = function(){
                                     //失败
                                     controller.updateDataError(row.id,parseInt(row.callback_err_num)+1).then(function (data) {})
                                 } else {
-                                    console.log(row.id+' callback success');
                                     //成功
-                                    controller.updateDataSuccess(row.id).then(function (data) {})
+                                    controller.updateDataSuccess(row.id).then(function (data) {
+                                        console.log(row.id+' callback success');
+                                    },function (err) {
+                                        console.log(err.message)
+                                    })
                                 }
                             });
                         }
@@ -76,12 +79,12 @@ var controller = {
             .update({callback_status:1},{where : {id:id}})
             .then(crawlmain => {
                 if (crawlmain){
-                    throw new Error('更新出错');
-                } else {
                     return defer.resolve({
-                            status : true,
-                            id: id
-                        });
+                        status : true,
+                        id: id
+                    });
+                } else {
+                    return defer.reject('更新出错');
                 }
             }
         ).catch(err => {
