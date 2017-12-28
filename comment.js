@@ -6,6 +6,7 @@ var request = require('request');
 //需要支持 淘宝|天猫 亚马逊  识货  京东 国美
 var taobao = require('./lib/comment/taobaoComment');
 var tbNew = require('./lib/comment/tbNewComment');  //淘宝新抓取 
+var tbPc = require('./lib/comment/tbPcComment');
 var amazonCn = require('./lib/comment/amazonCnComment');
 var shihuoHaitao = require('./lib/comment/shihuoHaitaoComment');
 var gome = require('./lib/comment/gomeComment');
@@ -40,7 +41,8 @@ app.get('/info',async function (req, res) {
     var storeObj = [],
     itemInfo = [];
     //如果是淘宝单独处理
-    if(goodsUrlHost == 'item.taobao.com' || goodsUrlHost == 'detail.tmall.com') {
+    //if(goodsUrlHost == 'item.taobao.com' || goodsUrlHost == 'detail.tmall.com') {
+    if(0) {
         console.log('通过puppeteer抓取'+goodsUrlHost);
         try { 
             itemInfo = await tbNew.getInfo(goodsUrl);
@@ -77,7 +79,7 @@ function getStoreObj(host){
         case 'item.taobao.com':
         case 'detail.tmall.com':
         case 'detail.tmall.hk':
-            return taobao;
+            return tbPc;
         case 'store.nike.com':
         case 'www.nike.com':
             return nikeStore;
