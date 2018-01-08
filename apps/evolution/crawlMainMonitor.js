@@ -49,7 +49,9 @@ var controller = {
     getDataList:function(curr_time, pagesize){
         var defer = Q.defer();
         SequelizeDb.CrawlMain
-            .findAll({where:{status:{[Op.in]:[1,3]},updatedAt:{[Op.lt]:curr_time},update_err_num:{[Op.lt]:4}},limit:pagesize})
+            .findAll({
+                attributes: ['id', 'update_err_num'],
+                where:{status:{[Op.in]:[1,3]},updatedAt:{[Op.lt]:curr_time},update_err_num:{[Op.lt]:4}},limit:pagesize})
             .then(crawlmain => {
                 return defer.resolve({
                     status : true,

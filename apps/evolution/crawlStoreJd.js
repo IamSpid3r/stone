@@ -87,7 +87,8 @@ var controller = {
                         if (body.hasOwnProperty('ads')){
                             subtitle = body.ads[0].ad
                         }
-                        var dd=subtitle.replace(/<\/?.+?>/g,"");
+                        var dd=subtitle.replace(/<.+?>.*<\/?.+?>/g,"");
+
                         subtitle=dd.replace(/ /g,"");
                         //保存到tablestore
                         controller.updateTableStore(taskId,'cn.jd.'+unique_id,subtitle,callback);
@@ -103,7 +104,7 @@ var controller = {
                                     if (body.hasOwnProperty('ads')){
                                         subtitle = body.ads[0].ad
                                     }
-                                    var dd=subtitle.replace(/<\/?.+?>/g,"");
+                                    var dd=subtitle.replace(/<.+?>.*<\/?.+?>/g,"");
                                     subtitle=dd.replace(/ /g,"");
                                     //保存到tablestore
                                     controller.updateTableStore(taskId,'cn.jd.'+unique_id,subtitle,callback);
@@ -348,7 +349,12 @@ setInterval(function(){
     deal(task_id);
 },10000)
 
-
+process.on('uncaughtException', function (err) {
+    console.log(err.message);
+    if (task_id){
+        //dealerrorcallback(task_id, err.message);
+    }
+});
 
 
 

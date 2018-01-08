@@ -8,7 +8,7 @@ const binList = [
         'name': 'deliverQueue',
         'address' : 'center',
         'bin' : {
-            start: '/usr/bin/pm2 start ./apps/evolution/deliverQueue.js -n deliverQueue',
+            start: '/usr/bin/pm2 start ./apps/evolution/deliverQueue.js -n deliverQueue   --max-memory-restart 125M',
             restart : '/usr/bin/pm2 start deliverQueue',
             stop : '/usr/bin/pm2 stop deliverQueue'
         }
@@ -16,7 +16,7 @@ const binList = [
         'name' : 'sendTask',
         'address' : 'center',
         'bin': {
-            start: '/usr/bin/pm2 start ./apps/evolution/sendTask.js -n sendTask',
+            start: '/usr/bin/pm2 start ./apps/evolution/sendTask.js -n sendTask   --max-memory-restart 125M',
             restart : '/usr/bin/pm2 start sendTask',
             stop : '/usr/bin/pm2 stop sendTask',
         }
@@ -25,11 +25,12 @@ const binList = [
         'address' : 'guonei',
         'bin': {
             start: [
-                '/usr/bin/pm2 start ./apps/evolution/crawlStoreGuonei.js -n crawlStoreGuonei1',
-                '/usr/bin/pm2 start ./apps/evolution/crawlStoreGuonei.js -n crawlStoreGuonei2',
-                '/usr/bin/pm2 start ./apps/evolution/crawlStoreGuonei.js -n crawlStoreGuonei3',
-                '/usr/bin/pm2 start ./apps/evolution/crawlStoreGuonei.js -n crawlStoreGuonei4',
-                '/usr/bin/pm2 start ./apps/evolution/crawlStoreGuonei.js -n crawlStoreGuonei5',
+                '/usr/bin/pm2 start ./apps/evolution/crawlStoreGuonei.js -n crawlStoreGuonei1  --max-memory-restart 125M',
+                '/usr/bin/pm2 start ./apps/evolution/crawlStoreGuonei.js -n crawlStoreGuonei2  --max-memory-restart 125M',
+                '/usr/bin/pm2 start ./apps/evolution/crawlStoreGuonei.js -n crawlStoreGuonei3  --max-memory-restart 125M',
+                '/usr/bin/pm2 start ./apps/evolution/crawlStoreGuonei.js -n crawlStoreGuonei4  --max-memory-restart 125M',
+                '/usr/bin/pm2 start ./apps/evolution/crawlStoreGuonei.js -n crawlStoreGuonei5  --max-memory-restart 125M',
+                '/usr/bin/pm2 start ./apps/evolution/crawlStoreGuonei.js -n crawlStoreGuonei6  --max-memory-restart 125M',
             ],
             restart : [
                 '/usr/bin/pm2 restart crawlStoreGuonei1',
@@ -37,6 +38,7 @@ const binList = [
                 '/usr/bin/pm2 restart crawlStoreGuonei3',
                 '/usr/bin/pm2 restart crawlStoreGuonei4',
                 '/usr/bin/pm2 restart crawlStoreGuonei5',
+                '/usr/bin/pm2 restart crawlStoreGuonei6',
             ],
             stop : [
                 '/usr/bin/pm2 stop crawlStoreGuonei1',
@@ -44,6 +46,7 @@ const binList = [
                 '/usr/bin/pm2 stop crawlStoreGuonei3',
                 '/usr/bin/pm2 stop crawlStoreGuonei4',
                 '/usr/bin/pm2 stop crawlStoreGuonei5',
+                '/usr/bin/pm2 stop crawlStoreGuonei6',
             ],
         }
     },
@@ -52,11 +55,11 @@ const binList = [
         'address' : 'guowai',
         'bin': {
             start: [
-                '/usr/bin/pm2 start ./apps/evolution/crawlStoreGuowai.js -n crawlStoreGuowai1',
-                '/usr/bin/pm2 start ./apps/evolution/crawlStoreGuowai.js -n crawlStoreGuowai2',
-                '/usr/bin/pm2 start ./apps/evolution/crawlStoreGuowai.js -n crawlStoreGuowai3',
-                '/usr/bin/pm2 start ./apps/evolution/crawlStoreGuowai.js -n crawlStoreGuowai4',
-                '/usr/bin/pm2 start ./apps/evolution/crawlStoreGuowai.js -n crawlStoreGuowai5',
+                '/usr/bin/pm2 start ./apps/evolution/crawlStoreGuowai.js -n crawlStoreGuowai1  --max-memory-restart 125M',
+                '/usr/bin/pm2 start ./apps/evolution/crawlStoreGuowai.js -n crawlStoreGuowai2  --max-memory-restart 125M',
+                '/usr/bin/pm2 start ./apps/evolution/crawlStoreGuowai.js -n crawlStoreGuowai3  --max-memory-restart 125M',
+                '/usr/bin/pm2 start ./apps/evolution/crawlStoreGuowai.js -n crawlStoreGuowai4  --max-memory-restart 125M',
+                '/usr/bin/pm2 start ./apps/evolution/crawlStoreGuowai.js -n crawlStoreGuowai5  --max-memory-restart 125M',
             ],
             restart : [
                 '/usr/bin/pm2 restart crawlStoreGuowai1',
@@ -78,9 +81,21 @@ const binList = [
         'name' : 'crawlStoreJd',
         'address' : 'guonei',
         'bin': {
-            start: '/usr/bin/pm2 start ./apps/evolution/crawlStoreJd.js -n crawlStoreJd',
-            restart : '/usr/bin/pm2 start crawlStoreJd',
-            stop : '/usr/bin/pm2 stop crawlStoreJd',
+            start: [
+                '/usr/bin/pm2 start ./apps/evolution/crawlStoreJd.js -n crawlStoreJd  --max-memory-restart 125M',
+                '/usr/bin/pm2 start ./apps/evolution/crawlStoreJd.js -n crawlStoreJd2  --max-memory-restart 125M',
+                '/usr/bin/pm2 start ./apps/evolution/crawlStoreJd.js -n crawlStoreJd3  --max-memory-restart 125M',
+            ],
+            restart : [
+                '/usr/bin/pm2 start crawlStoreJd',
+                '/usr/bin/pm2 start crawlStoreJd2',
+                '/usr/bin/pm2 start crawlStoreJd3'
+            ],
+            stop : [
+                '/usr/bin/pm2 stop crawlStoreJd',
+                '/usr/bin/pm2 stop crawlStoreJd2',
+                '/usr/bin/pm2 stop crawlStoreJd3'
+            ]
         }
     },
     {

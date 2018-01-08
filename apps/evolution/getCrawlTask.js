@@ -162,6 +162,7 @@ var controller = {
         var defer = Q.defer();
         SequelizeDb.CrawlMain
             .findOne({
+            		attributes: ['id', 'task_id', 'url', 'store'],
 	            	where: {store:store,status:0},
 	            	order: [['updatedAt','asc']]
 	                //[Op.or]: [{status: 0}, {status: 1}]
@@ -200,6 +201,7 @@ var controller = {
         var defer = Q.defer();
         SequelizeDb.CrawlMain
             .findOne({
+            		attributes: ['id', 'task_id', 'url', 'store'],
 	            	where: {store: {[Op.in]:storeStr},status:0},
 	            	order: [['updatedAt','asc']]
              	}

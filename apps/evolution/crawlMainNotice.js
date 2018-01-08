@@ -9,27 +9,47 @@ const Q = require("q");
 
 var deal = function(){
     console.log('start notice')
-	controller.getDataList(10).then(function (data) {
+	controller.getDataList(200).then(function (data) {
             if (data.status){
                 data.data.forEach(function (row) {
                     if (row.id){
                         //通知给晓林
-                        receiveQueue.handler(row.task_id, row.url,  JSON.parse(row.sku_info), function(error, info){
-                            if(error){
-                                //失败
-                                controller.updateDataError(row.id,parseInt(row.callback_err_num)+1).then(function (data) {})
+                        var skuInfo = row.sku_info;
+                        if (skuInfo && !fun.isJson(skuInfo)){
+                            console.log(row.id+' callback json error');
+                            fun.stoneLog('receiveQueue', 'error', {"param" : 'callback json error', "id":row.id})
+                            //失败
+                            controller.updateDataError(row.id,parseInt(row.callback_err_num)+1).then(function (data) {})
+                        } else {
+                            if (!skuInfo){
+                                skuInfo = {Status:false,Msg:{Errors:[{Code:'Error',Message:'多次抓取失败'}]}}
                             } else {
-                                //成功
-                                controller.updateDataSuccess(row.id).then(function (data) {})
+                                skuInfo = JSON.parse(skuInfo);
                             }
-                        });
-                        
+                            receiveQueue.handler(row.task_id, row.url,  skuInfo, function(error, info){
+                                if(error){
+                                    console.log(row.id+' callback error');
+                                    fun.stoneLog('receiveQueue', 'error', {"param" : error, "id":row.id})
+                                    //失败
+                                    controller.updateDataError(row.id,parseInt(row.callback_err_num)+1).then(function (data) {})
+                                } else {
+                                    //成功
+                                    controller.updateDataSuccess(row.id).then(function (data) {
+                                        console.log(row.id+' callback success');
+                                    },function (err) {
+                                        console.log(err.message)
+                                    })
+                                }
+                            });
+                        }
                     } 
                     
                 })
             }
         },function (err) {
             
+        }).then(function () {},function (err) {
+             console.log(err.message);
         })
 }
 
@@ -59,12 +79,12 @@ var controller = {
             .update({callback_status:1},{where : {id:id}})
             .then(crawlmain => {
                 if (crawlmain){
-                    throw new Error('更新出错');
-                } else {
                     return defer.resolve({
-                            status : true,
-                            id: id
-                        });
+                        status : true,
+                        id: id
+                    });
+                } else {
+                    return defer.reject('更新出错');
                 }
             }
         ).catch(err => {
@@ -76,6 +96,7 @@ var controller = {
         var defer = Q.defer();
         SequelizeDb.CrawlMain
             .findAll({
+                attributes: ['id', 'task_id', 'url', 'update_err_num', 'sku_info', 'callback_err_num'],
                 where:{
                     callback_status: 0,
                     callback_err_num:{[Op.lt]:5},
@@ -102,4 +123,4 @@ var controller = {
 //start
 setInterval(function(){
 	deal();
-},10000)
+},5000)
