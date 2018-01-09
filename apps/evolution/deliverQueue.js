@@ -32,7 +32,7 @@ var controller = {
         var defer = Q.defer();
         
         stoneTaskES.search(
-            { status: 0, size: 100, sort: [['from', 'desc'],['created_at', 'asc']]
+            { status: 0, size: 100, sort: [['from', 'desc'],['create_at', 'asc']]
         }, function (err, res) {
             if (err) {
                 return defer.reject(err);
@@ -67,13 +67,13 @@ var controller = {
             //更新状态
             var errMsg = null;
             if (result.Code == 'ok') {
-                var now = dateFormat(_.now(), "yyyy-mm-dd HH:MM:ss");
+                var now = new Date();
                 var body = result.data.map(function (val) {
                     if (val.status) {
                         return {
                             task_id: val.task_id,
                             status: 1,
-                            updated_at : now
+                            update_at : now
                         }
                     } else {
                         errMsg = val.msg;

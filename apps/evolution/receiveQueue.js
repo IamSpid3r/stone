@@ -44,7 +44,7 @@ var controller = {
         var updateInfo = packageInfo[0];
         var updateStatus = packageInfo[1];
         var updateErrStatus = packageInfo[2];
-        var now = dateFormat(_.now(), "yyyy-mm-dd HH:MM:ss");
+        var now = new Date();
 
         stoneTaskES.update({
             task_id: taskId,
@@ -52,7 +52,7 @@ var controller = {
             'update_info' : JSON.stringify(updateInfo),
             'update_status' : updateStatus,
             'update_err_status' : updateErrStatus,
-            'updated_at' : now
+            'update_at' : now
         }, function (err, res) {
             if (err) {
                 return callback(err);

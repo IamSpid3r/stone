@@ -57,7 +57,7 @@ var controller = {
 
         var that = this;
         var taskIds = []
-        var now = dateFormat(_.now(), "yyyy-mm-dd HH:MM:ss");
+        var now = new Date();
         var urlToTaskId = [];
         var body = urls.map(function (url) {
             var taskId = that.generateTaskId(url);
@@ -71,8 +71,8 @@ var controller = {
                 "store" : store,
                 "status" : 0,
                 "from" : from,
-                "created_at" : now,
-                "updated_at" : now,
+                "create_at" : now,
+                "update_at" : now,
             };
         })
 

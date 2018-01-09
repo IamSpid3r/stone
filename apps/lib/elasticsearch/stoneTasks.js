@@ -166,13 +166,11 @@ function mapping(callback) {
             "update_err_status": {
                 "type": "byte",
             },
-            "updated_at" : {
-                "type":   "date",
-                "format": "yyyy-MM-dd HH:mm:ss"
+            "update_at" : {
+                "type":   "date"
             },
-            "created_at" : {
-                "type":   "date",
-                "format": "yyyy-MM-dd HH:mm:ss"
+            "create_at" : {
+                "type":   "date"
             }
         }
     };

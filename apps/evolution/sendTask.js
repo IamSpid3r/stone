@@ -42,7 +42,7 @@ var controller = {
             status : 2,
             from : [0, 1],  //kunlun来源
             size : 200,
-            sort : [['updated_at', 'asc']]
+            sort : [['update_at', 'asc']]
         },function (err, res) {
             if (err) {
                 return defer.reject(err);
@@ -85,12 +85,12 @@ var controller = {
             //更新状态 已发送
             var body = JSON.parse(body);
             if (body.code == 200) {
-                var now = dateFormat(_.now(), "yyyy-mm-dd HH:MM:ss");
+                var now = new Date();
                 var bulkData = data.map(function (val) {
                     return {
                         task_id : val.task_id,
                         status : 3,
-                        updated_at : now
+                        update_at : now
                     };
                 })
 
