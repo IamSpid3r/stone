@@ -22,7 +22,7 @@
       "tableName": "stone"
     },
     "elasticsearch" : {
-      "host" : "stone-es.shihuo.cn",
+      "host" : "stone-es1.shihuo.cn",
       "user" : "elastic",
       "pass" : "kciKdi93Ldua1"
     }

@@ -22,9 +22,9 @@
         "tableName": "stone_test"
       },
       "elasticsearch" : {
-        "host" : "121.196.203.47",
+        "host" : "shihuo-es-01.offline.hupu.com:9200",
         "user" : "elastic",
-        "pass" : "7791782hxlqqQ"
+        "pass" : "elastic"
       }
     },
   "kunlun" : {

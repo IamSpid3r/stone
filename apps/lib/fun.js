@@ -132,7 +132,7 @@ exports.stoneLog = function (type, level, param) {
             res.body[key] = val;
         }
     })
-    fs.appendFile("/data0/log-data/shihuo.log", JSON.stringify(res) + "\n", function (err) {
+    fs.appendFile("/data0/log-data/stone.log", JSON.stringify(res) + "\n", function (err) {
         if (err) {
             return console.error(err);
         }

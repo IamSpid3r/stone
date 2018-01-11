@@ -141,19 +141,19 @@ function mapping(callback) {
     var mappingBody = {
         "properties": {
             "task_id": {
-                "type": "keyword",
+                "type": "keyword"
             },
             "url": {
-                "type": "keyword",
+                "type": "keyword"
             },
             "store": {
-                "type": "keyword",
+                "type": "keyword"
             },
             "status": {
-                "type": "byte",
+                "type": "byte"
             },
             "from": {
-                "type": "byte",
+                "type": "byte"
             },
             "update_info": {
                 "type": "text",
@@ -161,18 +161,16 @@ function mapping(callback) {
                 "search_analyzer": "ik_max_word"
             },
             "update_status": {
-                "type": "byte",
+                "type": "byte"
             },
             "update_err_status": {
-                "type": "byte",
+                "type": "byte"
             },
-            "updated_at" : {
-                "type":   "date",
-                "format": "yyyy-MM-dd HH:mm:ss"
+            "update_at" : {
+                "type":   "date"
             },
-            "created_at" : {
-                "type":   "date",
-                "format": "yyyy-MM-dd HH:mm:ss"
+            "create_at" : {
+                "type":   "date"
             }
         }
     };
