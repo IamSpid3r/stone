@@ -52,7 +52,8 @@ var du = require('./lib/du');
 var iherb = require('./lib/iherb');
 var abcpost = require('./lib/kaluli/abcpost');
 var apo = require('./lib/kaluli/cnapo');
-var mia = require('./lib/mia');
+// var mia = require('./lib/mia');蜜芽新测试
+var mia = require('./lib/kaluli/mia');
 var chemistdirect = require('./lib/chemistdirect');
 
 var taobaos112017 = require('./lib/shuang112017/taobao');
