@@ -35,23 +35,13 @@ var stone = {
             if(producter){
                 //调用抓取接口 
                 that.stoneApi(producter, function(formData){
-                    if(//stone挂了 等待几秒 重来
-                    typeof formData.Msg != 'undefined' && (formData.Msg.code == 'ECONNREFUSED')
-                    ){
-                        console.log('stone:ECONNREFUSED...');
-                        setTimeout(function(){//回调
+                    that.productData = null;
+                    //返回应答
+                    that.consumer(formData, function(){
+                        setTimeout(function(){ //work
                             that.init();
-                        },3000)
-
-                    }else{
-                        that.productData = null;
-                        //返回应答
-                        that.consumer(formData, function(){
-                            setTimeout(function(){ //work
-                                that.init();
-                            },4000)
-                        });
-                    }
+                        },4000)
+                    });
                 });
             }else{ //如果没有连接 那么等会
                 console.log("waiting...");
@@ -95,7 +85,6 @@ var stone = {
             url: consumerUrl,
             form: {'info': JSON.stringify(formData)},
         },function(error,response,body){
-            console.log(formData)
             callback(body,error);
         });
     },
@@ -119,18 +108,27 @@ var stone = {
         storeObj = getStoreObj(goodsUrlHost);
         if(typeof storeObj == 'object'){
             storeObj.getInfo(goodsUrl ,function(error, itemInfo){
-                if(error){
-                    //res.json({ Status: false,Msg: error});
-                    var formData = {Status: 1, Id: body.data.id, Msg: error};
-                }else{
-                    //res.json({ Status: true, Data: itemInfo});
-                    var formData = { Status: 2, Id: body.data.id, Data: itemInfo};
+                //如果出错了
+                if(typeof itemInfo.Msg != 'undefined' && (itemInfo.Msg.code == 'ECONNREFUSED')){
+                        console.log('stone:ECONNREFUSED...');
+                        setTimeout(function(){//回调
+                            that.init();
+                        },3000);
+                } else {
+                    if(error){
+                        //res.json({ Status: false,Msg: error});
+                        var formData = {Status: 1, Id: body.data.id, Msg: error};
+                    }else{
+                        //res.json({ Status: true, Data: itemInfo});
+                        var formData = { Status: 2, Id: body.data.id, Data: itemInfo};
+                    }
+                    console.log(formData);
+                    callback(formData);
                 }
-                //console.log(itemInfo);
-                callback(formData);
             })
         }else{
             var formData = {Status: 1, Id: body.data.id, Msg: "请求地址不在抓取访问"};
+            console.log(formData);
             callback(formData);
         }
     }//stone end
