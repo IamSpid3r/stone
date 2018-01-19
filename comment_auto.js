@@ -86,10 +86,13 @@ var stone = {
      * 应答给识货
      */
     consumer:function(formData,callback){
+        console.log(formData);
         request.post({
             url: consumerUrl,
             form: {'info': JSON.stringify(formData)},
         },function(error,response,body){
+            console.log("识货返回"+body);
+            console.log("识货返回错误"+error);
             callback(body,error);
         });
     },
@@ -123,8 +126,7 @@ var stone = {
                             //res.json({ Status: false,Msg: error});
                             //var formData = {Status: 1, Id: body.data.id, Msg: error};
                             //res.json({ Status: true, Data: itemInfo});
-                        var formData = { Status: 2, Id: body.data.id, Data: itemInfo};
-                        console.log(formData);  
+                        var formData = { Status: 2, Id: body.data.id, Data: itemInfo};  
                         resolve(formData);
                     }
                 });
