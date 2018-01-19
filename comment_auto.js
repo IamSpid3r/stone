@@ -131,9 +131,11 @@ var stone = {
                 return p;
             }), timeout()])
             .then(function(formData){  //如果10秒内返回了
+                console.log("正常返回。。。。");
                 callback(formData);
             })
             .catch(function(error){  //如果10秒内还没返回
+                console.log(error);
                 that.productData = null;
                 that.consumer({Status: 1, Id: body.data.id, Msg: ''}, function(){
                     setTimeout(function(){ //work
@@ -152,8 +154,7 @@ var stone = {
 function timeout(){
     var p = new Promise(function(resolve, reject){
         setTimeout(function(){
-            console.log("超时10秒。。。。");
-            reject('URL请求超时');
+            reject('URL请求10秒无响应');
         }, 10000);
     });
     return p;
