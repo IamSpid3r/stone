@@ -93,6 +93,7 @@ var stone = {
      * 真正的抓取方法
      */
     stoneApi:function(body, callback){
+        var that = this;
         var goodsUrl = body.data.url;
         var goodsUrlHost = '';
         
@@ -109,19 +110,18 @@ var stone = {
         if(typeof storeObj == 'object'){
             storeObj.getInfo(goodsUrl ,function(error, itemInfo){
                 //如果出错了
-                if(typeof itemInfo.Msg != 'undefined' && (itemInfo.Msg.code == 'ECONNREFUSED')){
+                if(error){
                         console.log('stone:ECONNREFUSED...');
                         setTimeout(function(){//回调
                             that.init();
                         },3000);
                 } else {
-                    if(error){
+                 
                         //res.json({ Status: false,Msg: error});
-                        var formData = {Status: 1, Id: body.data.id, Msg: error};
-                    }else{
+                        //var formData = {Status: 1, Id: body.data.id, Msg: error};
+                   
                         //res.json({ Status: true, Data: itemInfo});
-                        var formData = { Status: 2, Id: body.data.id, Data: itemInfo};
-                    }
+                    var formData = { Status: 2, Id: body.data.id, Data: itemInfo};
                     console.log(formData);
                     callback(formData);
                 }
@@ -132,12 +132,7 @@ var stone = {
             callback(formData);
         }
     }//stone end
-
-
-
 };
-
-
 
 //获取商城对象
 function getStoreObj(host){
@@ -181,21 +176,5 @@ function getStoreObj(host){
             return '';
     }
 }
-
-
+//start
 stone.init(1);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
