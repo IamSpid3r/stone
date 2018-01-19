@@ -76,7 +76,6 @@ exports.getStore = function (urlStr) {
         ['美囤妈妈', ['item.meitun.com']],
         ['贝贝', ['www.beibei.com']],
         ['蜜芽', ['www.mia.com']],
-        // 卡路里抓取商城          海外
         ['澳洲chemistdirect', ['cn.chemistdirect.com.au']],
         ['澳洲pharmacy4less', ['cn.pharmacy4less.com.au']],
         ['澳洲pharmacyonline', ['cn.pharmacyonline.com.au']],
@@ -112,17 +111,16 @@ exports.getStore = function (urlStr) {
 }
 
 
-exports.stoneLog = function (type, level, param) {
-    var type = type || 'stone';
+exports.stoneLog = function (key, level, param) {
+    var key  = key || 'stone';
     var level = level || 'trace';
     var fs = require('fs');
     var res = {
-        'evt': 'stone',
-        'vtm': parseInt((new Date()) / 1000),
-        'body': {
-            'param1':type,
-            'key': 'stone',
-            'level': level,
+        'evt' : 'stone',
+        'vtm' : parseInt((new Date())/1000),
+        'body' : {
+            'key'   :  key,
+            'level' :  level,
         }
     };
     _(param).forEach(function (val, key) {
