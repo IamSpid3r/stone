@@ -126,7 +126,7 @@ var stone = {
                     //res.json({ Status: true, Data: itemInfo});
                     var formData = { Status: 2, Id: body.data.id, Data: itemInfo};
                 }
-                console.log(itemInfo);
+                //console.log(itemInfo);
                 callback(formData);
             })
         }else{
