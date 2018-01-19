@@ -127,14 +127,16 @@ var stone = {
                             //var formData = {Status: 1, Id: body.data.id, Msg: error};
                             //res.json({ Status: true, Data: itemInfo});
                         var formData = { Status: 2, Id: body.data.id, Data: itemInfo};  
-                        resolve(formData);
+                        console.log(formData);
+                        callback(formData);
+                        resolve("");
                     }
                 });
                 return p;
             }), timeout()])
             .then(function(formData){  //如果10秒内返回了
                 console.log("正常返回。。。。");
-                callback(formData);
+                
             })
             .catch(function(error){  //如果10秒内还没返回
                 console.log(error);
