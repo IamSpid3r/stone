@@ -144,41 +144,15 @@ var stone = {
 //获取商城对象
 function getStoreObj(host){
     switch(host){
-        case 'www.amazon.cn':
-            return amazonCn;
-        case 'www.amazon.co.jp':
-            return amazonJp;
-        case 'www.amazon.com':
-            return amazonUsa;
         case 'item.taobao.com':
         case 'detail.tmall.com':
         case 'detail.tmall.hk':
             return tbPc;
-        case 'store.nike.com':
-        case 'www.nike.com':
-            return nikeStore;
-        case 'www.yougou.com':
-        case 'seoul.yougou.com':
-            return yougou;
-        case 'www.shihuo.cn':
-            return shihuoHaitao;
-        case 'www.6pm.com':
-            return _6pm;
-        case 'store.nba.com':
-            return nbaStore;
         case 'item.gome.com.cn':
             return gome;
         case 'item.jd.com':
         case 'item.jd.hk':
             return jd;
-        // 考拉
-        case 'www.kaola.com':
-        case 'www.kaola.com.hk':
-            return kaola;
-        //蜜芽
-        case 'www.mia.com':
-        case 'www.miyabaobei.hk':
-            return mia;
         default:
             return '';
     }
