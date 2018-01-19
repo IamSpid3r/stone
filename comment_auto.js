@@ -117,7 +117,8 @@ var stone = {
                 var p = new Promise(function(resolve, reject){
                     //如果出错了
                     if(error){
-                        reject(error);
+                        console.log(error); 
+                        reject("error");
                     } else {
                             //res.json({ Status: false,Msg: error});
                             //var formData = {Status: 1, Id: body.data.id, Msg: error};
@@ -134,7 +135,6 @@ var stone = {
             })
             .catch(function(error){  //如果10秒内还没返回
                 console.log("超时10秒。。。。");
-                console.log(error); 
                 that.productData = null;
                 that.consumer({Status: 1, Id: body.data.id, Msg: ''}, function(){
                     setTimeout(function(){ //work
