@@ -57,6 +57,11 @@ var stone = {
      * 从识货拿到需要抓取的连接
      */
     producer:function(callback){
+        /*
+        var a = { status: true,
+            data:  { id: '468546',url: 'https://detail.tmall.hk/hk/item.htm?id=40088519684' } };
+            callback(a); */
+   
         var that = this;
         if(that.productData){
             callback(that.productData)
@@ -75,7 +80,7 @@ var stone = {
                     callback(false)
                 }
             })
-        }
+        } 
     },
     /**
      * 应答给识货
@@ -111,7 +116,8 @@ var stone = {
             storeObj.getInfo(goodsUrl ,function(error, itemInfo){
                 //如果出错了
                 if(error){
-                        console.log('stone:ECONNREFUSED...');
+                        console.log(error);
+                        that.productData = null;
                         setTimeout(function(){//回调
                             that.init();
                         },3000);
