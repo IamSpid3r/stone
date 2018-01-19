@@ -116,12 +116,12 @@ var stone = {
         storeObj = getStoreObj(goodsUrlHost);
         if(typeof storeObj == 'object'){
             Promise.race([getComment(storeObj,goodsUrl,body.data.id), timeout()])
-            .then(function(formData){  //如果10秒内返回了
+            .then(function(formData){  //如果20秒内返回了
                 console.log(formData);
                 callback(formData);
                 console.log("正常返回。。。。");
             })
-            .catch(function(error){  //如果10秒内还没返回
+            .catch(function(error){  //如果20秒内还没返回
                 console.log(error);
                 that.productData = null;
                 that.consumer({Status: 1, Id: body.data.id, Msg: ''}, function(){
@@ -165,8 +165,8 @@ function getComment(storeObj,goodsUrl,id) {
 function timeout(){
     var p = new Promise(function(resolve, reject){
         setTimeout(function(){
-            reject('URL请求10秒无响应');
-        }, 10000);
+            reject('URL请求20秒无响应');
+        }, 20000);
     });
     return p;
 }
