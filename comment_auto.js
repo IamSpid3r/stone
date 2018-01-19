@@ -113,30 +113,13 @@ var stone = {
         //抓取数据
         var storeObj = [],
         itemInfo = [];
-
         storeObj = getStoreObj(goodsUrlHost);
         if(typeof storeObj == 'object'){
-            Promise.race([storeObj.getInfo(goodsUrl ,function(error, itemInfo){
-                var p = new Promise(function(resolve, reject){
-                    //如果出错了
-                    if(error){
-                        console.log(error); 
-                        reject("error");
-                    } else {
-                            //res.json({ Status: false,Msg: error});
-                            //var formData = {Status: 1, Id: body.data.id, Msg: error};
-                            //res.json({ Status: true, Data: itemInfo});
-                        var formData = { Status: 2, Id: body.data.id, Data: itemInfo};  
-                        console.log(formData);
-                        callback(formData);
-                        resolve("");
-                    }
-                });
-                return p;
-            }), timeout()])
+            Promise.race([getComment(storeObj,goodsUrl,body.data.id), timeout()])
             .then(function(formData){  //如果10秒内返回了
+                console.log(formData);
+                callback(formData);
                 console.log("正常返回。。。。");
-                
             })
             .catch(function(error){  //如果10秒内还没返回
                 console.log(error);
@@ -154,6 +137,30 @@ var stone = {
         }
     }//stone end
 };
+
+
+function getComment(storeObj,goodsUrl,id) {
+    var p = new Promise(function(resolve, reject){
+        if(typeof storeObj == 'object'){
+            storeObj.getInfo(goodsUrl ,function(error, itemInfo){  
+                //如果出错了
+                if(error){
+                    console.log(error); 
+                    reject("error");
+                } else {
+                        //res.json({ Status: false,Msg: error});
+                        //var formData = {Status: 1, Id: body.data.id, Msg: error};
+                        //res.json({ Status: true, Data: itemInfo});
+                    var formData = { Status: 2, Id: id, Data: itemInfo};  
+                    resolve(formData);
+                }   
+            });
+        } else {
+            reject('请求地址不在抓取访问');
+        }
+    });
+    return p;
+}
 
 function timeout(){
     var p = new Promise(function(resolve, reject){
