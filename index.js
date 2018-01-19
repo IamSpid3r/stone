@@ -42,6 +42,8 @@ var kiwi = require('./lib/kaluli/kiwistarcare');
 var uka = require('./lib/uka');
 var discovery = require('./lib/kaluli/discovery');
 var dod = require('./lib/kaluli/dod');
+var pharmacyonline = require('./lib/kaluli/pharmacyonline');
+
 
 
 var taobaos11 = require('./lib/shuang11/taobaoV2');
@@ -424,11 +426,14 @@ function getStoreObj(urlInfo){
             return iherb;
         case 'cn.chemistdirect.com.au':
         case 'cn.pharmacy4less.com.au':
-        case 'cn.pharmacyonline.com.au':
+        // case 'cn.pharmacyonline.com.au':
         case 'cn.pharmacydirect.co.nz':
         case 'cn.discount-apotheke.de':
         case 'cn.amcal.com.au':
             return chemistdirect;
+            break;
+        case 'cn.pharmacyonline.com.au':
+            return pharmacyonline;
             break;
         case 'www.abcpost.com.au':
             return abcpost;
