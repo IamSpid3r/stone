@@ -118,11 +118,12 @@ var stone = {
                 if(error){
                         console.log(error);
                         that.productData = null;
-                        setTimeout(function(){//回调
-                            that.init();
-                        },3000);
+                        that.consumer({Status: 1, Id: body.data.id, Msg: ''}, function(){
+                            setTimeout(function(){ //work
+                                that.init();
+                            },4000)
+                        });
                 } else {
-                 
                         //res.json({ Status: false,Msg: error});
                         //var formData = {Status: 1, Id: body.data.id, Msg: error};
                    
