@@ -134,7 +134,6 @@ var stone = {
                 callback(formData);
             })
             .catch(function(error){  //如果10秒内还没返回
-                console.log("超时10秒。。。。");
                 that.productData = null;
                 that.consumer({Status: 1, Id: body.data.id, Msg: ''}, function(){
                     setTimeout(function(){ //work
@@ -153,6 +152,7 @@ var stone = {
 function timeout(){
     var p = new Promise(function(resolve, reject){
         setTimeout(function(){
+            console.log("超时10秒。。。。");
             reject('URL请求超时');
         }, 10000);
     });
