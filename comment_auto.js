@@ -114,17 +114,20 @@ var stone = {
         storeObj = getStoreObj(goodsUrlHost);
         if(typeof storeObj == 'object'){
             Promise.race([storeObj.getInfo(goodsUrl ,function(error, itemInfo){
-                //如果出错了
-                if(error){
-                    reject(error);
-                } else {
-                        //res.json({ Status: false,Msg: error});
-                        //var formData = {Status: 1, Id: body.data.id, Msg: error};
-                        //res.json({ Status: true, Data: itemInfo});
-                    var formData = { Status: 2, Id: body.data.id, Data: itemInfo};
-                    console.log(formData);  
-                    resolve(formData);
-                }
+                var p = new Promise(function(resolve, reject){
+                    //如果出错了
+                    if(error){
+                        reject(error);
+                    } else {
+                            //res.json({ Status: false,Msg: error});
+                            //var formData = {Status: 1, Id: body.data.id, Msg: error};
+                            //res.json({ Status: true, Data: itemInfo});
+                        var formData = { Status: 2, Id: body.data.id, Data: itemInfo};
+                        console.log(formData);  
+                        resolve(formData);
+                    }
+                });
+                return p;
             }), timeout()])
             .then(function(formData){  //如果10秒内返回了
                 callback(formData);
