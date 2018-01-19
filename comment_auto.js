@@ -113,26 +113,32 @@ var stone = {
 
         storeObj = getStoreObj(goodsUrlHost);
         if(typeof storeObj == 'object'){
-            storeObj.getInfo(goodsUrl ,function(error, itemInfo){
+            Promise.race([storeObj.getInfo(goodsUrl ,function(error, itemInfo){
                 //如果出错了
                 if(error){
-                        console.log(error);
-                        that.productData = null;
-                        that.consumer({Status: 1, Id: body.data.id, Msg: ''}, function(){
-                            setTimeout(function(){ //work
-                                that.init();
-                            },4000)
-                        });
+                    reject(error);
                 } else {
                         //res.json({ Status: false,Msg: error});
                         //var formData = {Status: 1, Id: body.data.id, Msg: error};
-                   
                         //res.json({ Status: true, Data: itemInfo});
                     var formData = { Status: 2, Id: body.data.id, Data: itemInfo};
-                    console.log(formData);
-                    callback(formData);
+                    console.log(formData);  
+                    resolve(formData);
                 }
+            }), timeout()])
+            .then(function(formData){  //如果10秒内返回了
+                callback(formData);
             })
+            .catch(function(error){  //如果10秒内还没返回
+                console.log("超时10秒。。。。");
+                console.log(error); 
+                that.productData = null;
+                that.consumer({Status: 1, Id: body.data.id, Msg: ''}, function(){
+                    setTimeout(function(){ //work
+                        that.init();
+                    },4000)
+                });
+            });
         }else{
             var formData = {Status: 1, Id: body.data.id, Msg: "请求地址不在抓取访问"};
             console.log(formData);
@@ -140,6 +146,15 @@ var stone = {
         }
     }//stone end
 };
+
+function timeout(){
+    var p = new Promise(function(resolve, reject){
+        setTimeout(function(){
+            reject('URL请求超时');
+        }, 10000);
+    });
+    return p;
+}
 
 //获取商城对象
 function getStoreObj(host){
