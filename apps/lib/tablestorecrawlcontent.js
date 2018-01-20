@@ -3,7 +3,7 @@ var NODE_ENV   = typeof process.env.NODE_ENV != 'undefined' ? process.env.NODE_E
 
 var config = require(process.cwd()+'/config/'+NODE_ENV+'/app.json');
 var tablestoreConf = config.db.tablestore;
-var tableName = 'stone_sku_crawl';
+var tableName = 'stone_crawl_content';
 
 var client = new TableStore.Client({
     accessKeyId: tablestoreConf.accessKeyId,
@@ -15,13 +15,12 @@ var client = new TableStore.Client({
 var Long = TableStore.Long;
 
 //插入新数据
-function insert(taskId, skuId, attributes, callback) {
+function insert(taskId, attributes, callback) {
     var params = {
         tableName: tableName,
         condition: new TableStore.Condition(TableStore.RowExistenceExpectation.IGNORE, null),
         primaryKey: [
-            { 'task_id': taskId },
-            { 'sku_id':  skuId}
+            { 'task_id': taskId }
         ],
         attributeColumns: attributes,
         returnContent: { returnType: TableStore.ReturnType.Primarykey }
@@ -42,7 +41,6 @@ function insertBatch(attributes, callback) {
             condition: new TableStore.Condition(TableStore.RowExistenceExpectation.IGNORE, null),
             primaryKey: [
             { 'task_id': row.taskId },
-            { 'sku_id':  row.skuId}
             ],
             attributeColumns:row.attributeColumns,
             returnContent: { returnType: TableStore.ReturnType.Primarykey }
@@ -59,7 +57,7 @@ function insertBatch(attributes, callback) {
 }
 
 //更新数据
-function update(taskId, skuId, attributes, callback) {
+function update(taskId,attributes, callback) {
     query(taskId, skuId, function (err, rows) {
         if (err) {
             callback(err);
@@ -72,7 +70,6 @@ function update(taskId, skuId, attributes, callback) {
             condition: new TableStore.Condition(TableStore.RowExistenceExpectation.IGNORE, null),
             primaryKey: [
                 { 'task_id': taskId },
-                { 'sku_id': skuId }
             ],
             updateOfAttributeColumns: [
                 { 'PUT': attributes},
@@ -84,17 +81,16 @@ function update(taskId, skuId, attributes, callback) {
                 callback(err);
                 return;
             }
-            data.sku_id = skuId;
             callback(null, data)
         });
     });
 }
 
 //查询数据
-function query(taskId, skuId, callback) {
+function query(taskId, callback) {
     var params = {
         tableName: tableName,
-        primaryKey: [{ 'task_id': taskId }, { 'sku_id': skuId }],
+        primaryKey: [{ 'task_id': taskId }],
     };
 
     client.getRow(params, function (err, data) {
@@ -102,70 +98,14 @@ function query(taskId, skuId, callback) {
             callback(err)
             return;
         }
-
-        callback(null, data.rows)
+        callback(null, data.row)
     })
 }
-
-//查询未处理成功数据
-function queryStatus(taskId, status, pageSize, callback) {
-    var params = {
-        tableName: tableName,
-        direction: TableStore.Direction.FORWARD,
-        inclusiveStartPrimaryKey: [ {"task_id": taskId },  { "sku_id": TableStore.INF_MIN }],
-        exclusiveEndPrimaryKey: [ {"task_id": taskId },  { "sku_id": TableStore.INF_MAX }],
-        limit: pageSize,
-        maxVersions:1
-    };
-
-    // var condition = new TableStore.CompositeCondition(TableStore.LogicalOperator.AND);
-    // condition.addSubCondition(new TableStore.SingleColumnCondition('handle_status', status, TableStore.ComparatorType.EQUAL));
-    // condition.addSubCondition(new TableStore.SingleColumnCondition('handle_status', status, TableStore.ComparatorType.EQUAL));
-
-    // params.columnFilter = condition;
-
-    params.columnFilter =  new TableStore.SingleColumnCondition('handle_status', status, TableStore.ComparatorType.EQUAL);
-
-    client.getRange(params, function (err, data) {
-        if (err) {
-            callback(err)
-            return;
-        }
-
-        callback(null, data)
-    })
-}
-
-//查询数据
-function queryRange(taskId, pageSize, callback) {
-    var params = {
-        tableName: tableName,
-        direction: TableStore.Direction.FORWARD,
-        inclusiveStartPrimaryKey: [ {"task_id": taskId },  { "sku_id": TableStore.INF_MIN }],
-        exclusiveEndPrimaryKey: [ {"task_id": taskId },  { "sku_id": TableStore.INF_MAX }],
-        limit: pageSize,
-        maxVersions:1
-    };
-
-    client.getRange(params, function (err, data) {
-        if (err) {
-            callback(err)
-            return;
-        }
-        //如果data.next_start_primary_key不为空，说明需要继续读取
-        // if (data.next_start_primary_key) {}
-
-        callback(null, data)
-    })
-}
-
 
 exports.tableStore = {
     TableStore: TableStore,
     Insert: insert,
     InsertBatch:insertBatch,
     Update: update,
-    Query: query,
-    queryRange:queryRange,
-    queryStatus:queryStatus
+    Query: query
 }

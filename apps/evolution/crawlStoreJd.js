@@ -227,13 +227,18 @@ var crawl_num = 0;
 var deal = function(){
 	console.log('start jd')
     if (task_id){
+        //记日志
+        fun.stoneLog('crawlMainJd', 'info', {"param1" : task_id, "param2":'', "param":{"message":'继续处理'}})
         crawl(res.data.task_id);
     } else {
         controller.getData(crawltaskConfig.getUrl+'?store=%e4%ba%ac%e4%b8%9c').then(function (res) {
             if (res.code == 200){
+                //记日志
+                fun.stoneLog('crawlMainJd', 'info', {"param1" : res.data.task_id, "param2":res.data.url, "param":{"message":'开始处理'}})
                 crawl(res.data.task_id,res.data.url);
             }
         },function (err) {
+            fun.stoneLog('crawlMainJd', 'error', {"param1" : '', "param2":'', "param":{"message":'获取数据错误'}})
             console.log(err.message)
         })
     }
@@ -252,6 +257,7 @@ var crawl = function(taskId, url){
             })
             controller.curlHtml(taskId, tmpArr, function(err, rows){
                 if (!err){
+                   fun.stoneLog('crawlMainJd', 'info', {"param1" : taskId, "param2":'', "param":{"message":'子商品抓取副标题成功','unique_id':rows.sku_id}})
                    controller.queryStatus(taskId, 0, 1, function(err_st, rows_st){
                         if (rows_st.rows.length == 0){
                             controller.queryStatus(taskId, 1, 1000, function(err_stst, rows_stst){
@@ -275,7 +281,9 @@ var crawl = function(taskId, url){
                                         console.log(res)
                                         task_id = '';
                                         crawl_num = 0;
+                                        fun.stoneLog('crawlMainJd', 'info', {"param1" : taskId, "param2":'', "param":{"message":'callback成功'}})
                                     },function (err) {
+                                        fun.stoneLog('crawlMainJd', 'error', {"param1" : taskId, "param2":'', "param":{"message":'callback失败--'+err.message}})
                                         console.log(err.message)
                                     })
                                 }
@@ -284,23 +292,28 @@ var crawl = function(taskId, url){
                    }) 
                 } else {
                     crawl_num++;
+                    fun.stoneLog('crawlMainJd', 'error', {"param1" : taskId, "param2":'', "param":{"message":err}})
                     if (crawl == 3) dealerrorcallback(task_id, err);
                 }
             })
         }else if(url){
             jd.getInfo(url ,function(error, itemInfo){
                 if(error){
+                    fun.stoneLog('crawlMainJd', 'error', {"param1" : taskId, "param2":url, "param":error})
                     crawl_num++;
                     if (crawl == 3) dealerrorcallback(task_id, error);
                 }else{
+                    fun.stoneLog('crawlMainJd', 'info', {"param1" : taskId, "param2":'', "param":{"message":'获取基本信息成功'}})
                     controller.insertBatchTableStore(taskId, { Status: true, Data: itemInfo}, function (err, rows) {
                         if (err) {
+                            fun.stoneLog('crawlMainJd', 'error', {"param1" : taskId, "param2":url, "param":err})
                             crawl_num++;
                             if (crawl == 3) dealerrorcallback(task_id, err);
                             console.log(err.message)
                         } else {
                             controller.curlHtml(taskId, itemInfo, function(err, rows){
                                 if (!err){
+                                   fun.stoneLog('crawlMainJd', 'info', {"param1" : taskId, "param2":url, "param":{"message":'子商品抓取副标题成功','unique_id':rows.sku_id}})
                                    controller.queryStatus(taskId, 0, 1, function(err_st, rows_st){
                                         if (rows_st.rows.length == 0){
                                             controller.queryStatus(taskId, 1, 1000, function(err_stst, rows_stst){
@@ -324,7 +337,9 @@ var crawl = function(taskId, url){
                                                         console.log(res)
                                                         task_id = '';
                                                         crawl_num = 0;
+                                                        fun.stoneLog('crawlMainJd', 'info', {"param1" : taskId, "param2":url, "param":{"message":'callback成功'}})
                                                     },function (err) {
+                                                        fun.stoneLog('crawlMainJd', 'error', {"param1" : taskId, "param2":url, "param":{"message":'callback失败--'+err.message}})
                                                         console.log(err.message)
                                                     })
                                                 }
@@ -332,6 +347,7 @@ var crawl = function(taskId, url){
                                         }
                                    }) 
                                 }else{
+                                    fun.stoneLog('crawlMainJd', 'error', {"param1" : taskId, "param2":url, "param":{"message":err}})
                                     crawl_num++;
                                     if (crawl == 3) dealerrorcallback(task_id, err);
                                 }
@@ -351,6 +367,7 @@ setInterval(function(){
 
 process.on('uncaughtException', function (err) {
     console.log(err.message);
+    fun.stoneLog('crawlMainJd', 'error', {"param1" : '', "param2":'', "param":{"message":'捕捉到错误--'+err.message}})
     if (task_id){
         //dealerrorcallback(task_id, err.message);
     }

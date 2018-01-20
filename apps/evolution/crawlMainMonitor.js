@@ -16,6 +16,7 @@ var deal = function(){
                 data.data.forEach(function (row) {
                     if (row.id){
                     	console.log(row.id)
+                        fun.stoneLog('crawlMainMonitor', 'info', {"param1" : row.task_id, "param2":row.url, "param":{"message":'15分钟没有抓取成功，重新抓取'}})
                         controller.updateData(row.id,parseInt(row.update_err_num)+1).then(function (data) {})
                     } 
                     

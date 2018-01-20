@@ -128,7 +128,6 @@ var deal_time;
 //处理
 var deal = function(){
     deal_time = (new Date()).getTime();
-    console.log(deal_time)
     task_id = '';
 	console.log('start guonei')
 	
@@ -136,27 +135,34 @@ var deal = function(){
 		    if (res.code == 200){
                 console.log(res.data.url)
 		        task_id = res.data.task_id;
+                //记日志
+                fun.stoneLog('crawlMainGuonei', 'info', {"param1" : task_id, "param2":res.data.url, "param":{"message":'开始处理'}})
 			    var urlInfo = res.data.url ?  url.parse(res.data.url, true, true) : {path:'',host:''};
 		    	var storeObj = getStoreObj(urlInfo);
 			    if(typeof storeObj == 'object'){
 			        storeObj.getInfo(res.data.url ,function(error, itemInfo){
 			            if(error){
+                            fun.stoneLog('crawlMainGuonei', 'error', {"param1" : task_id, "param2":res.data.url, "param":{"message":error}})
 			            	dealerrorcallback(res.data.task_id, error);
 			            }else{
 			                //保存tablestore
 			                var dataJson = { Status: true, Data: itemInfo};
 			                controller.insertTableStore(res.data.task_id, itemInfo.Unique, res.data.url, dataJson, function (err, rows) {
 				                if (err) {
+                                    fun.stoneLog('crawlMainGuonei', 'error', {"param1" : task_id, "param2":res.data.url, "param":{"message":'保存tablestore失败--'+err.message}})
 				                	dealerrorcallback(res.data.task_id, err.message);
 				                } else {
 				                    console.log('success')
+                                    fun.stoneLog('crawlMainGuonei', 'info', {"param1" : task_id, "param2":res.data.url, "param":{"message":'保存tablestore成功'}})
 				                    //callback
-				                    controller.callbackData(crawltaskConfig.postUrl,res.data.task_id,dataJson,'success').then(function (res) {
-				                    	console.log(res)
+				                    controller.callbackData(crawltaskConfig.postUrl,res.data.task_id,dataJson,'success').then(function (result) {
+				                    	console.log(result)
+                                        fun.stoneLog('crawlMainGuonei', 'info', {"param1" : task_id, "param2":res.data.url, "param":{"message":'callback成功'}})
                                         //start
                                         deal();
 				                    },function (err) {
 				                    	console.log(err)
+                                        fun.stoneLog('crawlMainGuonei', 'error', {"param1" : task_id, "param2":res.data.url, "param":{"message":'callback失败--'+err.message}})
 				                    	dealerrorcallback(res.data.task_id, err.message);
 									})
 				                }
@@ -164,6 +170,7 @@ var deal = function(){
 			            }
 			        })
 			    }else{
+                    fun.stoneLog('crawlMainGuonei', 'error', {"param1" : task_id, "param2":res.data.url, "param":{"message":'当前地址不支持爬取'}})
 			    	dealerrorcallback(res.data.task_id, '当前地址不支持爬取');
 			    }
 
@@ -307,6 +314,7 @@ setInterval(function(){
 process.on('uncaughtException', function (err) {
     console.log(err.message);
     if (task_id){
+        fun.stoneLog('crawlMainGuonei', 'error', {"param1" : task_id, "param2":'', "param":{"message":"捕捉到错误--"+err.message}})
         dealerrorcallback(task_id, err.message);
     }
 });

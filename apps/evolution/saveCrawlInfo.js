@@ -2,7 +2,7 @@ var SequelizeDb = require('../lib/db').db;
 const Op = SequelizeDb.sequelize.Op;
 const Q = require("q");
 const _ = require('lodash');
-
+const tableStore = require(process.cwd()+"/apps/lib/tablestorecrawlcontent.js").tableStore;
 
 exports.saveData = function(request, response) {
 	handler(request, response);
@@ -23,19 +23,32 @@ var handler = function (request, response){
         response.json({code: 400, msg: '参数有误'});
         return;
     }
-    
-	controller.updateData(taskId,dataStr,status).then(function (data) {
-    	if(data){
-    		response.json({code: 200, msg: 'success',data:''});
-    	} 
-    },function (err) {
-        response.json({code: 400, msg: err.message});
-    })
-		  
+
+    //先保存tablestore 再保存数据库
+    controller.insertTableStore(taskId,dataStr,function(err,row){
+        if (!err){
+            controller.updateData(taskId,dataStr,status).then(function (data) {
+                if(data){
+                    response.json({code: 200, msg: 'success',data:''});
+                } 
+            },function (err) {
+                response.json({code: 400, msg: err.message});
+            })
+        } else{
+            response.json({code: 400, msg: '保存tablestore出错'});
+        }
+    });
     return;
 }
 
 var controller = {
+    insertTableStore : function (taskId, data, callback) {
+        var attributes = [];
+        attributes.push({
+            'data' : JSON.stringify(data),
+        })
+        tableStore.Insert(taskId, attributes, callback)
+    },
     updateData:function(taskId, data, status){
         var defer = Q.defer();
         SequelizeDb.CrawlMain
@@ -43,7 +56,7 @@ var controller = {
             .then(crawlmain => {
                 if (crawlmain){
                     crawlmain.update({
-                        sku_info:data,
+                        //sku_info:data,
                         status: status == 'success' ? 2 : 3//更新成功
                       }).then(row=>{
                         if (!row) {
