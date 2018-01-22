@@ -92,7 +92,7 @@ var controller = {
                return callback(err);
            }
            tsData = {};
-           if (data.attributes.length > 0) {
+           if (data.attributes != undefined && data.attributes.length > 0) {
                data.attributes.forEach(function (val) {
                    if (val.columnName == 'data') {
                        tsData = JSON.parse(val.columnValue);
