@@ -42,6 +42,8 @@ var kiwi = require('./lib/kaluli/kiwistarcare');
 var uka = require('./lib/uka');
 var discovery = require('./lib/kaluli/discovery');
 var dod = require('./lib/kaluli/dod');
+var pharmacyonline = require('./lib/kaluli/pharmacyonline');
+
 
 
 var taobaos11 = require('./lib/shuang11/taobaoV2');
@@ -52,7 +54,8 @@ var du = require('./lib/du');
 var iherb = require('./lib/iherb');
 var abcpost = require('./lib/kaluli/abcpost');
 var apo = require('./lib/kaluli/cnapo');
-var mia = require('./lib/mia');
+// var mia = require('./lib/mia');蜜芽新测试
+var mia = require('./lib/kaluli/mia');
 var chemistdirect = require('./lib/chemistdirect');
 
 var taobaos112017 = require('./lib/shuang112017/taobao');
@@ -65,6 +68,7 @@ app.use(compress());
 app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.urlencoded({ limit: '50mb',extended: true }));
 app.use(express.static('mochawesome-reports'));
+
 
 
 app.use(function (req, res, next) {
@@ -97,6 +101,14 @@ app.use(function (req, res, next) {
 });
 
 
+app.all('*', function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
+    res.header("X-Powered-By",' 3.2.1')
+    res.header("Content-Type", "application/json;charset=utf-8");
+    next();
+});
 
 app.get('/info', function (req, res) {
     var goodsUrl = req.query.url;
@@ -423,11 +435,14 @@ function getStoreObj(urlInfo){
             return iherb;
         case 'cn.chemistdirect.com.au':
         case 'cn.pharmacy4less.com.au':
-        case 'cn.pharmacyonline.com.au':
+        // case 'cn.pharmacyonline.com.au':
         case 'cn.pharmacydirect.co.nz':
         case 'cn.discount-apotheke.de':
         case 'cn.amcal.com.au':
             return chemistdirect;
+            break;
+        case 'cn.pharmacyonline.com.au':
+            return pharmacyonline;
             break;
         case 'www.abcpost.com.au':
             return abcpost;
