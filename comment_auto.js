@@ -57,6 +57,11 @@ var stone = {
      * 从识货拿到需要抓取的连接
      */
     producer:function(callback){
+        /*
+        var a = { status: true,
+            data:  { id: '468546',url: 'https://detail.tmall.hk/hk/item.htm?id=40088519684' } };
+            callback(a); */
+   
         var that = this;
         if(that.productData){
             callback(that.productData)
@@ -75,16 +80,19 @@ var stone = {
                     callback(false)
                 }
             })
-        }
+        } 
     },
     /**
      * 应答给识货
      */
     consumer:function(formData,callback){
+        console.log(formData);
         request.post({
             url: consumerUrl,
             form: {'info': JSON.stringify(formData)},
         },function(error,response,body){
+            console.log("识货返回"+body);
+            console.log("识货返回错误"+error);
             callback(body,error);
         });
     },
@@ -105,27 +113,23 @@ var stone = {
         //抓取数据
         var storeObj = [],
         itemInfo = [];
-
         storeObj = getStoreObj(goodsUrlHost);
         if(typeof storeObj == 'object'){
-            storeObj.getInfo(goodsUrl ,function(error, itemInfo){
-                //如果出错了
-                if(error){
-                        console.log('stone:ECONNREFUSED...');
-                        setTimeout(function(){//回调
-                            that.init();
-                        },3000);
-                } else {
-                 
-                        //res.json({ Status: false,Msg: error});
-                        //var formData = {Status: 1, Id: body.data.id, Msg: error};
-                   
-                        //res.json({ Status: true, Data: itemInfo});
-                    var formData = { Status: 2, Id: body.data.id, Data: itemInfo};
-                    console.log(formData);
-                    callback(formData);
-                }
+            Promise.race([getComment(storeObj,goodsUrl,body.data.id), timeout()])
+            .then(function(formData){  //如果20秒内返回了
+                console.log(formData);
+                callback(formData);
+                console.log("正常返回。。。。");
             })
+            .catch(function(error){  //如果20秒内还没返回
+                console.log(error);
+                that.productData = null;
+                that.consumer({Status: 1, Id: body.data.id, Msg: ''}, function(){
+                    setTimeout(function(){ //work
+                        that.init();
+                    },4000)
+                });
+            });
         }else{
             var formData = {Status: 1, Id: body.data.id, Msg: "请求地址不在抓取访问"};
             console.log(formData);
@@ -134,44 +138,51 @@ var stone = {
     }//stone end
 };
 
+
+function getComment(storeObj,goodsUrl,id) {
+    var p = new Promise(function(resolve, reject){
+        if(typeof storeObj == 'object'){
+            storeObj.getInfo(goodsUrl ,function(error, itemInfo){  
+                //如果出错了
+                if(error){
+                    console.log(error); 
+                    reject("error");
+                } else {
+                        //res.json({ Status: false,Msg: error});
+                        //var formData = {Status: 1, Id: body.data.id, Msg: error};
+                        //res.json({ Status: true, Data: itemInfo});
+                    var formData = { Status: 2, Id: id, Data: itemInfo};  
+                    resolve(formData);
+                }   
+            });
+        } else {
+            reject('请求地址不在抓取访问');
+        }
+    });
+    return p;
+}
+
+function timeout(){
+    var p = new Promise(function(resolve, reject){
+        setTimeout(function(){
+            reject('URL请求20秒无响应');
+        }, 20000);
+    });
+    return p;
+}
+
 //获取商城对象
 function getStoreObj(host){
     switch(host){
-        case 'www.amazon.cn':
-            return amazonCn;
-        case 'www.amazon.co.jp':
-            return amazonJp;
-        case 'www.amazon.com':
-            return amazonUsa;
         case 'item.taobao.com':
         case 'detail.tmall.com':
         case 'detail.tmall.hk':
             return tbPc;
-        case 'store.nike.com':
-        case 'www.nike.com':
-            return nikeStore;
-        case 'www.yougou.com':
-        case 'seoul.yougou.com':
-            return yougou;
-        case 'www.shihuo.cn':
-            return shihuoHaitao;
-        case 'www.6pm.com':
-            return _6pm;
-        case 'store.nba.com':
-            return nbaStore;
         case 'item.gome.com.cn':
             return gome;
         case 'item.jd.com':
         case 'item.jd.hk':
             return jd;
-        // 考拉
-        case 'www.kaola.com':
-        case 'www.kaola.com.hk':
-            return kaola;
-        //蜜芽
-        case 'www.mia.com':
-        case 'www.miyabaobei.hk':
-            return mia;
         default:
             return '';
     }
