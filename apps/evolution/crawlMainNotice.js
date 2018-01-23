@@ -101,7 +101,7 @@ var controller = {
 
                callback(null, tsData)
            } else {
-               callback(new Error('未在tablestore找到此任务id的数据'))
+               callback(null, null)
            }
        })
     },
