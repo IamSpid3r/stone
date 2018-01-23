@@ -64,6 +64,7 @@ var savecrawlinfo = require('./apps/evolution/saveCrawlInfo');
 var writeTaskhandler = require('./apps/evolution/writeTask').handler;
 var getTaskInfohandler = require('./apps/evolution/getTaskInfo').handler;
 var getCrawlTaskInfohandler = require('./apps/evolution/getCrawlTaskInfo').handler;
+var getCrawlStatInfohandler = require('./apps/evolution/getCrawlStatInfo').handler;
 
 app.use(compress());
 app.use(bodyParser.json({limit: '50mb'}));
@@ -302,6 +303,10 @@ app.get('/getTaskInfo', function (req, res) {
 //按taskid获取信息
 app.get('/getCrawlTaskInfo', function (req, res) {
     getCrawlTaskInfohandler(req, res);
+})
+//按类型获取统计信息
+app.get('/getCrawlStatInfo', function (req, res) {
+    getCrawlStatInfohandler(req, res);
 })
 
 //获取抓取任务
