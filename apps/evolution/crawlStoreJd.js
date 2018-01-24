@@ -38,6 +38,37 @@ var controller = {
         })
         tableStore.Update(taskId, skuId, attributes, callback);
     },
+    insertTableStore : function (taskId, skuId, url, data, callback) {
+        var attributes = [];
+        attributes.push({
+            'data' : JSON.stringify(data),
+        })
+        attributes.push({
+            'url' : url
+        })
+        attributes.push({
+            'store' : fun.getStore(url)
+        })
+        if (data.Status) {
+            attributes.push({
+                'status' : data.Data.Status
+            })
+            attributes.push({
+                'handle_status' : 1
+            })
+            attributes.push({
+                'update_status' : 'success'
+            })
+            attributes.push({
+                'shop_name' : data.Data.ItemAttributes.ShopName
+            })
+        } else {
+            attributes.push({
+                'update_status' : 'error'
+            })
+        }
+        tableStore.Insert(taskId, skuId, attributes, callback)
+    },
     insertBatchTableStore : function (taskId, data, callback) {
         var attributes = [];
         data.Data.Items.forEach(function (row) {
@@ -304,56 +335,85 @@ var crawl = function(taskId, url){
                     if (crawl == 3) dealerrorcallback(task_id, error);
                 }else{
                     fun.stoneLog('crawlMainJd', 'info', {"param1" : taskId, "param2":'', "param":{"message":'获取基本信息成功'}})
-                    controller.insertBatchTableStore(taskId, { Status: true, Data: itemInfo}, function (err, rows) {
-                        if (err) {
-                            fun.stoneLog('crawlMainJd', 'error', {"param1" : taskId, "param2":url, "param":err})
-                            crawl_num++;
-                            if (crawl == 3) dealerrorcallback(task_id, err);
-                            console.log(err.message)
-                        } else {
-                            controller.curlHtml(taskId, itemInfo, function(err, rows){
-                                if (!err){
-                                   fun.stoneLog('crawlMainJd', 'info', {"param1" : taskId, "param2":url, "param":{"message":'子商品抓取副标题成功','unique_id':rows.sku_id}})
-                                   controller.queryStatus(taskId, 0, 1, function(err_st, rows_st){
-                                        if (rows_st.rows.length == 0){
-                                            controller.queryStatus(taskId, 1, 1000, function(err_stst, rows_stst){
-                                                if (rows_stst.rows.length > 0){
-                                                    var tmpTitleArr = {};
-                                                    var content
-                                                    rows_stst.rows.forEach(function (row_ststfe) {
-                                                            var index = _.findIndex(row_ststfe.attributes, {'columnName':'subtitle'});
-                                                            tmpTitleArr[row_ststfe.primaryKey[1].value] = row_ststfe.attributes[index].columnValue;
-                                                            var index_data = _.findIndex(row_ststfe.attributes, {'columnName':'data'});
-                                                            if (!content) content = row_ststfe.attributes[index_data].columnValue;
-                                                    })
-                                                    if (content){
-                                                        content = JSON.parse(content);
-                                                        content.Data.Items.forEach(function (row_ststfeItem, row_index) {
-                                                            content.Data.Items[row_index].Offers[0].Subtitle = tmpTitleArr[row_ststfeItem.Unique];
+                    
+                    //不正常
+                    if (itemInfo.Status != 'inStock'){
+
+                        //保存tablestore
+                        var content = { Status: true, Data: itemInfo};
+                        controller.insertTableStore(taskId, itemInfo.Unique, url, content, function (err, rows) {
+                            if (err) {
+                                fun.stoneLog('crawlMainJd', 'error', {"param1" : taskId, "param2":url, "param":{"message":'保存tablestore失败--'+err.message}})
+                                dealerrorcallback(taskId, err.message);
+                            } else {
+                                console.log('success')
+                                fun.stoneLog('crawlMainJd', 'info', {"param1" : taskId, "param2":url, "param":{"message":'保存tablestore成功'}})
+                                //callback
+                                controller.callbackData(crawltaskConfig.postUrl,taskId,content,'success').then(function (res) {
+                                    console.log(res)
+                                    task_id = '';
+                                    crawl_num = 0;
+                                    fun.stoneLog('crawlMainJd', 'info', {"param1" : taskId, "param2":url, "param":{"message":'callback成功'}})
+                                },function (err) {
+                                    fun.stoneLog('crawlMainJd', 'error', {"param1" : taskId, "param2":url, "param":{"message":'callback失败--'+err.message}})
+                                    console.log(err.message)
+                                })
+                            }
+                        })
+
+                        
+                    } else {
+                        controller.insertBatchTableStore(taskId, { Status: true, Data: itemInfo}, function (err, rows) {
+                            if (err) {
+                                fun.stoneLog('crawlMainJd', 'error', {"param1" : taskId, "param2":url, "param":err})
+                                crawl_num++;
+                                if (crawl == 3) dealerrorcallback(task_id, err);
+                                console.log(err.message)
+                            } else {
+                                controller.curlHtml(taskId, itemInfo, function(err, rows){
+                                    if (!err){
+                                       fun.stoneLog('crawlMainJd', 'info', {"param1" : taskId, "param2":url, "param":{"message":'子商品抓取副标题成功','unique_id':rows.sku_id}})
+                                       controller.queryStatus(taskId, 0, 1, function(err_st, rows_st){
+                                            if (rows_st.rows.length == 0){
+                                                controller.queryStatus(taskId, 1, 1000, function(err_stst, rows_stst){
+                                                    if (rows_stst.rows.length > 0){
+                                                        var tmpTitleArr = {};
+                                                        var content
+                                                        rows_stst.rows.forEach(function (row_ststfe) {
+                                                                var index = _.findIndex(row_ststfe.attributes, {'columnName':'subtitle'});
+                                                                tmpTitleArr[row_ststfe.primaryKey[1].value] = row_ststfe.attributes[index].columnValue;
+                                                                var index_data = _.findIndex(row_ststfe.attributes, {'columnName':'data'});
+                                                                if (!content) content = row_ststfe.attributes[index_data].columnValue;
+                                                        })
+                                                        if (content){
+                                                            content = JSON.parse(content);
+                                                            content.Data.Items.forEach(function (row_ststfeItem, row_index) {
+                                                                content.Data.Items[row_index].Offers[0].Subtitle = tmpTitleArr[row_ststfeItem.Unique];
+                                                            })
+                                                        }
+                                                        //callback
+                                                        controller.callbackData(crawltaskConfig.postUrl,taskId,content,'success').then(function (res) {
+                                                            console.log(res)
+                                                            task_id = '';
+                                                            crawl_num = 0;
+                                                            fun.stoneLog('crawlMainJd', 'info', {"param1" : taskId, "param2":url, "param":{"message":'callback成功'}})
+                                                        },function (err) {
+                                                            fun.stoneLog('crawlMainJd', 'error', {"param1" : taskId, "param2":url, "param":{"message":'callback失败--'+err.message}})
+                                                            console.log(err.message)
                                                         })
                                                     }
-                                                    //callback
-                                                    controller.callbackData(crawltaskConfig.postUrl,taskId,content,'success').then(function (res) {
-                                                        console.log(res)
-                                                        task_id = '';
-                                                        crawl_num = 0;
-                                                        fun.stoneLog('crawlMainJd', 'info', {"param1" : taskId, "param2":url, "param":{"message":'callback成功'}})
-                                                    },function (err) {
-                                                        fun.stoneLog('crawlMainJd', 'error', {"param1" : taskId, "param2":url, "param":{"message":'callback失败--'+err.message}})
-                                                        console.log(err.message)
-                                                    })
-                                                }
-                                           }) 
-                                        }
-                                   }) 
-                                }else{
-                                    fun.stoneLog('crawlMainJd', 'error', {"param1" : taskId, "param2":url, "param":{"message":err}})
-                                    crawl_num++;
-                                    if (crawl == 3) dealerrorcallback(task_id, err);
-                                }
-                            })
-                        }
-                    });
+                                               }) 
+                                            }
+                                       }) 
+                                    }else{
+                                        fun.stoneLog('crawlMainJd', 'error', {"param1" : taskId, "param2":url, "param":{"message":err}})
+                                        crawl_num++;
+                                        if (crawl == 3) dealerrorcallback(task_id, err);
+                                    }
+                                })
+                            }
+                        });
+                    }
                 }
             });
         }
