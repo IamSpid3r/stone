@@ -194,6 +194,12 @@ var controller = {
 			    return mall.name;
 			  })
 			  .value();
+	    }else if(store == 'taobao'){
+	    	var storeStr = _.chain(taobaoArr)
+			  .map(function(mall){
+			    return mall.name;
+			  })
+			  .value();
     	} else {
     		var storeStr = _.chain(guowaiArr)
 			  .map(function(mall){
