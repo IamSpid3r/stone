@@ -59,8 +59,6 @@ var guowaiArr = [
   {'name':'荷兰DOD'},
 ];
 var guoneiArr = [
-	{'name':'淘宝'},
-	{'name':'天猫'},
 	{'name':'中亚'},
 	{'name':'优购'},
 	{'name':'NIKE官网'},
@@ -80,6 +78,11 @@ var guoneiArr = [
 	{'name':'贝贝'},
 	{'name':'蜜芽'},
 	{'name':'其他'},
+];
+
+var taobaoArr = [
+	{'name':'淘宝'},
+	{'name':'天猫'},
 ];
 
 
