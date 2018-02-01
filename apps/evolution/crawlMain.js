@@ -4,7 +4,7 @@ var url  = require('url');
 var fun  = require('../lib/fun');
 
 const Q = require("q");
-var limit = 500;//最大任务
+var limit = 2000;//最大任务
 
 exports.saveTask = function(param, callback) {
     try{
