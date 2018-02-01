@@ -27,26 +27,32 @@ const binList = [
             start: [
                 '/usr/bin/pm2 start ./apps/evolution/crawlStoreGuonei.js -n crawlStoreGuonei1  --max-memory-restart 125M',
                 '/usr/bin/pm2 start ./apps/evolution/crawlStoreGuonei.js -n crawlStoreGuonei2  --max-memory-restart 125M',
-                '/usr/bin/pm2 start ./apps/evolution/crawlStoreGuonei.js -n crawlStoreGuonei3  --max-memory-restart 125M',
-                '/usr/bin/pm2 start ./apps/evolution/crawlStoreGuonei.js -n crawlStoreGuonei4  --max-memory-restart 125M',
-                '/usr/bin/pm2 start ./apps/evolution/crawlStoreGuonei.js -n crawlStoreGuonei5  --max-memory-restart 125M',
-                '/usr/bin/pm2 start ./apps/evolution/crawlStoreGuonei.js -n crawlStoreGuonei6  --max-memory-restart 125M',
             ],
             restart : [
                 '/usr/bin/pm2 restart crawlStoreGuonei1',
                 '/usr/bin/pm2 restart crawlStoreGuonei2',
-                '/usr/bin/pm2 restart crawlStoreGuonei3',
-                '/usr/bin/pm2 restart crawlStoreGuonei4',
-                '/usr/bin/pm2 restart crawlStoreGuonei5',
-                '/usr/bin/pm2 restart crawlStoreGuonei6',
             ],
             stop : [
                 '/usr/bin/pm2 stop crawlStoreGuonei1',
                 '/usr/bin/pm2 stop crawlStoreGuonei2',
-                '/usr/bin/pm2 stop crawlStoreGuonei3',
-                '/usr/bin/pm2 stop crawlStoreGuonei4',
-                '/usr/bin/pm2 stop crawlStoreGuonei5',
-                '/usr/bin/pm2 stop crawlStoreGuonei6',
+            ],
+        }
+    },
+    {
+        'name' : 'crawlStoreTaobao',
+        'address' : 'guonei',
+        'bin': {
+            start: [
+                '/usr/bin/pm2 start ./apps/evolution/crawlStoreTaobao.js -n crawlStoreTaobao1  -f --max-memory-restart 125M',
+                '/usr/bin/pm2 start ./apps/evolution/crawlStoreTaobao.js -n crawlStoreTaobao2  -f --max-memory-restart 125M',
+            ],
+            restart : [
+                '/usr/bin/pm2 restart crawlStoreTaobao1',
+                '/usr/bin/pm2 restart crawlStoreTaobao2',
+            ],
+            stop : [
+                '/usr/bin/pm2 stop crawlStoreTaobao1',
+                '/usr/bin/pm2 stop crawlStoreTaobao2',
             ],
         }
     },
@@ -122,7 +128,7 @@ var currentAddress = [];
 if (!NODE_ENV) {
     const ipList = {
         'center' : ['120.26.107.228'],
-        'guonei' : ['120.26.107.228', '121.41.62.148', '121.41.62.183'],
+        'guonei' : ['120.26.107.228', '121.41.62.148', '121.41.62.183', '116.62.53.123', '116.62.53.162'],
         'guowai' : ['47.88.18.192', '47.88.77.102']
     }
     var  currentIp = os.networkInterfaces().eth1[0].address;
