@@ -45,14 +45,20 @@ const binList = [
             start: [
                 '/usr/bin/pm2 start ./apps/evolution/crawlStoreTaobao.js -n crawlStoreTaobao1  -f --max-memory-restart 125M',
                 '/usr/bin/pm2 start ./apps/evolution/crawlStoreTaobao.js -n crawlStoreTaobao2  -f --max-memory-restart 125M',
+                '/usr/bin/pm2 start ./apps/evolution/crawlStoreTaobao.js -n crawlStoreTaobao3  -f --max-memory-restart 125M',
+                '/usr/bin/pm2 start ./apps/evolution/crawlStoreTaobao.js -n crawlStoreTaobao4  -f --max-memory-restart 125M',
             ],
             restart : [
                 '/usr/bin/pm2 restart crawlStoreTaobao1',
                 '/usr/bin/pm2 restart crawlStoreTaobao2',
+                '/usr/bin/pm2 restart crawlStoreTaobao3',
+                '/usr/bin/pm2 restart crawlStoreTaobao4',
             ],
             stop : [
                 '/usr/bin/pm2 stop crawlStoreTaobao1',
                 '/usr/bin/pm2 stop crawlStoreTaobao2',
+                '/usr/bin/pm2 stop crawlStoreTaobao3',
+                '/usr/bin/pm2 stop crawlStoreTaobao4',
             ],
         }
     },
@@ -148,38 +154,62 @@ if (!NODE_ENV) {
 }
 
 var options = process.argv;
-for(var i=0;i<options.length;i++) {
-    if(options[i].indexOf("start") == 0) {
+if (options.length > 2) {
+    if(options[2].indexOf("start") == 0) {
         option = 'start';
-    } else if (options[i].indexOf("restart") == 0){
+    } else if (options[2].indexOf("restart") == 0){
         option = 'restart';
-    } else if (options[i].indexOf("stop") == 0){
+    } else if (options[2].indexOf("stop") == 0){
         option = 'stop';
     } else {
         option = '';
     }
+}
+name = '';
+if (options.length > 3){
+    name = options[3];
+}
 
-    if (option) {
-        binList.forEach(function (bin) {
-            if (currentAddress.indexOf(bin.address) != -1) {
-                if (!Array.isArray(bin.bin[option])) {
-                    binTmpArr = [bin.bin[option]]
-                } else {
-                    binTmpArr = bin.bin[option];
-                }
-
-                binTmpArr.forEach(function (binTmp) {
-                    exec(binTmp, function(err, stdout, stderr) {
-                        if (err) {
-                            console.log(err.message);
-                        } else {
-                            console.log(binTmp, ' ok');
-                        }
-                    });
-                })
+if (option && name) {
+    binList.forEach(function (bin) {
+        if (bin.name == name) {
+            if (!Array.isArray(bin.bin[option])) {
+                binTmpArr = [bin.bin[option]]
+            } else {
+                binTmpArr = bin.bin[option];
             }
-        })
-    }
+
+            binTmpArr.forEach(function (binTmp) {
+                exec(binTmp, function(err, stdout, stderr) {
+                    if (err) {
+                        console.log(err.message);
+                    } else {
+                        console.log(binTmp, ' ok');
+                    }
+                });
+            })
+        }
+    })
+} else if (option){
+    binList.forEach(function (bin) {
+        if (currentAddress.indexOf(bin.address) != -1) {
+            if (!Array.isArray(bin.bin[option])) {
+                binTmpArr = [bin.bin[option]]
+            } else {
+                binTmpArr = bin.bin[option];
+            }
+
+            binTmpArr.forEach(function (binTmp) {
+                exec(binTmp, function(err, stdout, stderr) {
+                    if (err) {
+                        console.log(err.message);
+                    } else {
+                        console.log(binTmp, ' ok');
+                    }
+                });
+            })
+        }
+    })
 }
 
 if (!option) {
