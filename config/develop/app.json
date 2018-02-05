@@ -31,8 +31,14 @@
     "receiveUrl" : "http://192.168.11.185:3500/receive"
   },
   "crawltask":{
-    "getUrl" : "http://127.0.0.1:3000/getCrawlTask",
-    "postUrl" : "http://127.0.0.1:3000/saveCrawlInfo"
+    "getUrl" : "http://127.0.0.1:3200/getCrawlTask",
+    "postUrl" : "http://127.0.0.1:3200/saveCrawlInfo",
+    "taskNum" : {
+      "guonei" : 2,
+      "guowai" : 1,
+      "jd" : 1,
+      "taobao" : 1
+    }
   },
   "app" : {
     "taskFrom" : {

@@ -31,8 +31,14 @@
       "receiveUrl" : "http://kunlun.shihuo.cn/receive"
   },
   "crawltask":{
-    "getUrl" : "http://stone.shihuo.cn/getCrawlTask",
-    "postUrl" : "http://stone.shihuo.cn/saveCrawlInfo"
+    "getUrl" : "http://120.26.107.228:3200/getCrawlTask",
+    "postUrl" : "http://120.26.107.228:3200/saveCrawlInfo",
+    "taskNum" : {
+      "guonei" : 4,
+      "guowai" : 6,
+      "jd" : 3,
+      "taobao" : 5
+    }
   },
   "app" : {
     "taskFrom" : {

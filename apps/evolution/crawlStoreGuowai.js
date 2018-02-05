@@ -6,6 +6,7 @@ var request = require('request');
 var url = require('url');
 const fun = require(process.cwd()+"/apps/lib/fun.js");
 const Q = require("q");
+const cluster = require('cluster');
 var taobao = require('../../lib/taobao');
 var taobaoV2 = require('../../lib/taobaoV2');
 var amazonCn = require('../../lib/amazonCn');
@@ -38,10 +39,6 @@ var discovery = require('../../lib/kaluli/discovery');
 var dod = require('../../lib/kaluli/dod');
 var abcpost = require('../../lib/kaluli/abcpost');
 var apo = require('../../lib/kaluli/cnapo');
-
-
-var taobaos11 = require('../../lib/shuang11/taobaoV2');
-var taobaos12 = require('../../lib/shuang12/taobao');
 var suning = require('../../lib/suning');
 var gome = require('../../lib/gome');
 var du = require('../../lib/du');
@@ -49,7 +46,6 @@ var iherb = require('../../lib/iherb');
 var mia = require('../../lib/mia');
 var chemistdirect = require('../../lib/chemistdirect');
 
-var taobaos112017 = require('../../lib/shuang112017/taobao');
 
 var task_id;//当前在跑的任务id
 
@@ -125,77 +121,69 @@ var dealerrorcallback = function(taskId,error){
 			})
 }
 
-var deal_time;
 
 //处理
+var deal_time;
 var deal = function(){
     deal_time = (new Date()).getTime();
     task_id = '';
-	console.log('start guowai')
-	
-		controller.getData(crawltaskConfig.getUrl+'?store=guowai').then(function (res) {
-		    if (res.code == 200){
-		        task_id = res.data.task_id;
-		    	console.log(res.data.url)
-                //记日志
-                fun.stoneLog('crawlStoreGuowai', 'info', {"param1" : task_id, "param2":res.data.url, "param":{"message":"开始处理"}})
-			    var urlInfo = res.data.url ?  url.parse(res.data.url, true, true) : {path:'',host:''};
-		    	var storeObj = getStoreObj(urlInfo);
-			    if(typeof storeObj == 'object'){
-			        storeObj.getInfo(res.data.url ,function(error, itemInfo){
-			            if(error){
-                            fun.stoneLog('crawlStoreGuowai', 'error', {"param1" : task_id, "param2":res.data.url, "param":{"message":error}})
-			            	dealerrorcallback(res.data.task_id, error);
-			            }else{
-			                //保存tablestore
-			                var dataJson = { Status: true, Data: itemInfo};
-			                controller.insertTableStore(res.data.task_id, itemInfo.Unique, res.data.url, dataJson, function (err, rows) {
-				                if (err) {
-				                	fun.stoneLog('crawlStoreGuowai', 'error', {"param1" : task_id, "param2":res.data.url, "param":{"message":'保存tablestore失败--'+err.message}})
-                                    dealerrorcallback(res.data.task_id, err.message);
-				                } else {
-				                    console.log('success')
-				                    fun.stoneLog('crawlStoreGuowai', 'info', {"param1" : task_id, "param2":res.data.url, "param":{"message":'保存tablestore成功'}})
-                                    //callback
-				                    controller.callbackData(crawltaskConfig.postUrl,res.data.task_id,dataJson,'success').then(function (result) {
-				                    	console.log(result)
-                                        fun.stoneLog('crawlStoreGuowai', 'info', {"param1" : task_id, "param2":res.data.url, "param":{"message":'callback成功'}})
-                                        //start
-                                        deal();
-				                    },function (err) {
-				                    	console.log(err)
-                                        fun.stoneLog('crawlStoreGuowai', 'error', {"param1" : task_id, "param2":res.data.url, "param":{"message":"callback失败--"+err.message}})
-				                    	dealerrorcallback(res.data.task_id, err.message);
-									})
-				                }
-				            })
-			            }
-			        })
-			    }else{
-                    fun.stoneLog('crawlStoreGuowai', 'error', {"param1" : task_id, "param2":res.data.url, "param":{"message":'当前地址不支持爬取'}})
-			    	dealerrorcallback(res.data.task_id, '当前地址不支持爬取');
-			    }
 
-		    } else {
-                setTimeout(function(){
-                    //start
-                    deal();
-                },5000)
-		    }
-		},function (err) {
-		    console.log(err.message)
-            setTimeout(function(){
-                    //start
-                    deal();
-                },2000)
-		}).then(function(){},function(err){
-            console.log(err.message)
-            setTimeout(function(){
-                //start
-                deal();
-            },2000)
-        })
-	
+    console.log(cluster.worker.id + ' start guowai');
+    controller.getData(crawltaskConfig.getUrl+'?store=guowai').then(function (res) {
+        if (res.code == 200){
+            console.log(cluster.worker.id + ' crawl ' +res.data.url);
+
+            task_id = res.data.task_id;
+            //记日志
+            fun.stoneLog('crawlStoreGuowai', 'info', {"param1" : task_id, "param2":res.data.url, "param":{"message":"开始处理"}})
+            var urlInfo = res.data.url ?  url.parse(res.data.url, true, true) : {path:'',host:''};
+            var storeObj = getStoreObj(urlInfo);
+            if(typeof storeObj == 'object'){
+                storeObj.getInfo(res.data.url ,function(error, itemInfo){
+                    if(error){
+                        console.log(cluster.worker.id + ' crawl error'+ error);
+                        fun.stoneLog('crawlStoreGuowai', 'error', {"param1" : task_id, "param2":res.data.url, "param":{"message":error}})
+                        dealerrorcallback(res.data.task_id, error);
+                    }else{
+                        //保存tablestore
+                        var dataJson = { Status: true, Data: itemInfo};
+                        controller.insertTableStore(res.data.task_id, itemInfo.Unique, res.data.url, dataJson, function (err, rows) {
+                            if (err) {
+                                fun.stoneLog('crawlStoreGuowai', 'error', {"param1" : task_id, "param2":res.data.url, "param":{"message":'保存tablestore失败--'+err.message}})
+                                dealerrorcallback(res.data.task_id, err.message);
+                            } else {
+                                console.log(cluster.worker.id + ' success');
+                                fun.stoneLog('crawlStoreGuowai', 'info', {"param1" : task_id, "param2":res.data.url, "param":{"message":'保存tablestore成功'}})
+                                //callback
+                                controller.callbackData(crawltaskConfig.postUrl,res.data.task_id,dataJson,'success').then(function (result) {
+                                    console.log(cluster.worker.id + ' success' + result)
+                                    fun.stoneLog('crawlStoreGuowai', 'info', {"param1" : task_id, "param2":res.data.url, "param":{"message":'callback成功'}})
+                                    //start
+                                    deal();
+                                },function (err) {
+                                    console.log(cluster.worker.id + ' tablestore ' +err.message);
+                                    fun.stoneLog('crawlStoreGuowai', 'error', {"param1" : task_id, "param2":res.data.url, "param":{"message":"callback失败--"+err.message}})
+                                    dealerrorcallback(res.data.task_id, err.message);
+                                })
+                            }
+                        })
+                    }
+                })
+            }else{
+                fun.stoneLog('crawlStoreGuowai', 'error', {"param1" : task_id, "param2":res.data.url, "param":{"message":'当前地址不支持爬取'}})
+                dealerrorcallback(res.data.task_id, '当前地址不支持爬取');
+            }
+
+        } else {
+            setTimeout(function(){deal();},5000)
+        }
+    },function (err) {
+        console.log(cluster.worker.id + ' stone ' +err.message);
+        setTimeout(function(){deal();},2000)
+    }).then(function(){},function(err){
+        console.log(cluster.worker.id + ' stone2 ' +err.message);
+        setTimeout(function(){deal();},2000)
+    })
 }
 
 
@@ -317,16 +305,6 @@ function getStoreObj(urlInfo){
     }
 }
 
-//start
-deal();
-
-setInterval(function(){
-    if ((new Date()).getTime() - deal_time > 120*1000){
-        //start
-        deal();
-    }
-}, 5000)
-
 process.on('uncaughtException', function (err) {
     console.log(err.message);
     if (task_id){
@@ -334,5 +312,28 @@ process.on('uncaughtException', function (err) {
         dealerrorcallback(task_id, err.message);
     }
 });
+
+
+if (cluster.isMaster) {
+    for (var i = 0; i < crawltaskConfig.taskNum.guowai; i++) {
+        cluster.fork();
+    }
+    cluster.on('exit', function(worker, code, signal) {
+        console.log('worker ' + worker.process.pid + ' died');
+        cluster.fork();
+    });
+} else {
+    //start
+    console.log("I am worker #"+cluster.worker.id);
+    deal();
+
+    //listen timeout
+    setInterval(function () {
+        if ((new Date()).getTime() - deal_time > 120 * 1000) {
+            deal();
+        }
+    }, 5000)
+}
+
 
 

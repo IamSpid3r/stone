@@ -124,7 +124,7 @@ var handler = function (request, response){
 		  },function(err){
 		  	//没有获取到锁则循环获取
 		  	setTimeout(function(){
-		  		handle(request, response);
+		  		handler(request, response);
 		  	},500)
 	      }); 
     } else {//其他的商城
@@ -153,7 +153,7 @@ var handler = function (request, response){
 		  },function(err){
 		  	//没有获取到锁则循环获取
 		  	setTimeout(function(){
-		  		handle(request, response);
+		  		handler(request, response);
 		  	},500)
 	      }); 
     }
