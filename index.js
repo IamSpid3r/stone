@@ -43,6 +43,7 @@ var uka = require('./lib/uka');
 var discovery = require('./lib/kaluli/discovery');
 var dod = require('./lib/kaluli/dod');
 var pharmacyonline = require('./lib/kaluli/pharmacyonline');
+var fengqu = require('./lib/kaluli/fengqu');
 
 
 
@@ -429,7 +430,9 @@ function getStoreObj(urlInfo){
         case 'www.xiji.com':
             return xiji;
             break;
-
+        case 'www.fengqu.com':
+            return fengqu;
+            break;
         case 'product.suning.com':
             return suning;
             break;
