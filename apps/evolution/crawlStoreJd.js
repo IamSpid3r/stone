@@ -7,6 +7,7 @@ var url = require('url');
 const fun = require(process.cwd()+"/apps/lib/fun.js");
 const Q = require("q");
 const _ = require('lodash');
+const cluster = require('cluster');
 var jd = require('../../lib/jd');
 var iconv = require('iconv-lite');
 var proxyRequest = require('../../lib/proxyRequest2');
@@ -256,7 +257,7 @@ var task_id;
 var crawl_num = 0;
 //处理
 var deal = function(){
-	console.log('start jd')
+    console.log(cluster.worker.id + ' start jd');
     if (task_id){
         //记日志
         fun.stoneLog('crawlStoreJd', 'info', {"param1" : task_id, "param2":'', "param":{"message":'继续处理'}})
@@ -275,7 +276,6 @@ var deal = function(){
     }
 	
 }
-
 var crawl = function(taskId, url){
     controller.queryRange(taskId, 1000, function (err, rows) {
         if (rows.rows.length > 0){//有抓取过
@@ -420,11 +420,6 @@ var crawl = function(taskId, url){
     })
 }
 
-//start
-setInterval(function(){
-    deal(task_id);
-},10000)
-
 process.on('uncaughtException', function (err) {
     console.log(err.message);
     fun.stoneLog('crawlStoreJd', 'error', {"param1" : '', "param2":'', "param":{"message":'捕捉到错误--'+err.message}})
@@ -432,6 +427,23 @@ process.on('uncaughtException', function (err) {
         //dealerrorcallback(task_id, err.message);
     }
 });
+
+if (cluster.isMaster) {
+    for (var i = 0; i < crawltaskConfig.taskNum.jd; i++) {
+        cluster.fork();
+    }
+    cluster.on('exit', function (worker, code, signal) {
+        console.log('worker ' + worker.process.pid + ' died');
+        cluster.fork();
+    });
+} else {
+    //start
+    console.log("I am worker #" + cluster.worker.id);
+    setInterval(function(){
+        deal(task_id);
+    },10000)
+}
+
 
 
 
