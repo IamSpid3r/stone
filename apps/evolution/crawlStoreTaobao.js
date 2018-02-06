@@ -77,7 +77,7 @@ var dealerrorcallback = function (taskId, error) {
     var response = {Status: false, Msg: {Errors: [{Code: 'Error', Message: error}]}}
 
     //callback
-    controller.callbackData(crawltaskConfig.postUrl, taskId, response, 'error').then(function (res) {
+    controller.callbackData(crawltaskConfig.postUrl.guonei, taskId, response, 'error').then(function (res) {
         //start
         deal();
     }, function (err) {
@@ -94,7 +94,7 @@ var deal = function () {
     task_id = '';
     console.log(cluster.worker.id + ' start taobao');
 
-    controller.getData(crawltaskConfig.getUrl + '?store=taobao').then(function (res) {
+    controller.getData(crawltaskConfig.getUrl.guonei + '?store=taobao').then(function (res) {
         if (res.code == 200) {
             console.log(cluster.worker.id + ' crawl '+ res.data.url)
             task_id = res.data.task_id;
@@ -138,7 +138,7 @@ var deal = function () {
                                     "param": {"message": '保存tablestore成功'}
                                 })
                                 //callback
-                                controller.callbackData(crawltaskConfig.postUrl, res.data.task_id, dataJson, 'success').then(function (result) {
+                                controller.callbackData(crawltaskConfig.postUrl.guonei, res.data.task_id, dataJson, 'success').then(function (result) {
                                     console.log(result)
                                     fun.stoneLog('crawlStoreTaobao', 'info', {
                                         "param1": task_id,

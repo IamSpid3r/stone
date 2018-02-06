@@ -155,7 +155,7 @@ var controller = {
 var dealerrorcallback = function(taskId,error){
     var response = {Status:false,Msg:{Errors:[{Code:'Error',Message:error}]}}
             //callback
-            controller.callbackData(crawltaskConfig.postUrl,taskId,response,'error').then(function (res) {
+            controller.callbackData(crawltaskConfig.postUrl.guonei,taskId,response,'error').then(function (res) {
                 console.log(res)
             },function (err) {
                 console.log(err.message)
@@ -263,7 +263,7 @@ var deal = function(){
         fun.stoneLog('crawlStoreJd', 'info', {"param1" : task_id, "param2":'', "param":{"message":'继续处理'}})
         crawl(res.data.task_id);
     } else {
-        controller.getData(crawltaskConfig.getUrl+'?store=%e4%ba%ac%e4%b8%9c').then(function (res) {
+        controller.getData(crawltaskConfig.getUrl.guonei+'?store=%e4%ba%ac%e4%b8%9c').then(function (res) {
             if (res.code == 200){
                 //记日志
                 fun.stoneLog('crawlStoreJd', 'info', {"param1" : res.data.task_id, "param2":res.data.url, "param":{"message":'开始处理'}})
@@ -308,7 +308,7 @@ var crawl = function(taskId, url){
                                         })
                                     }
                                     //callback
-                                    controller.callbackData(crawltaskConfig.postUrl,taskId,content,'success').then(function (res) {
+                                    controller.callbackData(crawltaskConfig.postUrl.guonei,taskId,content,'success').then(function (res) {
                                         console.log(res)
                                         task_id = '';
                                         crawl_num = 0;
@@ -349,7 +349,7 @@ var crawl = function(taskId, url){
                                 console.log('success')
                                 fun.stoneLog('crawlStoreJd', 'info', {"param1" : taskId, "param2":url, "param":{"message":'保存tablestore成功'}})
                                 //callback
-                                controller.callbackData(crawltaskConfig.postUrl,taskId,content,'success').then(function (res) {
+                                controller.callbackData(crawltaskConfig.postUrl.guonei,taskId,content,'success').then(function (res) {
                                     console.log(res)
                                     task_id = '';
                                     crawl_num = 0;
@@ -392,7 +392,7 @@ var crawl = function(taskId, url){
                                                             })
                                                         }
                                                         //callback
-                                                        controller.callbackData(crawltaskConfig.postUrl,taskId,content,'success').then(function (res) {
+                                                        controller.callbackData(crawltaskConfig.postUrl.guonei,taskId,content,'success').then(function (res) {
                                                             console.log(res)
                                                             task_id = '';
                                                             crawl_num = 0;

@@ -109,7 +109,7 @@ var controller = {
 var dealerrorcallback = function(taskId,error){
 	var response = {Status:false,Msg:{Errors:[{Code:'Error',Message:error}]}}
 			//callback
-	        controller.callbackData(crawltaskConfig.postUrl,taskId,response,'error').then(function (res) {
+	        controller.callbackData(crawltaskConfig.postUrl.guowai,taskId,response,'error').then(function (res) {
 	        	//start
                 deal();
 	        },function (err) {
@@ -129,7 +129,7 @@ var deal = function(){
     task_id = '';
 
     console.log(cluster.worker.id + ' start guowai');
-    controller.getData(crawltaskConfig.getUrl+'?store=guowai').then(function (res) {
+    controller.getData(crawltaskConfig.getUrl.guowai+'?store=guowai').then(function (res) {
         if (res.code == 200){
             console.log(cluster.worker.id + ' crawl ' +res.data.url);
 
@@ -155,7 +155,7 @@ var deal = function(){
                                 console.log(cluster.worker.id + ' success');
                                 fun.stoneLog('crawlStoreGuowai', 'info', {"param1" : task_id, "param2":res.data.url, "param":{"message":'保存tablestore成功'}})
                                 //callback
-                                controller.callbackData(crawltaskConfig.postUrl,res.data.task_id,dataJson,'success').then(function (result) {
+                                controller.callbackData(crawltaskConfig.postUrl.guowai,res.data.task_id,dataJson,'success').then(function (result) {
                                     console.log(cluster.worker.id + ' success' + result)
                                     fun.stoneLog('crawlStoreGuowai', 'info', {"param1" : task_id, "param2":res.data.url, "param":{"message":'callback成功'}})
                                     //start
