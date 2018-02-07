@@ -171,7 +171,7 @@ var controller = {
     },
     getDataListEs:function(pagesize){
         var defer = Q.defer();
-        
+
         crawlmainTaskES.search(
             { callback_status: 0, callback_err_num: 5,notice:1, size: pagesize, sort: [['update_at', 'asc']]
         }, function (err, res) {
@@ -181,8 +181,6 @@ var controller = {
 
             var data;
             var rows = res.hits.hits;
-            console.log(rows)
-            return;
             var data = [];
             rows.forEach(function (row) {
                 data.push({
@@ -229,7 +227,7 @@ var controller = {
         var now = new Date();
 
         crawlmainTaskES.update({
-            task_id: taskId,
+            task_id: task_id,
             'callback_status' : 1
         }, function (err, res) {
             if (err) {

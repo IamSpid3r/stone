@@ -81,7 +81,7 @@ function create(body, callback) {
 }
 
 //update
-function update(body, callback) {
+function update(body, callback, refresh) {
     if (typeof body.task_id == 'undefined') {
         return callback(new Error('缺少task_id'));
     }
@@ -95,6 +95,10 @@ function update(body, callback) {
         }
     };
 
+    //立即刷新
+    if (refresh) {
+        params.refresh = true;
+    }
     esClient.update(params, function (err, res) {
         return callback(err, res);
     })
