@@ -82,7 +82,7 @@ var controller = {
 
         crawlmainTaskES.update({
             task_id: taskId,
-            status: status == 'success' ? 2 : 3//更新成功
+            status: status == 'success' ? 2 : 3,//更新成功
             'update_at' : now
         }, function (err, res) {
             if (err) {
