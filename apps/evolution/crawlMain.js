@@ -36,9 +36,8 @@ exports.saveTask = function(param, callback) {
             }
         })
 
-
         var response = [];
-        if (timely_data_param){
+        if (timely_data_param.length>0){
             controller.writeUrlTask(timely_data_param).then(function (data) {
                 response = data;
                 //获取条数
@@ -84,51 +83,47 @@ exports.saveTask = function(param, callback) {
                 callback(err.message,null)
                 return '';
             })
-        } else if(data_param) {
-            //判断当前抓取任务的数量
-            controller.getDataCount().then(function (count) {
-                if (count.status){
-                    if (count.data >= limit){
-                        var msg = {
-                                'Code':'limit',
-                                'msg':'抓取任务已达最大'+limit,
-                                'data':null
-                            }
-                        callback(null,msg)
-                        return '';
-                    } else {
-                        controller.saveBulkData(param).then(function (data) {
-                            var response = [];
-                            if (data.status){
-                                data.data.forEach(function (row) {
-                                    if (row.id){
-                                        response.push(
-                                            {task_id:row.task_id,status:true,msg:'success'}
-                                        );
-                                    } else {
-                                        response.push(
-                                            {task_id:row.task_id,status:false,msg:'该任务已经存在'}
-                                        );
-                                    }
-                                    
-                                })
-                            }
-                            var msg = {
-                                'Code':'ok',
-                                'msg':'',
-                                'data':response
-                            }
-                            callback(null, msg);
-                        },function (err) {
-                            callback(err.message,null)
-                            return '';
-                        })
-                    }   
+        } else if(data_param.length>0) {
+            //获取条数
+            crawlmainTaskES.count({status:0},function(err, res){
+                if (err){
+                    callback(err.message,null)
+                    return '';
                 }
-            },function (err) {
-                callback(err.message,null)
-                return '';
+                if (res.count >= limit){
+                    data_param.forEach(function (row) {
+                            response.push(
+                                {task_id:row.task_id,status:false,msg:'抓取任务已达最大'+limit}
+                            );
+                            
+                        })
+                    var msg = {
+                        'Code':'ok',
+                        'msg':'',
+                        'data':response
+                    }
+                    callback(null, msg);
+                    return '';
+                } else {
+                    controller.writeUrlTask(data_param).then(function (datanormal) {
+                        if (datanormal) {
+                            datanormal.forEach(function (row) {
+                                response.push(row);
+                            })
+                        }
+                        var msg = {
+                            'Code':'ok',
+                            'msg':'',
+                            'data':response
+                        }
+                        callback(null, msg);
+                    },function (err) {
+                        callback(err.message,null)
+                        return '';
+                    })
+                }
             })
+
         } else {
             callback('数据格式有误',null)
             return '';
