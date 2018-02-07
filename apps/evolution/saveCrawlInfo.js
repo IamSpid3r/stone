@@ -3,6 +3,7 @@ const Op = SequelizeDb.sequelize.Op;
 const Q = require("q");
 const _ = require('lodash');
 const tableStore = require(process.cwd()+"/apps/lib/tablestorecrawlcontent.js").tableStore;
+const crawlmainTaskES = require(process.cwd()+"/apps/lib/elasticsearch/crawlMainTasks.js").esClient;
 
 exports.saveData = function(request, response) {
 	handler(request, response);
