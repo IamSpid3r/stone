@@ -338,9 +338,8 @@ var controller = {
     	}
         var defer = Q.defer();
 
-
         crawlmainTaskES.search(
-            { store:store, status: 0, size: 1, sort: [['from', 'desc'],['update_at', 'asc']]
+            { store:storeStr, status: 0, size: 1, sort: [['from', 'desc'],['update_at', 'asc']]
         }, function (err, res) {
             if (err) {
                 return defer.reject(err);

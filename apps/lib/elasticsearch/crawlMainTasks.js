@@ -147,7 +147,7 @@ function count(condition, callback) {
         boolMust.push(
             {
                 "terms": {
-                    "store":  Array.isArray(condition.store) ? condition.from : [condition.store]
+                    "store":  Array.isArray(condition.store) ? condition.store : [condition.store]
                 }
             }
         )
