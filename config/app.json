@@ -32,12 +32,12 @@
   },
   "crawltask":{
     "getUrl" : {
-      "guonei" : "http://10.51.9.70:81/getCrawlTask",
-      "guowai" : "http://120.26.107.228:81/getCrawlTask"
+      "guonei" : "http://10.51.9.70:3200/getCrawlTask",
+      "guowai" : "http://120.26.107.228:3200/getCrawlTask"
     },
     "postUrl" : {
-      "guonei" : "http://10.51.9.70:81/saveCrawlInfo",
-      "guowai" : "http://120.26.107.228:81/saveCrawlInfo"
+      "guonei" : "http://10.51.9.70:3200/saveCrawlInfo",
+      "guowai" : "http://120.26.107.228:3200/saveCrawlInfo"
     },
     "taskNum" : {
       "guonei" : 4,
