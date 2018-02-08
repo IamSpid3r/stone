@@ -126,7 +126,7 @@ var handler = function (request, response){
 	                    	//100ms后继续获取
 	                    	setTimeout(function(){
 	                    		handler(request, response);
-	                    	},100)
+	                    	},50)
 	                    }
 	                });
 		    		
@@ -142,7 +142,7 @@ var handler = function (request, response){
 		  	//没有获取到锁则循环获取
 		  	setTimeout(function(){
 		  		handler(request, response);
-		  	},500)
+		  	},50)
 	      }); 
     } else {//其他的商城
 		redlock.lock('stone_get_crawl_task_'+ store, 4).done(//锁3秒
@@ -169,7 +169,7 @@ var handler = function (request, response){
 	                    	//100ms后继续获取
 	                    	setTimeout(function(){
 	                    		handler(request, response);
-	                    	},100)
+	                    	},50)
 	                    }
 	                });
 		    	} else {
@@ -185,7 +185,7 @@ var handler = function (request, response){
 		  	//没有获取到锁则循环获取
 		  	setTimeout(function(){
 		  		handler(request, response);
-		  	},500)
+		  	},50)
 	      }); 
     }
     return;
