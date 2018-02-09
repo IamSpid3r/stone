@@ -114,7 +114,7 @@ var handler = function (request, response){
 	                    	//获取完把状态更新成1（处理中）
 				    		controller.updateDataEs(data.data.task_id).then(function (datas) {
 				    			client.set(redis_key, 1);
-		                    	client.expire(redis_key, 24*3600);
+		                    	client.expire(redis_key, 3600);
 				    			redlock.unlock(lock);//释放锁
 				    			response.json({code: 200, msg: '',data:data.data});
 				    		}, function (errs) {
@@ -126,7 +126,7 @@ var handler = function (request, response){
 	                    	//100ms后继续获取
 	                    	setTimeout(function(){
 	                    		handler(request, response);
-	                    	},100)
+	                    	},50)
 	                    }
 	                });
 		    		
@@ -142,7 +142,7 @@ var handler = function (request, response){
 		  	//没有获取到锁则循环获取
 		  	setTimeout(function(){
 		  		handler(request, response);
-		  	},500)
+		  	},50)
 	      }); 
     } else {//其他的商城
 		redlock.lock('stone_get_crawl_task_'+ store, 4).done(//锁3秒
@@ -157,7 +157,7 @@ var handler = function (request, response){
 	                    	//获取完把状态更新成1（处理中）
 				    		controller.updateDataEs(data.data.task_id).then(function (datas) {
 				    			client.set(redis_key, 1);
-		                    	client.expire(redis_key, 24*3600);
+		                    	client.expire(redis_key, 3600);
 				    			redlock.unlock(lock);//释放锁
 				    			response.json({code: 200, msg: '',data:data.data});
 				    		}, function (errs) {
@@ -169,7 +169,7 @@ var handler = function (request, response){
 	                    	//100ms后继续获取
 	                    	setTimeout(function(){
 	                    		handler(request, response);
-	                    	},100)
+	                    	},50)
 	                    }
 	                });
 		    	} else {
@@ -185,7 +185,7 @@ var handler = function (request, response){
 		  	//没有获取到锁则循环获取
 		  	setTimeout(function(){
 		  		handler(request, response);
-		  	},500)
+		  	},50)
 	      }); 
     }
     return;
