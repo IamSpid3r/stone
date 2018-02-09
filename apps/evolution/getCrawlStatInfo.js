@@ -26,7 +26,7 @@ function handler(request, response) {
             return response.json({code: 401, msg: err.message});
         })
     } else if (type == 'process'){
-      controller.getStatusData(1).then(function (data) {
+      controller.getStatusDataEs(1).then(function (data) {
           return response.json({code: 200, msg: 'ok', data: data.data});
         },function (err) {
             return response.json({code: 401, msg: err.message});
@@ -162,7 +162,7 @@ var controller = {
             }
             var data;
             if (res.aggregations != undefined){
-                if (sort == 'sort'){
+                if (sort == 'store'){
                    var rows = res.aggregations.store.buckets;
                 } else {
                     var rows = res.aggregations.url.buckets;
