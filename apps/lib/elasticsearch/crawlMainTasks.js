@@ -41,7 +41,7 @@ function search(condition, callback) {
         boolMust.push(
             {
                 "terms": {
-                    "url":  Array.isArray(condition.url) ? condition.from : [condition.url]
+                    "url":  Array.isArray(condition.url) ? condition.url : [condition.url]
                 }
             }
         )
@@ -64,6 +64,15 @@ function search(condition, callback) {
             }
         )
     }
+    if (condition.hasOwnProperty('updateErrNum')) {
+        boolMust.push(
+            {
+                "range": {
+                    "update_err_num":  {"gt":condition.updateErrNum}
+                }
+            }
+        )
+    }
     if (condition.hasOwnProperty('callback_err_num')) {
         boolMust.push(
             {
@@ -82,6 +91,24 @@ function search(condition, callback) {
             }
         )
     }
+    if (condition.hasOwnProperty('create_at')) {
+        boolMust.push(
+            {
+                "range": {
+                    "create_at":  {"gt":condition.create_at}
+                }
+            }
+        )
+    }
+    if (condition.hasOwnProperty('updateAt')) {
+        boolMust.push(
+            {
+                "range": {
+                    "update_at":  {"gt":condition.updateAt}
+                }
+            }
+        )
+    }
 
     if (condition.hasOwnProperty('notice')) {
         boolMust.push(
@@ -93,6 +120,30 @@ function search(condition, callback) {
                 }
             }
         );
+    }
+
+    var aggs = [];
+    //aggs
+    if (condition.hasOwnProperty('aggs')) {
+        if (condition.aggs == 'store'){
+            aggs = {
+                "store": {
+                    "terms": {
+                    "field": "store",
+                    "size": condition.size
+                  }
+                }
+            };
+        } else if(condition.aggs == 'url'){
+            aggs = {
+                "url": {
+                    "terms": {
+                    "field": "url",
+                    "size": condition.size
+                  }
+                }
+            };
+        }
     }
 
     if (condition.hasOwnProperty('sort')) {
@@ -108,7 +159,10 @@ function search(condition, callback) {
         body.query.bool = {};
         body.query.bool.must = boolMust;
     }
-    
+
+    if(aggs){
+        body.aggs = aggs;
+    }
     var params = {
         index : _index,
         type  : _type,
@@ -147,7 +201,7 @@ function count(condition, callback) {
         boolMust.push(
             {
                 "terms": {
-                    "url":  Array.isArray(condition.url) ? condition.from : [condition.url]
+                    "url":  Array.isArray(condition.url) ? condition.url : [condition.url]
                 }
             }
         )

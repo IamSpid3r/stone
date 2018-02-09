@@ -5,6 +5,7 @@ var SequelizeDb = require('../lib/db').db;
 const Q = require("q");
 const fun = require(process.cwd()+"/apps/lib/fun.js");
 const tableStore = require(process.cwd()+"/apps/lib/tablestorecrawlcontent.js").tableStore;
+const crawlmainTaskES = require(process.cwd()+"/apps/lib/elasticsearch/crawlMainTasks.js").esClient;
 
 
 function handler(request, response) {
@@ -16,7 +17,7 @@ function handler(request, response) {
     }
 
     var taskId = body.task_id;
-    controller.getTaskStatus(taskId).then(function (data) {
+    controller.getTaskStatusEs(taskId).then(function (data) {
         if (data.data.sku_info){
           tsData = JSON.parse(data.data.sku_info);
           return response.json({code: 200, msg: 'ok', data: tsData});
@@ -81,6 +82,36 @@ var controller = {
                callback(new Error('未在tablestore找到此任务id的数据'))
            }
        })
+    },
+    //获取任务状态
+    getTaskStatusEs: function (taskId) {
+        var defer = Q.defer();
+        
+        crawlmainTaskES.search(
+            { task_id:taskId, status: 2
+        }, function (err, res) {
+            if (err) {
+                return defer.reject(err);
+            }
+
+            var data;
+            var rows = res.hits.hits;
+            if (rows.length > 0){
+              data = {
+                    task_id: rows[0]._source.task_id,
+                    url: rows[0]._source.url,
+                    store : rows[0]._source.store,
+                    status:rows[0]._source.status
+                };
+            return defer.resolve({
+                    status : true,
+                    data:data
+                });
+          } else {
+            return defer.reject('没有此task_id或者没有抓取到数据');
+          }
+        })
+        return defer.promise;
     }
 };
 

@@ -6,6 +6,7 @@ const Op = SequelizeDb.sequelize.Op;
 const Q = require("q");
 const fun = require(process.cwd()+"/apps/lib/fun.js");
 const tableStore = require(process.cwd()+"/apps/lib/tablestorecrawlcontent.js").tableStore;
+const crawlmainTaskES = require(process.cwd()+"/apps/lib/elasticsearch/crawlMainTasks.js").esClient;
 
 
 function handler(request, response) {
@@ -17,8 +18,9 @@ function handler(request, response) {
     }
 
     var type = body.type;
+    var time = body.time;
     if (type == 'wait'){
-        controller.getStatusData(0).then(function (data) {
+        controller.getStatusDataEs(0).then(function (data) {
           return response.json({code: 200, msg: 'ok', data: data.data});
         },function (err) {
             return response.json({code: 401, msg: err.message});
@@ -30,21 +32,25 @@ function handler(request, response) {
             return response.json({code: 401, msg: err.message});
         })
     } else if(type == 'store_error'){
-        //获取三天前时间
-        var curr_time = Date.parse(new Date())/1000 - 3600*24*3;
+        //获取time时间
+        if (!time)  time = 3600*24*3;
+        var curr_time = Date.parse(new Date())/1000 - time;
         var d = new Date(curr_time*1000); 
         curr_time = formatDate(d);
-        controller.getErrorData(curr_time,100,'store').then(function (data) {
+        curr_time = new Date(curr_time);
+        controller.getErrorDataEs(curr_time,100,'store').then(function (data) {
           return response.json({code: 200, msg: 'ok', data: data.data});
         },function (err) {
             return response.json({code: 401, msg: err.message});
         })
     } else if(type == 'url_error'){
         //获取三天前时间
-        var curr_time = Date.parse(new Date())/1000 - 3600*24*3;
+        if (!time)  time = 3600*24*3;
+        var curr_time = Date.parse(new Date())/1000 - time;
         var d = new Date(curr_time*1000); 
         curr_time = formatDate(d);
-        controller.getErrorData(curr_time,100,'url').then(function (data) {
+        curr_time = new Date(curr_time);
+        controller.getErrorDataEs(curr_time,100,'url').then(function (data) {
           return response.json({code: 200, msg: 'ok', data: data.data});
         },function (err) {
             return response.json({code: 401, msg: err.message});
@@ -112,7 +118,60 @@ var controller = {
             return defer.reject(err);
         });
         return defer.promise;
-    }
+    },
+    //获取正在等待抓取/抓取中的数据
+    getStatusDataEs: function (status) {
+      var defer = Q.defer();
+        
+        crawlmainTaskES.search(
+            { aggs:'store', status: status, callback_status:0
+        }, function (err, res) {
+            if (err) {
+                return defer.reject(err);
+            }
+
+            var data;
+            var rows = res.aggregations.store.buckets;
+            console.log(rows)
+            if (rows.length > 0){
+            return defer.resolve({
+                    status : true,
+                    data:rows
+                });
+          } else {
+            return defer.reject('没有数据了');
+          }
+        })
+        return defer.promise;
+    },
+    //获取最近错误的数据统计
+    getErrorDataEs: function (curr_time,pagesize,sort) {
+      var defer = Q.defer();
+        
+        crawlmainTaskES.search(
+            { aggs:sort, size:pagesize, updateErrNum: 0, create_at:curr_time
+        }, function (err, res) {
+            if (err) {
+                return defer.reject(err);
+            }
+
+            var data;
+            if (sort == 'sort'){
+                var rows = res.aggregations.store.buckets;
+            } else {
+                var rows = res.aggregations.url.buckets;
+            }
+            if (rows.length > 0){
+            return defer.resolve({
+                    status : true,
+                    data:rows
+                });
+          } else {
+            return defer.reject('没有数据了');
+          }
+        })
+        return defer.promise;
+      }
 };
 
 function formatDate(now) { 
