@@ -20,37 +20,34 @@ function handler(request, response) {
 
     if (task_id){
         controller.getTaskStatusEs(task_id).then(function (data) {
-          if (data.data.sku_info){
-            tsData = JSON.parse(data.data.sku_info);
-            return response.json({code: 200, msg: 'ok', data: tsData});
+          if(data){
+            //获取详情
+            controller.getTablestoreData(task_id, function (err, tsdata) {
+                if (err) {
+                    return response.json({code: 402, msg: err.message});
+                }
+                tsData = JSON.parse(tsData);
+                return response.json({code: 200, msg: 'ok', data: tsData});
+            })
           } else {
-              //获取详情
-              controller.getTablestoreData(taskId, function (err, tsdata) {
-                  if (err) {
-                      return response.json({code: 402, msg: err.message});
-                  }
-                  tsData = JSON.parse(tsData);
-                  return response.json({code: 200, msg: 'ok', data: tsData});
-              })
+            return response.json({code: 200, msg: '没有此数据'});
           }
-          
         },function (err) {
-                return response.json({code: 401, msg: err.message});
+            return response.json({code: 401, msg: err.message});
         })
     } else {
         controller.getTaskUrlStatusEs(url).then(function (data) {
-          if (data.data.sku_info){
-            tsData = JSON.parse(data.data.sku_info);
-            return response.json({code: 200, msg: 'ok', data: tsData});
+          if(data.data.task_id){
+            //获取详情
+            controller.getTablestoreData(data.data.task_id, function (err, tsdata) {
+                if (err) {
+                    return response.json({code: 402, msg: err.message});
+                }
+                tsData = JSON.parse(tsData);
+                return response.json({code: 200, msg: 'ok', data: tsData});
+            })
           } else {
-              //获取详情
-              controller.getTablestoreData(taskId, function (err, tsdata) {
-                  if (err) {
-                      return response.json({code: 402, msg: err.message});
-                  }
-                  tsData = JSON.parse(tsData);
-                  return response.json({code: 200, msg: 'ok', data: tsData});
-              })
+            return response.json({code: 200, msg: '没有此数据'});
           }
         },function (err) {
               return response.json({code: 401, msg: err.message});
@@ -140,7 +137,7 @@ var controller = {
         var defer = Q.defer();
         
         crawlmainTaskES.search(
-            { url:urls, status: 2
+            { url:url, status: 2
         }, function (err, res) {
             if (err) {
                 return defer.reject(err);
