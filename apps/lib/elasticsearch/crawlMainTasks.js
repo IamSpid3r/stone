@@ -160,7 +160,7 @@ function search(condition, callback) {
         body.query.bool.must = boolMust;
     }
 
-    if(aggs){
+    if(aggs.length>0){
         body.aggs = aggs;
     }
     var params = {
