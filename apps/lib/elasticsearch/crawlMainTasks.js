@@ -122,7 +122,7 @@ function search(condition, callback) {
         );
     }
 
-    var aggs = [];
+    var aggs;
     //aggs
     if (condition.hasOwnProperty('aggs')) {
         if (condition.aggs == 'store'){
@@ -160,7 +160,7 @@ function search(condition, callback) {
         body.query.bool.must = boolMust;
     }
 
-    if(aggs.length>0){
+    if(aggs){
         body.aggs = aggs;
     }
     var params = {
