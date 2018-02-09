@@ -1,4 +1,4 @@
-const stoneTaskES = require(process.cwd()+"/apps/lib/elasticsearch/stoneTasks").esClient;
+const stoneTaskES = require(process.cwd()+"/apps/lib/elasticsearch/crawlMainTasks").esClient;
 
 var options = process.argv;
 for(var i=0;i<options.length;i++)

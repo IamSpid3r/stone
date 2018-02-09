@@ -1,6 +1,6 @@
 const esClient = require(process.cwd()+'/apps/lib/elasticsearch.js').esClient;
-const _index = 'stone_tasks';
-const _type = 'stone_tasks';
+const _index = 'crawl_main_tasks';
+const _type = 'crawl_main_tasks';
 
 //search
 function search(condition, callback) {
@@ -19,6 +19,15 @@ function search(condition, callback) {
             }
         )
     }
+    if (condition.hasOwnProperty('callback_status')) {
+        boolMust.push(
+            {
+                "terms": {
+                    "callback_status":  Array.isArray(condition.callback_status) ? condition.callback_status : [condition.callback_status]
+                }
+            }
+        )
+    }
     if (condition.hasOwnProperty('task_id')) {
         boolMust.push(
             {
@@ -28,15 +37,115 @@ function search(condition, callback) {
             }
         )
     }
-    if (condition.hasOwnProperty('from')) {
+    if (condition.hasOwnProperty('url')) {
         boolMust.push(
             {
                 "terms": {
-                    "from":  Array.isArray(condition.from) ? condition.from : [condition.from]
+                    "url":  Array.isArray(condition.url) ? condition.url : [condition.url]
                 }
             }
         )
     }
+    if (condition.hasOwnProperty('store')) {
+        boolMust.push(
+            {
+                "terms": {
+                    "store":  Array.isArray(condition.store) ? condition.store : [condition.store]
+                }
+            }
+        )
+    }
+    if (condition.hasOwnProperty('update_err_num')) {
+        boolMust.push(
+            {
+                "range": {
+                    "update_err_num":  {"lt":condition.update_err_num}
+                }
+            }
+        )
+    }
+    if (condition.hasOwnProperty('updateErrNum')) {
+        boolMust.push(
+            {
+                "range": {
+                    "update_err_num":  {"gt":condition.updateErrNum}
+                }
+            }
+        )
+    }
+    if (condition.hasOwnProperty('callback_err_num')) {
+        boolMust.push(
+            {
+                "range": {
+                    "callback_err_num":  {"lt":condition.callback_err_num}
+                }
+            }
+        )
+    }
+    if (condition.hasOwnProperty('update_at')) {
+        boolMust.push(
+            {
+                "range": {
+                    "update_at":  {"lt":condition.update_at}
+                }
+            }
+        )
+    }
+    if (condition.hasOwnProperty('create_at')) {
+        boolMust.push(
+            {
+                "range": {
+                    "create_at":  {"gt":condition.create_at}
+                }
+            }
+        )
+    }
+    if (condition.hasOwnProperty('updateAt')) {
+        boolMust.push(
+            {
+                "range": {
+                    "update_at":  {"gt":condition.updateAt}
+                }
+            }
+        )
+    }
+
+    if (condition.hasOwnProperty('notice')) {
+        boolMust.push(
+            {"bool":
+                {"should":[
+                            {"term":{"status":2}},
+                            {"range": {"update_err_num":{"gt":3}}}
+                        ]
+                }
+            }
+        );
+    }
+
+    var aggs = [];
+    //aggs
+    if (condition.hasOwnProperty('aggs')) {
+        if (condition.aggs == 'store'){
+            aggs = {
+                "store": {
+                    "terms": {
+                    "field": "store",
+                    "size": condition.size
+                  }
+                }
+            };
+        } else if(condition.aggs == 'url'){
+            aggs = {
+                "url": {
+                    "terms": {
+                    "field": "url",
+                    "size": condition.size
+                  }
+                }
+            };
+        }
+    }
+
     if (condition.hasOwnProperty('sort')) {
         var sort = condition.sort;
         body.sort = [];
@@ -51,6 +160,9 @@ function search(condition, callback) {
         body.query.bool.must = boolMust;
     }
 
+    if(aggs.length>0){
+        body.aggs = aggs;
+    }
     var params = {
         index : _index,
         type  : _type,
@@ -58,6 +170,63 @@ function search(condition, callback) {
     };
 
     esClient.search(params, function (err, res) {
+        return callback(err, res);
+    })
+}
+
+//count
+function count(condition, callback) {
+    var boolMust = boolMustNot = [] ,body = {};
+
+    body.query = {};
+    if (condition.hasOwnProperty('status')) {
+        boolMust.push(
+            {
+                "terms": {
+                    "status":  Array.isArray(condition.status) ? condition.status : [condition.status]
+                }
+            }
+        )
+    }
+    if (condition.hasOwnProperty('task_id')) {
+        boolMust.push(
+            {
+                "terms": {
+                    "task_id": Array.isArray(condition.task_id) ? condition.task_id : [condition.task_id]
+                }
+            }
+        )
+    }
+    if (condition.hasOwnProperty('url')) {
+        boolMust.push(
+            {
+                "terms": {
+                    "url":  Array.isArray(condition.url) ? condition.url : [condition.url]
+                }
+            }
+        )
+    }
+    if (condition.hasOwnProperty('store')) {
+        boolMust.push(
+            {
+                "terms": {
+                    "store":  Array.isArray(condition.store) ? condition.store : [condition.store]
+                }
+            }
+        )
+    }
+    if (boolMust) {
+        body.query.bool = {};
+        body.query.bool.must = boolMust;
+    }
+
+    var params = {
+        index : _index,
+        type  : _type,
+        body   : body
+    };
+
+    esClient.count(params, function (err, res) {
         return callback(err, res);
     })
 }
@@ -95,10 +264,11 @@ function update(body, callback, refresh) {
         }
     };
 
-    //立即刷新
+     //立即刷新
     if (refresh) {
         params.refresh = true;
     }
+
     esClient.update(params, function (err, res) {
         return callback(err, res);
     })
@@ -153,21 +323,22 @@ function mapping(callback) {
             "store": {
                 "type": "keyword"
             },
-            "status": {
-                "type": "byte"
+            "sku_info": {
+                "type": "keyword"
             },
             "from": {
                 "type": "byte"
             },
-            "update_info": {
-                "type": "text",
-                "analyzer": "ik_max_word",
-                "search_analyzer": "ik_max_word"
-            },
-            "update_status": {
+            "update_err_num": {
                 "type": "byte"
             },
-            "update_err_status": {
+            "status": {
+                "type": "byte"
+            },
+            "callback_status": {
+                "type": "byte"
+            },
+            "callback_err_num": {
                 "type": "byte"
             },
             "update_at" : {
@@ -194,6 +365,7 @@ exports.esClient = {
     search : search,
     create : create,
     update : update,
+    count  : count,
     delete : _delete,
     bulk : bulk,
     mapping: mapping

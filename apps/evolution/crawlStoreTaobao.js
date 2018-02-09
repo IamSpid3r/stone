@@ -9,45 +9,6 @@ const fun = require(process.cwd() + "/apps/lib/fun.js");
 const Q = require("q");
 var taobao = require('../../lib/taobao');
 var taobaoV2 = require('../../lib/taobaoV2');
-var amazonCn = require('../../lib/amazonCn');
-var nikeStore = require('../../lib/nikeStore');
-var yougou = require('../../lib/yougou');
-var _6pm = require('../../lib/6pm');
-var shihuoHaitao = require('../../lib/shihuoHaitao');
-var shihuoTuangou = require('../../lib/shihuoTuangou');
-var amazonJp = require('../../lib/amazonJp');
-var amazonUsa = require('../../lib/amazonUsa');
-var nbaStore = require('../../lib/nbaStore');
-var yohobuy = require('../../lib/yohobuy');
-var yintai = require('../../lib/yintai');
-var kaluli = require('../../lib/kaluli');
-var footlocker = require('../../lib/footlocker');
-var jd = require('../../lib/jd');
-var underarmour = require('../../lib/underarmour');
-var xtep = require('../../lib/xtep');
-// 适合卡路里的考拉拉取方式
-// var kaola = require('./lib/kaola');
-var kaola = require('../../lib/kaola');
-var beibei = require('../../lib/kaluli/beibei');
-var meitun = require('../../lib/kaluli/meitun');
-var xiji = require('../../lib/kaluli/xiji');
-var delemei = require('../../lib/kaluli/delemei');
-var ba = require('../../lib/kaluli/ba');
-var kiwi = require('../../lib/kaluli/kiwistarcare');
-var uka = require('../../lib/uka');
-var discovery = require('../../lib/kaluli/discovery');
-var dod = require('../../lib/kaluli/dod');
-var abcpost = require('../../lib/kaluli/abcpost');
-var apo = require('../../lib/kaluli/cnapo');
-var taobaos11 = require('../../lib/shuang11/taobaoV2');
-var taobaos12 = require('../../lib/shuang12/taobao');
-var suning = require('../../lib/suning');
-var gome = require('../../lib/gome');
-var du = require('../../lib/du');
-var iherb = require('../../lib/iherb');
-var mia = require('../../lib/mia');
-var chemistdirect = require('../../lib/chemistdirect');
-
 var task_id;//当前在跑的任务id
 var controller = {
     getData: function (url) {
@@ -114,42 +75,42 @@ var controller = {
 
 var dealerrorcallback = function (taskId, error) {
     var response = {Status: false, Msg: {Errors: [{Code: 'Error', Message: error}]}}
+
     //callback
     controller.callbackData(crawltaskConfig.postUrl.guonei, taskId, response, 'error').then(function (res) {
         //start
         deal();
     }, function (err) {
-        console.log(err.message);
+        console.log(err.message)
         setTimeout(function () {deal();}, 1000)
     })
 }
+
 
 //处理
 var deal_time;
 var deal = function () {
     deal_time = (new Date()).getTime();
     task_id = '';
+    console.log(cluster.worker.id + ' start taobao');
 
-    console.log(cluster.worker.id + ' start guonei');
-    controller.getData(crawltaskConfig.getUrl.guonei + '?store=guonei').then(function (res) {
+    controller.getData(crawltaskConfig.getUrl.guonei + '?store=taobao').then(function (res) {
         if (res.code == 200) {
-            console.log(cluster.worker.id + ' crawl ' +res.data.url);
-
+            console.log(cluster.worker.id + ' crawl '+ res.data.url)
             task_id = res.data.task_id;
             //记日志
-            fun.stoneLog('crawlMainGuonei', 'info', {
+            fun.stoneLog('crawlStoreTaobao', 'info', {
                 "param1": task_id,
                 "param2": res.data.url,
                 "param": {"message": '开始处理'}
             })
-
             var urlInfo = res.data.url ? url.parse(res.data.url, true, true) : {path: '', host: ''};
             var storeObj = getStoreObj(urlInfo);
             if (typeof storeObj == 'object') {
                 storeObj.getInfo(res.data.url, function (error, itemInfo) {
                     if (error) {
-                        console.log(cluster.worker.id + ' crawl error'+ error);
-                        fun.stoneLog('crawlMainGuonei', 'error', {
+                        console.log(cluster.worker.id + ' error '+ error)
+                        fun.stoneLog('crawlStoreTaobao', 'error', {
                             "param1": task_id,
                             "param2": res.data.url,
                             "param": {"message": error}
@@ -160,23 +121,26 @@ var deal = function () {
                         var dataJson = {Status: true, Data: itemInfo};
                         controller.insertTableStore(res.data.task_id, itemInfo.Unique, res.data.url, dataJson, function (err, rows) {
                             if (err) {
-                                fun.stoneLog('crawlMainGuonei', 'error', {
+                                console.log(cluster.worker.id + ' error '+ err.message)
+
+                                fun.stoneLog('crawlStoreTaobao', 'error', {
                                     "param1": task_id,
                                     "param2": res.data.url,
                                     "param": {"message": '保存tablestore失败--' + err.message}
                                 })
                                 dealerrorcallback(res.data.task_id, err.message);
                             } else {
-                                console.log(cluster.worker.id + ' success');
-                                fun.stoneLog('crawlMainGuonei', 'info', {
+                                console.log(cluster.worker.id + ' success')
+
+                                fun.stoneLog('crawlStoreTaobao', 'info', {
                                     "param1": task_id,
                                     "param2": res.data.url,
                                     "param": {"message": '保存tablestore成功'}
                                 })
                                 //callback
                                 controller.callbackData(crawltaskConfig.postUrl.guonei, res.data.task_id, dataJson, 'success').then(function (result) {
-                                    console.log(cluster.worker.id + ' success' + result)
-                                    fun.stoneLog('crawlMainGuonei', 'info', {
+                                    console.log(result)
+                                    fun.stoneLog('crawlStoreTaobao', 'info', {
                                         "param1": task_id,
                                         "param2": res.data.url,
                                         "param": {"message": 'callback成功'}
@@ -184,8 +148,8 @@ var deal = function () {
                                     //start
                                     deal();
                                 }, function (err) {
-                                    console.log(cluster.worker.id + ' tablestore ' +err.message);
-                                    fun.stoneLog('crawlMainGuonei', 'error', {
+                                    console.log(err)
+                                    fun.stoneLog('crawlStoreTaobao', 'error', {
                                         "param1": task_id,
                                         "param2": res.data.url,
                                         "param": {"message": 'callback失败--' + err.message}
@@ -197,135 +161,45 @@ var deal = function () {
                     }
                 })
             } else {
-                console.log(cluster.worker.id + ' 当前地址不支持爬取');
-                fun.stoneLog('crawlMainGuonei', 'error', {
+                fun.stoneLog('crawlStoreTaobao', 'error', {
                     "param1": task_id,
                     "param2": res.data.url,
                     "param": {"message": '当前地址不支持爬取'}
                 })
                 dealerrorcallback(res.data.task_id, '当前地址不支持爬取');
             }
+
         } else {
             setTimeout(function () {deal();}, 5000)
         }
     }, function (err) {
-        console.log(cluster.worker.id + ' stone ' +err.message);
-        setTimeout(function () {deal();}, 2000)
+        console.log(err.message)
+        setTimeout(function () { deal() }, 2000)
     }).then(function () {
     }, function (err) {
-        console.log(cluster.worker.id + ' stone2 ' +err.message);
-        setTimeout(function () {deal();}, 2000)
+        console.log(err.message)
+        setTimeout(function () { deal() }, 2000)
     })
-}
 
+}
 
 //获取商城对象
 function getStoreObj(urlInfo) {
     switch (urlInfo.host) {
-        case 'www.amazon.cn':
-            return amazonCn;
-        case 'www.amazon.co.jp':
-            return amazonJp;
-        case 'www.amazon.com':
-            return amazonUsa;
         case 'item.taobao.com':
         case 'detail.tmall.com':
         case 'detail.tmall.hk':
             return taobao;
-        //return taobaoV2;
-        case 'store.nike.com':
-        case 'www.nike.com':
-            return nikeStore;
-        case 'www.yougou.com':
-        case 'seoul.yougou.com':
-            return yougou;
-        case 'www.shihuo.cn':
-            var xianhuoExp = /\/xianhuo\/buy\/(\d+)(-(\d+)){0,1}\.html/ig;
-            var haitaoExp = /\/haitao\/buy\/(\d+)(-(\d+)){0,1}\.html/ig;
-            var tuangouExp = /\/tuangou\/(\d+)/ig;
-
-            if (xianhuoExp.exec(urlInfo.path) || haitaoExp.exec(urlInfo.path)) {
-                return shihuoHaitao;
-            } else if (tuangouExp.exec(urlInfo.path)) {
-                return shihuoTuangou;
-            } else {
-                return '';
-            }
-        case 'www.haitaodashi.cn':
-            var haitaoExp = /\/haitao\/buy\/(\d+)(-(\d+)){0,1}\.html/ig;
-
-            if (haitaoExp.exec(urlInfo.path)) {
-                return shihuoHaitao;
-            } else {
-                return '';
-            }
-        case 'www.6pm.com':
-            return _6pm;
-        case 'store.nba.com':
-            return nbaStore;
-        case 'item.yohobuy.com':
-            return yohobuy;
-        case 'item.yintai.com':
-            return yintai;
-        case 'www.kaluli.com':
-            return kaluli;
-        case 'www.footlocker.com':
-            return footlocker;
-        case 'www.underarmour.cn':
-            return underarmour;
-        case 'www.xtep.com.cn':
-            return xtep;
-        case 'www.kaola.com':
-        case 'www.kaola.com.hk':
-            return kaola;
-
-        // 贝贝网
-        case 'global.beibei.com':
-        case 'www.beibei.com':
-        case 'you.beibei.com':
-            return beibei;
-        //美囤网
-        case 'item.meitun.com':
-            return meitun;
-        //西集网
-        case 'www.xiji.com':
-            return xiji;
-
-
-        case 'product.suning.com':
-            return suning;
-        case 'item.gome.com.cn':
-            return gome;
-        case 'du.hupu.com':
-        case 'dev.du.hupu.com':
-            return du;
-        case 'cn.iherb.com':
-            return iherb;
-        case 'cn.chemistdirect.com.au':
-        case 'cn.pharmacy4less.com.au':
-        case 'cn.pharmacyonline.com.au':
-        case 'cn.pharmacydirect.co.nz':
-        case 'cn.discount-apotheke.de':
-        case 'cn.amcal.com.au':
-            return chemistdirect;
-        case 'www.abcpost.com.au':
-            return abcpost;
-        case 'cn.apo.com':
-            return apo;
-        //蜜芽
-
-        case 'www.miyabaobei.hk':
-        case 'www.mia.com':
-            return mia;
         default:
             return '';
     }
 }
 
+//错误日志
 process.on('uncaughtException', function (err) {
     console.log(err.message);
     if (task_id) {
-        fun.stoneLog('crawlMainGuonei', 'error', {
+        fun.stoneLog('crawlStoreTaobao', 'error', {
             "param1": task_id,
             "param2": '',
             "param": {"message": "捕捉到错误--" + err.message}
@@ -334,18 +208,17 @@ process.on('uncaughtException', function (err) {
     }
 });
 
-
 if (cluster.isMaster) {
-    for (var i = 0; i < crawltaskConfig.taskNum.guonei; i++) {
+    for (var i = 0; i < crawltaskConfig.taskNum.taobao; i++) {
         cluster.fork();
     }
-    cluster.on('exit', function (worker, code, signal) {
+    cluster.on('exit', function(worker, code, signal) {
         console.log('worker ' + worker.process.pid + ' died');
         cluster.fork();
     });
 } else {
     //start
-    console.log("I am worker #" + cluster.worker.id);
+    console.log("I am worker #"+cluster.worker.id);
     deal();
 
     //listen timeout
@@ -355,6 +228,3 @@ if (cluster.isMaster) {
         }
     }, 5000)
 }
-
-
-

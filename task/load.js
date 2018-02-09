@@ -27,26 +27,38 @@ const binList = [
             start: [
                 '/usr/bin/pm2 start ./apps/evolution/crawlStoreGuonei.js -n crawlStoreGuonei1  --max-memory-restart 125M',
                 '/usr/bin/pm2 start ./apps/evolution/crawlStoreGuonei.js -n crawlStoreGuonei2  --max-memory-restart 125M',
-                '/usr/bin/pm2 start ./apps/evolution/crawlStoreGuonei.js -n crawlStoreGuonei3  --max-memory-restart 125M',
-                '/usr/bin/pm2 start ./apps/evolution/crawlStoreGuonei.js -n crawlStoreGuonei4  --max-memory-restart 125M',
-                '/usr/bin/pm2 start ./apps/evolution/crawlStoreGuonei.js -n crawlStoreGuonei5  --max-memory-restart 125M',
-                '/usr/bin/pm2 start ./apps/evolution/crawlStoreGuonei.js -n crawlStoreGuonei6  --max-memory-restart 125M',
             ],
             restart : [
                 '/usr/bin/pm2 restart crawlStoreGuonei1',
                 '/usr/bin/pm2 restart crawlStoreGuonei2',
-                '/usr/bin/pm2 restart crawlStoreGuonei3',
-                '/usr/bin/pm2 restart crawlStoreGuonei4',
-                '/usr/bin/pm2 restart crawlStoreGuonei5',
-                '/usr/bin/pm2 restart crawlStoreGuonei6',
             ],
             stop : [
                 '/usr/bin/pm2 stop crawlStoreGuonei1',
                 '/usr/bin/pm2 stop crawlStoreGuonei2',
-                '/usr/bin/pm2 stop crawlStoreGuonei3',
-                '/usr/bin/pm2 stop crawlStoreGuonei4',
-                '/usr/bin/pm2 stop crawlStoreGuonei5',
-                '/usr/bin/pm2 stop crawlStoreGuonei6',
+            ],
+        }
+    },
+    {
+        'name' : 'crawlStoreTaobao',
+        'address' : 'guonei',
+        'bin': {
+            start: [
+                '/usr/bin/pm2 start ./apps/evolution/crawlStoreTaobao.js -n crawlStoreTaobao1  -f --max-memory-restart 125M',
+                '/usr/bin/pm2 start ./apps/evolution/crawlStoreTaobao.js -n crawlStoreTaobao2  -f --max-memory-restart 125M',
+                '/usr/bin/pm2 start ./apps/evolution/crawlStoreTaobao.js -n crawlStoreTaobao3  -f --max-memory-restart 125M',
+                '/usr/bin/pm2 start ./apps/evolution/crawlStoreTaobao.js -n crawlStoreTaobao4  -f --max-memory-restart 125M',
+            ],
+            restart : [
+                '/usr/bin/pm2 restart crawlStoreTaobao1',
+                '/usr/bin/pm2 restart crawlStoreTaobao2',
+                '/usr/bin/pm2 restart crawlStoreTaobao3',
+                '/usr/bin/pm2 restart crawlStoreTaobao4',
+            ],
+            stop : [
+                '/usr/bin/pm2 stop crawlStoreTaobao1',
+                '/usr/bin/pm2 stop crawlStoreTaobao2',
+                '/usr/bin/pm2 stop crawlStoreTaobao3',
+                '/usr/bin/pm2 stop crawlStoreTaobao4',
             ],
         }
     },
@@ -122,7 +134,7 @@ var currentAddress = [];
 if (!NODE_ENV) {
     const ipList = {
         'center' : ['120.26.107.228'],
-        'guonei' : ['120.26.107.228', '121.41.62.148', '121.41.62.183'],
+        'guonei' : ['120.26.107.228', '121.41.62.148', '121.41.62.183', '116.62.53.123', '116.62.53.162'],
         'guowai' : ['47.88.18.192', '47.88.77.102']
     }
     var  currentIp = os.networkInterfaces().eth1[0].address;
@@ -142,38 +154,62 @@ if (!NODE_ENV) {
 }
 
 var options = process.argv;
-for(var i=0;i<options.length;i++) {
-    if(options[i].indexOf("start") == 0) {
+if (options.length > 2) {
+    if(options[2].indexOf("start") == 0) {
         option = 'start';
-    } else if (options[i].indexOf("restart") == 0){
+    } else if (options[2].indexOf("restart") == 0){
         option = 'restart';
-    } else if (options[i].indexOf("stop") == 0){
+    } else if (options[2].indexOf("stop") == 0){
         option = 'stop';
     } else {
         option = '';
     }
+}
+name = '';
+if (options.length > 3){
+    name = options[3];
+}
 
-    if (option) {
-        binList.forEach(function (bin) {
-            if (currentAddress.indexOf(bin.address) != -1) {
-                if (!Array.isArray(bin.bin[option])) {
-                    binTmpArr = [bin.bin[option]]
-                } else {
-                    binTmpArr = bin.bin[option];
-                }
-
-                binTmpArr.forEach(function (binTmp) {
-                    exec(binTmp, function(err, stdout, stderr) {
-                        if (err) {
-                            console.log(err.message);
-                        } else {
-                            console.log(binTmp, ' ok');
-                        }
-                    });
-                })
+if (option && name) {
+    binList.forEach(function (bin) {
+        if (bin.name == name) {
+            if (!Array.isArray(bin.bin[option])) {
+                binTmpArr = [bin.bin[option]]
+            } else {
+                binTmpArr = bin.bin[option];
             }
-        })
-    }
+
+            binTmpArr.forEach(function (binTmp) {
+                exec(binTmp, function(err, stdout, stderr) {
+                    if (err) {
+                        console.log(err.message);
+                    } else {
+                        console.log(binTmp, ' ok');
+                    }
+                });
+            })
+        }
+    })
+} else if (option){
+    binList.forEach(function (bin) {
+        if (currentAddress.indexOf(bin.address) != -1) {
+            if (!Array.isArray(bin.bin[option])) {
+                binTmpArr = [bin.bin[option]]
+            } else {
+                binTmpArr = bin.bin[option];
+            }
+
+            binTmpArr.forEach(function (binTmp) {
+                exec(binTmp, function(err, stdout, stderr) {
+                    if (err) {
+                        console.log(err.message);
+                    } else {
+                        console.log(binTmp, ' ok');
+                    }
+                });
+            })
+        }
+    })
 }
 
 if (!option) {

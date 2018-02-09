@@ -3,6 +3,7 @@ const Op = SequelizeDb.sequelize.Op;
 const Q = require("q");
 const _ = require('lodash');
 const tableStore = require(process.cwd()+"/apps/lib/tablestorecrawlcontent.js").tableStore;
+const crawlmainTaskES = require(process.cwd()+"/apps/lib/elasticsearch/crawlMainTasks.js").esClient;
 
 exports.saveData = function(request, response) {
 	handler(request, response);
@@ -27,7 +28,7 @@ var handler = function (request, response){
     //先保存tablestore 再保存数据库
     controller.insertTableStore(taskId,dataStr,function(err,row){
         if (!err){
-            controller.updateData(taskId,dataStr,status).then(function (data) {
+            controller.updateDataEs(taskId,dataStr,status).then(function (data) {
                 if(data){
                     response.json({code: 200, msg: 'success',data:''});
                 } 
@@ -74,6 +75,25 @@ var controller = {
         ).catch(err => {
             return defer.reject(err);
         });
+        return defer.promise;
+    },
+    updateDataEs:function(taskId, data, status){
+        var defer = Q.defer();
+        var now = new Date();
+
+        crawlmainTaskES.update({
+            task_id: taskId,
+            status: status == 'success' ? 2 : 3,//更新成功
+            'update_at' : now
+        }, function (err, res) {
+            if (err) {
+                return defer.reject(new Error('保存ES错误'));
+            }
+
+            return defer.resolve({
+                status : true
+            });
+        })
         return defer.promise;
     }
 }

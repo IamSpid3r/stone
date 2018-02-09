@@ -31,8 +31,20 @@
       "receiveUrl" : "http://kunlun.shihuo.cn/receive"
   },
   "crawltask":{
-    "getUrl" : "http://stone.shihuo.cn/getCrawlTask",
-    "postUrl" : "http://stone.shihuo.cn/saveCrawlInfo"
+    "getUrl" : {
+      "guonei" : "http://10.51.9.70:3200/getCrawlTask",
+      "guowai" : "http://120.26.107.228:3200/getCrawlTask"
+    },
+    "postUrl" : {
+      "guonei" : "http://10.51.9.70:3200/saveCrawlInfo",
+      "guowai" : "http://120.26.107.228:3200/saveCrawlInfo"
+    },
+    "taskNum" : {
+      "guonei" : 4,
+      "guowai" : 6,
+      "jd" : 4,
+      "taobao" : 8
+    }
   },
   "app" : {
     "taskFrom" : {
