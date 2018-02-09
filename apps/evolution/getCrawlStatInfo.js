@@ -131,13 +131,19 @@ var controller = {
             }
 
             var data;
-            var rows = res.aggregations.store.buckets;
-            console.log(rows)
-            if (rows.length > 0){
-            return defer.resolve({
-                    status : true,
-                    data:rows
-                });
+            if (res.aggregations!= undefined){
+              var rows = res.aggregations.store.buckets;
+              
+              if (rows.length > 0){
+              return defer.resolve({
+                      status : true,
+                      data:rows
+                  });
+            }else{
+              return defer.reject('没有数据了');
+
+            }
+            
           } else {
             return defer.reject('没有数据了');
           }
@@ -154,18 +160,22 @@ var controller = {
             if (err) {
                 return defer.reject(err);
             }
-
             var data;
-            if (sort == 'sort'){
-                var rows = res.aggregations.store.buckets;
+            if (res.aggregations != undefined){
+                if (sort == 'sort'){
+                   var rows = res.aggregations.store.buckets;
+                } else {
+                    var rows = res.aggregations.url.buckets;
+                }
+                if (rows.length > 0){
+                return defer.resolve({
+                        status : true,
+                        data:rows
+                    });
             } else {
-                var rows = res.aggregations.url.buckets;
+              return defer.reject('没有数据了');
             }
-            if (rows.length > 0){
-            return defer.resolve({
-                    status : true,
-                    data:rows
-                });
+            
           } else {
             return defer.reject('没有数据了');
           }
