@@ -108,7 +108,8 @@ var controller = {
     curlHtml:function(taskId, data, callback){
         data.Items.forEach(function (row) {
             var unique_id = row.Unique.replace(/cn.jd./g, "");
-            var url = "https://cd.jd.com/promotion/v2?skuId="+unique_id+"&area=1_72_2799_0&shopId=&venderId=93447&cat=1315%2C1345%2C9744&isCanUseDQ=isCanUseDQ-1&isCanUseJQ=isCanUseJQ-1&_=1513654815684";
+            //var url = "https://cd.jd.com/promotion/v2?skuId="+unique_id+"&area=1_72_2799_0&shopId=&venderId=93447&cat=1315%2C1345%2C9744&isCanUseDQ=isCanUseDQ-1&isCanUseJQ=isCanUseJQ-1&_=1513654815684";
+            var url = "https://cd.jd.com/promotion/v2?skuId="+unique_id+"&area=1_72_2799_0&shopId=1000000127&venderId=1000000127&cat=9987%2C653%2C655&isCanUseDQ=isCanUseDQ-0&isCanUseJQ=isCanUseJQ-0&_=1519444914343";
             getHtml(url, function(err, body){
                 if(err){
                     console.log(unique_id+' error')
