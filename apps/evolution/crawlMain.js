@@ -40,6 +40,15 @@ exports.saveTask = function(param, callback) {
         if (timely_data_param.length>0){
             controller.writeUrlTask(timely_data_param).then(function (data) {
                 response = data;
+                if(data_param.length == 0){
+                    var msg = {
+                            'Code':'ok',
+                            'msg':'',
+                            'data':response
+                        }
+                        callback(null, msg);
+                        return '';
+                }
                 //获取条数
                 crawlmainTaskES.count({status:0},function(err, res){
                     if (err){
