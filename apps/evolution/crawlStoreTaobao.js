@@ -189,7 +189,7 @@ function getStoreObj(urlInfo) {
         case 'item.taobao.com':
         case 'detail.tmall.com':
         case 'detail.tmall.hk':
-            return taobao;
+            return taobaoV2;
         default:
             return '';
     }
