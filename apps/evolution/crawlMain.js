@@ -221,7 +221,8 @@ var controller = {
                 if (item.create.created) {
                     taskIds.push({task_id:taskId,status:true,msg:'success'})
                 }else {
-                    taskIds.push({task_id:taskId,status:false,msg:'create err'})
+                    //taskIds.push({task_id:taskId,status:false,msg:'create err'})
+                    taskIds.push({task_id:taskId,status:true,msg:'success'})
                 }
             })
 
