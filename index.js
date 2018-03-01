@@ -72,7 +72,7 @@ app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.urlencoded({ limit: '50mb',extended: true }));
 app.use(express.static('mochawesome-reports'));
 
-
+var vip = require('./lib/vip');
 
 app.use(function (req, res, next) {
     var reqDomain = domain.create();
@@ -479,6 +479,8 @@ function getStoreObj(urlInfo){
             return discovery;
         case 'cn.dod.nl':
             return dod;
+        case 'detail.vip.com':
+            return vip;
         default:
             return '';
             break;
