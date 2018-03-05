@@ -46,7 +46,8 @@ var parseCookie = class parseCookie{
         var values = encodeURIComponent(arr[i].replace(item[0],'').slice(1))
       }else{
         var keyname = item[0].trim()
-        var values = item[1].trim()
+        if (item.length > 1) var values = item[1].trim()
+        else values = '';
       }
 
       if(keyname != 'miid' && keyname != 'tkmb' && keyname != 'tkmb' && keyname != 'cna' && keyname != 'l' && keyname != 'isg'){

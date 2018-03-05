@@ -32,12 +32,26 @@ var runList = function(params, cookiePath, callback) {
             if (params.api == 'mtop.taobao.detail.getdetail') {
                 apiUrl = apiUrl.replace(/api\.m/g, 'h5api.\m');
             }
+            if (params.api == 'mtop.macao.market.activity.applycoupon.querycouponsfordetail') {
+                apiUrl = apiUrl.replace(/api\.m/g, 'acs.\m');
+            }
+            if (params.api == 'mtop.tmall.detail.couponpage') {
+                apiUrl = apiUrl.replace(/api\.m\.taobao/g, 'h5api\.m\.tmall');
+            }
 
             var requestCookie = globalCookies;
 
             options = {};
             options.gzip = true;
             options.url = apiUrl;
+            options.headers = {
+                'Accept':'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+                'Accept-Encoding':'gzip, deflate, br',
+                'Accept-Language':'zh-CN,zh;q=0.8,en;q=0.6,ja;q=0.4',
+                'Cache-Control':'no-cache',
+                'User-Agent':'user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.91 Safari/537.36',
+                'Cookie' : requestCookie
+            };
             proxyRequest2(options, function (error, response, body) {
                 if(error) {
                     return callback(null, error);
@@ -66,6 +80,24 @@ var runList = function(params, cookiePath, callback) {
                             }
                             break;
                         case 'mtop.alimama.union.hsf.coupon.get':
+                            if (resJson.ret instanceof Array && resJson.ret[0].indexOf('SUCCESS') > -1) {
+                                callback(resJson);
+                            }else{
+                                if (response.headers['set-cookie']) {
+                                    var sc = response.headers['set-cookie'];
+                                    sc = sc.join('; ');
+                                    let cookieObj = new parseCookie(sc).parsetoJSON();
+                                    cookie = new parseCookie(cookieObj).parsetoSTR();
+
+                                    fun.writeLog(cookiePath, cookie);
+                                    requestBody(cookie);
+                                }else{
+                                    callback(null, '抓取服务器错误');
+                                }
+                            }
+                            break;
+                        case 'mtop.tmall.detail.couponpage2':
+
                             if (resJson.ret instanceof Array && resJson.ret[0].indexOf('SUCCESS') > -1) {
                                 callback(resJson);
                             }else{

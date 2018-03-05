@@ -106,7 +106,7 @@ Login.prototype = {
     fOnResourceReceived: function (oResponse, oCurPage, oPhantom, oCallBack) {
         var oLogin = this;
         var oQrPage = null  
-       console.log(oResponse.url);
+      // console.log(oResponse.url);
         //https://h5.m.taobao.com/fav/index.htm
         //https://h5api.m.taobao.com/h5/com.taobao.mcl.fav.querycolgoodsbycursor/3.0/
         if (oResponse.url.indexOf('https://h5api.m.taobao.com/h5/com.taobao.mcl.fav.querycolgoodsbycursor/3.0/') !=-1  &&  oResponse.stage =='end'){
@@ -140,6 +140,7 @@ Login.prototype = {
             this.sAlimamaIndexNumber = 1;
             console.log('打开我的收藏');
             oCurPage.open("https://h5.m.taobao.com/fav/index.htm");
+            //oCurPage.open("https://detail.m.tmall.com/item.htm?id=563540050141");
         }
       
     },
