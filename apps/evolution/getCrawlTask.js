@@ -114,7 +114,7 @@ var handler = function (request, response){
 	                    	//获取完把状态更新成1（处理中）
 				    		controller.updateDataEs(data.data.task_id).then(function (datas) {
 				    			client.set(redis_key, 1);
-		                    	client.expire(redis_key, 3600);
+		                    	client.expire(redis_key, 10);
 				    			redlock.unlock(lock);//释放锁
 				    			response.json({code: 200, msg: '',data:data.data});
 				    		}, function (errs) {
@@ -157,7 +157,7 @@ var handler = function (request, response){
 	                    	//获取完把状态更新成1（处理中）
 				    		controller.updateDataEs(data.data.task_id).then(function (datas) {
 				    			client.set(redis_key, 1);
-		                    	client.expire(redis_key, 3600);
+		                    	client.expire(redis_key, 10);
 				    			redlock.unlock(lock);//释放锁
 				    			response.json({code: 200, msg: '',data:data.data});
 				    		}, function (errs) {
