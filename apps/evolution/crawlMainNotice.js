@@ -29,7 +29,7 @@ var deal = function(){
                                     receiveQueue.handler(row.task_id, row.url,  skuInfo, function(error, info){
                                         if(error){
                                             console.log(row.task_id+' callback error');
-                                            fun.stoneLog('crawlMainNotice', 'error', {"param1" : row.task_id, "param2":row.url, "param":{"message":'notice error--'+error}})
+                                            fun.stoneLog('crawlMainNotice', 'error', {"param1" : row.task_id, "param2":row.url, "param":{"message":'notice error1--'+error}})
                                             //失败
                                             controller.updateDataErrorEs(row.task_id,parseInt(row.callback_err_num)+1).then(function (data) {})
                                         } else {
@@ -38,7 +38,7 @@ var deal = function(){
                                                 console.log(row.task_id+' callback success');
                                                 fun.stoneLog('crawlMainNotice', 'info', {"param1" : row.task_id, "param2":row.url, "param":{"message":'notice success'}})
                                             },function (err) {
-                                                fun.stoneLog('crawlMainNotice', 'error', {"param1" : row.task_id, "param2":row.url, "param":{"message":'notice error--'+err.message}})
+                                                fun.stoneLog('crawlMainNotice', 'error', {"param1" : row.task_id, "param2":row.url, "param":{"message":'notice error2--'+err.message}})
                                                 console.log(err.message)
                                             })
                                         }
