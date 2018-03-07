@@ -123,8 +123,8 @@ var controller = {
 function getLocalTime(nS) {     
     return new Date(parseInt(nS) * 1000).toLocaleString().replace(/年|月/g, "-").replace(/日/g, " ");      
  }  
-deal();
+//deal();
 //start
-// setInterval(function(){
-// 	deal();
-// },10000)
+setInterval(function(){
+	deal();
+},10000)

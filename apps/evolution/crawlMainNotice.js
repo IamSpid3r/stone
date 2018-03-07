@@ -208,7 +208,7 @@ var controller = {
         var now = new Date();
 
         crawlmainTaskES.update({
-            task_id: taskId,
+            task_id: task_id,
             'callback_status' : 0,
             'callback_err_num' : err_num
         }, function (err, res) {
