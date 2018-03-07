@@ -45,7 +45,7 @@ var controller = {
                 'update_status': 'success'
             })
             attributes.push({
-                'shop_name': (data.Data.ItemAttributes.ShopName != undefined) ? data.Data.ItemAttributes.ShopName : ''
+                'shop_name': data.Data.ItemAttributes.ShopName ? data.Data.ItemAttributes.ShopName : ''
             })
         } else {
             attributes.push({
