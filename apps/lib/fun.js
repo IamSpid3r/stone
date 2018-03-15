@@ -75,6 +75,7 @@ exports.getStore = function (urlStr) {
         ['西集', ['www.xiji.com']],
         ['美囤妈妈', ['item.meitun.com']],
         ['贝贝', ['www.beibei.com']],
+        ['唯品会', ['detail.vip.com']],
         ['蜜芽', ['www.mia.com']],
         ['澳洲chemistdirect', ['cn.chemistdirect.com.au']],
         ['澳洲pharmacy4less', ['cn.pharmacy4less.com.au']],
