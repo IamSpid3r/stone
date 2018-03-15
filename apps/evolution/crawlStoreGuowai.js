@@ -44,7 +44,11 @@ var gome = require('../../lib/gome');
 var du = require('../../lib/du');
 var iherb = require('../../lib/iherb');
 var mia = require('../../lib/mia');
-var chemistdirect = require('../../lib/chemistdirect');
+var chemistdirect = require('../../lib/kaluli/chemistdirect');
+var pharmacy4less = require('../../lib/kaluli/pharmacy4less');
+var pharmacydirect = require('../../lib/kaluli/pharmacydirect');
+var discountApotheke = require('../../lib/kaluli/discountApotheke');
+var amcal = require('../../lib/kaluli/amcal');
 
 
 var task_id;//当前在跑的任务id
@@ -273,12 +277,17 @@ function getStoreObj(urlInfo){
         case 'cn.iherb.com':
             return iherb;
         case 'cn.chemistdirect.com.au':
-        case 'cn.pharmacy4less.com.au':
-        case 'cn.pharmacyonline.com.au':
-        case 'cn.pharmacydirect.co.nz':
-        case 'cn.discount-apotheke.de':
-        case 'cn.amcal.com.au':
             return chemistdirect;
+        case 'cn.pharmacy4less.com.au':
+            return pharmacy4less;
+        case 'cn.pharmacyonline.com.au':
+            return pharmacyonline;
+        case 'cn.pharmacydirect.co.nz':
+            return pharmacydirect;
+        case 'cn.discount-apotheke.de':
+            return discountApotheke;
+        case 'cn.amcal.com.au':
+            return amcal;
         case 'www.abcpost.com.au':
             return abcpost;
         case 'cn.apo.com':

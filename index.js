@@ -57,7 +57,11 @@ var abcpost = require('./lib/kaluli/abcpost');
 var apo = require('./lib/kaluli/cnapo');
 // var mia = require('./lib/mia');蜜芽新测试
 var mia = require('./lib/kaluli/mia');
-var chemistdirect = require('./lib/chemistdirect');
+var chemistdirect = require('./lib/kaluli/chemistdirect');              //Chemist Direct药房中文官网
+var pharmacy4less = require('./lib/kaluli/pharmacy4less');              //PHARMACY 4 LESS 澳洲站
+var pharmacydirect = require('./lib/kaluli/pharmacydirect');            //新西兰大型综合性折扣店  Pharmacy Direct 中文站
+var discountApotheke = require('./lib/kaluli/discountApotheke');        //德式康线上药房  discount-apotheke
+var amcal = require('./lib/kaluli/amcal');                              //澳洲知名高端；连锁药房  amcal
 
 var taobaos112017 = require('./lib/shuang112017/taobao');
 var getcrawltask = require('./apps/evolution/getCrawlTask');
@@ -446,12 +450,16 @@ function getStoreObj(urlInfo){
         case 'cn.iherb.com':
             return iherb;
         case 'cn.chemistdirect.com.au':
+            return chemistdirect;
         case 'cn.pharmacy4less.com.au':
+            return pharmacy4less;
         // case 'cn.pharmacyonline.com.au':
         case 'cn.pharmacydirect.co.nz':
+            return pharmacydirect;
         case 'cn.discount-apotheke.de':
+            return discountApotheke;
         case 'cn.amcal.com.au':
-            return chemistdirect;
+            return amcal;
             break;
         case 'cn.pharmacyonline.com.au':
             return pharmacyonline;
