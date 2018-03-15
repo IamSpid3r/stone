@@ -45,6 +45,7 @@ var guowaiArr = [
 	{'name':'nbaStore'},
 	{'name':'footlocker官网'},
 	{'name':'UA官网'},
+    {'name':'识货海淘'},
 	// 卡路里国外
   {'name':'澳洲chemistdirect'},
   {'name':'澳洲pharmacy4less'},
@@ -64,7 +65,6 @@ var guoneiArr = [
 	{'name':'中亚'},
 	{'name':'优购'},
 	{'name':'NIKE官网'},
-	{'name':'识货海淘'},
 	{'name':'识货团购'},
 	{'name':'有货'},
 	{'name':'银泰'},
@@ -74,6 +74,9 @@ var guoneiArr = [
 	{'name':'考拉海购'},
 	{'name':'国美在线'},
 	{'name':'苏宁易购'},
+    {'name':'苏宁'},
+    {'name':'唯品会'},
+    {'name':'考拉海购'},
 	{'name':'毒'},
 	{'name':'西集'},
 	{'name':'美囤妈妈'},
@@ -102,12 +105,12 @@ var handler = function (request, response){
     }
 
     if (_.findIndex(storeArr, {'name':store}) != -1){//是否是需要单独获取的商城
-    	redlock.lock('stone_get_crawl_task_'+ store, 4).done(//锁3秒
+    	redlock.lock('stone_get_crawl_task1_'+ store, 4).done(//锁3秒
 		  function(lock){
 		  	//拿到锁以后获取一条数据
 	    	controller.getDataEs(store).then(function (data) {
 		    	if(data){
-		    		var redis_key = 'stone_get_crawl_task_'+data.data.task_id;
+		    		var redis_key = 'stone_get_crawl_task1_'+data.data.task_id;
 		    		//用redis的方式存储是否获取过，防止es更新缓慢造成重复抓取的问题
 		    		client.get(redis_key, function (err, reply) {
 	                    if (!reply){//没有获取过
@@ -145,12 +148,12 @@ var handler = function (request, response){
 		  	},50)
 	      }); 
     } else {//其他的商城
-		redlock.lock('stone_get_crawl_task_'+ store, 4).done(//锁3秒
+		redlock.lock('stone_get_crawl_task1_'+ store, 4).done(//锁3秒
 		  function(lock){
 		  	//拿到锁以后获取一条数据
 	    	controller.getDataOtherEs(store).then(function (data) {
 		    	if(data){
-		    		var redis_key = 'stone_get_crawl_task_'+data.data.task_id;
+		    		var redis_key = 'stone_get_crawl_task1_'+data.data.task_id;
 		    		//用redis的方式存储是否获取过，防止es更新缓慢造成重复抓取的问题
 		    		client.get(redis_key, function (err, reply) {
 	                    if (!reply){//没有获取过
