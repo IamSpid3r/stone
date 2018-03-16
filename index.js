@@ -451,13 +451,17 @@ function getStoreObj(urlInfo){
             return iherb;
         case 'cn.chemistdirect.com.au':
             return chemistdirect;
+            break;
         case 'cn.pharmacy4less.com.au':
             return pharmacy4less;
+            break;
         // case 'cn.pharmacyonline.com.au':
         case 'cn.pharmacydirect.co.nz':
             return pharmacydirect;
+            break;
         case 'cn.discount-apotheke.de':
             return discountApotheke;
+            break;
         case 'cn.amcal.com.au':
             return amcal;
             break;
