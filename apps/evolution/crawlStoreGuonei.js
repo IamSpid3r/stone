@@ -46,6 +46,7 @@ var gome = require('../../lib/gome');
 var du = require('../../lib/du');
 var iherb = require('../../lib/iherb');
 var mia = require('../../lib/mia');
+var vip = require('../../lib/vip');
 var chemistdirect = require('../../lib/kaluli/chemistdirect');
 var pharmacy4less = require('../../lib/kaluli/pharmacy4less');
 var pharmacydirect = require('../../lib/kaluli/pharmacydirect');
@@ -294,8 +295,8 @@ function getStoreObj(urlInfo) {
         //西集网
         case 'www.xiji.com':
             return xiji;
-
-
+        case 'detail.vip.com':
+            return vip;
         case 'product.suning.com':
             return suning;
         case 'item.gome.com.cn':
@@ -322,7 +323,6 @@ function getStoreObj(urlInfo) {
         case 'cn.apo.com':
             return apo;
         //蜜芽
-
         case 'www.miyabaobei.hk':
         case 'www.mia.com':
             return mia;
