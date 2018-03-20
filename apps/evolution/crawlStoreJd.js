@@ -381,7 +381,7 @@ var crawl = function(taskId, url){
                                                         var tmpTitleArr = {};
                                                         var content
                                                         rows_stst.rows.forEach(function (row_ststfe) {
-                                                                var index = _.findIndex(row_ststfe.attributes, {'columnName':'Subtitleitle'});
+                                                                var index = _.findIndex(row_ststfe.attributes, {'columnName':'subtitle'});
                                                                 tmpTitleArr[row_ststfe.primaryKey[1].value] = row_ststfe.attributes[index].columnValue;
                                                                 var index_data = _.findIndex(row_ststfe.attributes, {'columnName':'data'});
                                                                 if (!content) content = row_ststfe.attributes[index_data].columnValue;
