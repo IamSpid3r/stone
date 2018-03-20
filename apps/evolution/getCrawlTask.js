@@ -258,11 +258,13 @@ var controller = {
             var data;
             var rows = res.hits.hits;
             if (rows.length > 0){
-                data = {
-                    task_id: rows[0]._source.task_id,
-                    url: rows[0]._source.url,
-                    store : rows[0]._source.store
-                };
+                rows.forEach(function(row){
+                    data.push({
+                        task_id: row._source.task_id,
+                        url: row._source.url,
+                        store : row._source.store
+                    });
+                })
             return defer.resolve({
                         status : true,
                         data:data
