@@ -64,8 +64,8 @@ var discountApotheke = require('./lib/kaluli/discountApotheke');        //德式
 var amcal = require('./lib/kaluli/amcal');                              //澳洲知名高端；连锁药房  amcal
 
 var taobaos112017 = require('./lib/shuang112017/taobao');
-var getcrawltask = require('./apps/evolution/getCrawlTask');
-var savecrawlinfo = require('./apps/evolution/saveCrawlInfo');
+//var getcrawltask = require('./apps/evolution/getCrawlTask');
+//var savecrawlinfo = require('./apps/evolution/saveCrawlInfo');
 var writeTaskhandler = require('./apps/evolution/writeTask').handler;
 var getTaskInfohandler = require('./apps/evolution/getTaskInfo').handler;
 var getCrawlTaskInfohandler = require('./apps/evolution/getCrawlTaskInfo').handler;
@@ -315,13 +315,13 @@ app.get('/getCrawlStatInfo', function (req, res) {
 })
 
 //获取抓取任务
-app.get('/getCrawlTask', function (req, res) {
-    getcrawltask.getMainList(req, res);
-})
+// app.get('/getCrawlTask', function (req, res) {
+//     getcrawltask.getMainList(req, res);
+// })
 //保存抓取任务
-app.post('/saveCrawlInfo', function (req, res) {
-    savecrawlinfo.saveData(req, res);
-})
+// app.post('/saveCrawlInfo', function (req, res) {
+//     savecrawlinfo.saveData(req, res);
+// })
 
 // uncaughtException 避免程序崩溃
 process.on('uncaughtException', function (err) {
