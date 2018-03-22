@@ -11,7 +11,7 @@ var deal = function(){
 	console.log('start monitor')
     var curr_time = new Date();
         curr_time.setTime(curr_time.getTime()-15*60*1000);
-	    controller.getDataListEs(curr_time, 10).then(function (data) {
+	    controller.getDataListEs(curr_time, 300).then(function (data) {
             if (data.status){
                 data.data.forEach(function (row) {
                     if (row.task_id){
@@ -127,4 +127,4 @@ function getLocalTime(nS) {
 //start
 setInterval(function(){
 	deal();
-},10000)
+},2000)
