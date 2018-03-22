@@ -104,6 +104,7 @@ var controller = {
 
         crawlmainTaskES.update({
             task_id: taskId,
+            'status':0,
             'update_err_num' : err_num,
             'update_at' : now
         }, function (err, res) {
