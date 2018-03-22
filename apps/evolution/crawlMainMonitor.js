@@ -127,4 +127,4 @@ function getLocalTime(nS) {
 //start
 setInterval(function(){
 	deal();
-},6000)
+},10000)
