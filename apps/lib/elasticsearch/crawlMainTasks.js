@@ -188,6 +188,15 @@ function count(condition, callback) {
             }
         )
     }
+    if (condition.hasOwnProperty('callback_status')) {
+        boolMust.push(
+            {
+                "terms": {
+                    "callback_status":  Array.isArray(condition.callback_status) ? condition.callback_status : [condition.callback_status]
+                }
+            }
+        )
+    }
     if (condition.hasOwnProperty('task_id')) {
         boolMust.push(
             {
