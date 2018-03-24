@@ -11,7 +11,7 @@ var deal = function(){
 	console.log('start monitor')
     var curr_time = new Date();
         curr_time.setTime(curr_time.getTime()-15*60*1000);
-	    controller.getDataListEs(curr_time, 10).then(function (data) {
+	    controller.getDataListEs(curr_time, 200).then(function (data) {
             if (data.status){
                 data.data.forEach(function (row) {
                     if (row.task_id){
@@ -104,6 +104,7 @@ var controller = {
 
         crawlmainTaskES.update({
             task_id: taskId,
+            'status':0,
             'update_err_num' : err_num,
             'update_at' : now
         }, function (err, res) {
@@ -114,7 +115,7 @@ var controller = {
             return defer.resolve({
                 status : true
             });
-        })
+        }, true)
         return defer.promise;
     }
 }

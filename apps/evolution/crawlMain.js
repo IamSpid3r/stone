@@ -5,7 +5,7 @@ var fun  = require('../lib/fun');
 const crawlmainTaskES = require(process.cwd()+"/apps/lib/elasticsearch/crawlMainTasks.js").esClient;
 
 const Q = require("q");
-var limit = 15000;//最大任务
+var limit = 50000;//最大任务
 
 exports.saveTask = function(param, callback) {
     try{
@@ -50,7 +50,7 @@ exports.saveTask = function(param, callback) {
                         return '';
                 }
                 //获取条数
-                crawlmainTaskES.count({status:0},function(err, res){
+                crawlmainTaskES.count({status:0,callback_status:0},function(err, res){
                     if (err){
                         callback(err.message,null)
                         return '';
@@ -94,7 +94,7 @@ exports.saveTask = function(param, callback) {
             })
         } else if(data_param.length>0) {
             //获取条数
-            crawlmainTaskES.count({status:0},function(err, res){
+            crawlmainTaskES.count({status:0,callback_status:0},function(err, res){
                 if (err){
                     callback(err.message,null)
                     return '';
