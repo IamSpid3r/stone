@@ -354,6 +354,8 @@ function getStoreObj(urlInfo){
         case 'item.taobao.com':
         case 'detail.tmall.com':
         case 'detail.tmall.hk':
+        case 'chaoshi.detail.tmall.com':
+        case 'world.tmall.com':
             //return taobao;
             return taobaoV2;
             break;
