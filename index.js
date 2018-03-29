@@ -45,8 +45,6 @@ var dod = require('./lib/kaluli/dod');
 var pharmacyonline = require('./lib/kaluli/pharmacyonline');
 var fengqu = require('./lib/kaluli/fengqu');
 
-
-
 var taobaos11 = require('./lib/shuang11/taobaoV2');
 var taobaos12 = require('./lib/shuang12/taobao');
 var suning = require('./lib/suning');
@@ -70,6 +68,8 @@ var writeTaskhandler = require('./apps/evolution/writeTask').handler;
 var getTaskInfohandler = require('./apps/evolution/getTaskInfo').handler;
 var getCrawlTaskInfohandler = require('./apps/evolution/getCrawlTaskInfo').handler;
 var getCrawlStatInfohandler = require('./apps/evolution/getCrawlStatInfo').handler;
+var taobaoOrigin =  require('./lib/special/taobao');  //淘宝原始抓取信息
+
 
 //淘宝店铺信息
 var taobaoShop = require('./lib/taobaoShop');
@@ -149,10 +149,15 @@ app.get('/info', function (req, res) {
 })
 
 app.get('/taobao', function (req, res) {
-    var goodsUrl = req.query.url;
-    var urlInfo = goodsUrl ?  url.parse(goodsUrl, true, true) : {path:'',host:''};
+    var id = req.query.id;
+    if (!id)  {
+        res.json({
+            Status: false,
+            Msg: '缺少商品id'
+        }).end();
+    }
 
-    taobaoV2.getInfo(encodeURI(goodsUrl) ,function(error, itemInfo){
+    taobaoOrigin.getInfo(id ,function(error, itemInfo){
         if(error){
             res.json({
                 Status: false,
