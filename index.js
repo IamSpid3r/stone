@@ -71,6 +71,9 @@ var getTaskInfohandler = require('./apps/evolution/getTaskInfo').handler;
 var getCrawlTaskInfohandler = require('./apps/evolution/getCrawlTaskInfo').handler;
 var getCrawlStatInfohandler = require('./apps/evolution/getCrawlStatInfo').handler;
 
+//淘宝店铺信息
+var taobaoShop = require('./lib/taobaoShop');
+
 app.use(compress());
 app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.urlencoded({ limit: '50mb',extended: true }));
@@ -323,6 +326,36 @@ app.get('/getCrawlStatInfo', function (req, res) {
 //     savecrawlinfo.saveData(req, res);
 // })
 
+//根据商品url查看店铺基本信息
+app.get('/shopinfo', function (req, res) {
+    var goodsUrl = req.query.url;
+    var urlInfo = goodsUrl ?  url.parse(goodsUrl, true, true) : {path:'',host:''};
+
+    var storeObjShop = getStoreObjShop(urlInfo);
+    if(typeof storeObjShop == 'object'){
+        storeObjShop.getInfo(goodsUrl ,function(error, itemInfo){
+            if(error){
+                res.json({
+                    Status: false,
+                    Msg: error
+                }).end();
+            }else{
+                res.json({ Status: true, Data: itemInfo}).end();
+            }
+        })
+    }else{
+        res.json({
+            Status: false,
+            Msg: {
+                Errors: {
+                    Code: 'Fatal',
+                    Message: '当前地址不支持爬取'
+                }
+            }
+        }).end();
+    }
+})
+
 // uncaughtException 避免程序崩溃
 process.on('uncaughtException', function (err) {
     console.log('uncaughtException->',err);
@@ -497,6 +530,19 @@ function getStoreObj(urlInfo){
             return vip;
         default:
             return '';
+            break;
+    }
+}
+
+//获取商城店铺对象
+function getStoreObjShop(urlInfo){
+    switch(urlInfo.host){
+        case 'item.taobao.com':
+        case 'detail.tmall.com':
+        case 'detail.tmall.hk':
+            return taobaoShop;
+        default:
+            return taobaoShop;
             break;
     }
 }
