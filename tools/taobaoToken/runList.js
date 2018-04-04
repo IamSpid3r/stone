@@ -44,6 +44,7 @@ var runList = function(params, cookiePath, callback) {
             options = {};
             options.gzip = true;
             options.url = apiUrl;
+            options.timeout = 6000;
             options.headers = {
                 'Accept':'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
                 'Accept-Encoding':'gzip, deflate, br',
