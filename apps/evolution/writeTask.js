@@ -91,8 +91,9 @@ var controller = {
                         url: url, task_id: taskId
                     })
                 }else {
+                    errStr = item.create.error.type+','+item.create.error.reason;
                     taskIds.push({
-                        url: url, task_id: null, err: 'create err'
+                        url: url, task_id: null, err: errStr
                     })
                 }
             })
