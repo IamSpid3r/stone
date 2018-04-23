@@ -113,28 +113,30 @@ exports.getStore = function (urlStr) {
 
 
 exports.stoneLog = function (key, level, param) {
-    var key  = key || 'stone';
-    var level = level || 'trace';
-    var fs = require('fs');
-    var res = {
-        'evt' : 'stone',
-        'vtm' : parseInt((new Date())/1000),
-        'body' : {
-            'key'   :  key,
-            'level' :  level,
-        }
-    };
-    _(param).forEach(function (val, key) {
-        if (key == 'param') {
-            res.body[key] = JSON.stringify(val);
-        } else {
-            res.body[key] = val;
-        }
-    })
-    fs.appendFile("/data0/log-data/stone.log", JSON.stringify(res) + "\n", function (err) {
-        if (err) {
-            return console.error(err);
-        }
-        return true
-    });
+    //暂停日志收集影响业务
+    return true;
+    // var key  = key || 'stone';
+    // var level = level || 'trace';
+    // var fs = require('fs');
+    // var res = {
+    //     'evt' : 'stone',
+    //     'vtm' : parseInt((new Date())/1000),
+    //     'body' : {
+    //         'key'   :  key,
+    //         'level' :  level,
+    //     }
+    // };
+    // _(param).forEach(function (val, key) {
+    //     if (key == 'param') {
+    //         res.body[key] = JSON.stringify(val);
+    //     } else {
+    //         res.body[key] = val;
+    //     }
+    // })
+    // fs.appendFile("/data0/log-data/stone.log", JSON.stringify(res) + "\n", function (err) {
+    //     if (err) {
+    //         return console.error(err);
+    //     }
+    //     return true
+    // });
 }
