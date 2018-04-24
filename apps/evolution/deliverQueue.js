@@ -108,4 +108,4 @@ var controller = {
 
 setInterval(function () {
     handler();
-}, 5000)
+}, 3000)
