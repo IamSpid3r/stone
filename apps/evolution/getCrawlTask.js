@@ -227,6 +227,7 @@ var controller = {
         return defer.promise;
     },
     getDataOtherEs:function(store){
+        var size = 500;
         if(store == 'guonei'){
             var storeStr = _.chain(guoneiArr)
               .map(function(mall){
@@ -239,6 +240,7 @@ var controller = {
                 return mall.name;
               })
               .value();
+            size = 1000;
         } else {
             var storeStr = _.chain(guowaiArr)
               .map(function(mall){
@@ -249,7 +251,7 @@ var controller = {
         var defer = Q.defer();
 
         crawlmainTaskES.search(
-            { store:storeStr, status: 0, size: 500, sort: [['from', 'desc'],['update_at', 'asc']]
+            { store:storeStr, status: 0, size: size, sort: [['from', 'desc'],['update_at', 'asc']]
         }, function (err, res) {
             if (err) {
                 return defer.reject(err);

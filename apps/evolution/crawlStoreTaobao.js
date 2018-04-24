@@ -7,20 +7,23 @@ var url = require('url');
 const cluster = require('cluster');
 const fun = require(process.cwd() + "/apps/lib/fun.js");
 const Q = require("q");
-var taobao = require('../../lib/taobao');
 var taobaoV2 = require('../../lib/taobaoV2');
 var task_id;//当前在跑的任务id
+
 var controller = {
     getData: function (url) {
         var defer = Q.defer();
         request(url, function (error, response, body) {
-            if (!error && response.statusCode == 200) {
-
-                return defer.resolve(JSON.parse(body));
-            } else {
+            if (error) {
                 return defer.reject(error);
             }
+            if (response.statusCode != 200) {
+                return defer.reject(new Error('http code '+response.statusCode));
+            }
+
+            return defer.resolve(JSON.parse(body));
         })
+
         return defer.promise;
     },
     insertTableStore: function (taskId, skuId, url, data, callback) {
@@ -63,11 +66,14 @@ var controller = {
                 status: status
             }
         }, function (error, response, body) {
-            if (!error && response.statusCode == 200) {
-                return defer.resolve({status: true});
-            } else {
+            if (error) {
                 return defer.reject(error);
             }
+            if (response.statusCode != 200) {
+                return defer.reject(new Error('http code '+response.statusCode));
+            }
+
+            return defer.resolve({status: true});
         })
         return defer.promise;
     }
@@ -97,6 +103,7 @@ var deal = function () {
     controller.getData(crawltaskConfig.getUrl.guonei + '?store=taobao').then(function (res) {
         if (res.code == 200) {
             console.log(cluster.worker.id + ' crawl '+ res.data.url)
+
             task_id = res.data.task_id;
             //记日志
             fun.stoneLog('crawlStoreTaobao', 'info', {
@@ -104,71 +111,62 @@ var deal = function () {
                 "param2": res.data.url,
                 "param": {"message": '开始处理'}
             })
-            var urlInfo = res.data.url ? url.parse(res.data.url, true, true) : {path: '', host: ''};
-            var storeObj = getStoreObj(urlInfo);
-            if (typeof storeObj == 'object') {
-                storeObj.getInfo(res.data.url, function (error, itemInfo) {
-                    if (error) {
-                        console.log(cluster.worker.id + ' error '+ error)
+
+            taobaoV2.getInfo(res.data.url, function (error, itemInfo) {
+                if (error) {
+                    console.log(cluster.worker.id + ' error1 '+ error.Errors.Message)
+
+                    fun.stoneLog('crawlStoreTaobao', 'error', {
+                        "param1": task_id,
+                        "param2": res.data.url,
+                        "param": {"message": error.Errors.Message}
+                    })
+
+                    return dealerrorcallback(res.data.task_id, error.Errors.Message);
+                }
+
+                //保存tablestore
+                var dataJson = {Status: true, Data: itemInfo};
+                controller.insertTableStore(res.data.task_id, itemInfo.Unique, res.data.url, dataJson, function (err, rows) {
+                    if (err) {
+                        console.log(cluster.worker.id + ' error2 '+ err.message)
+
                         fun.stoneLog('crawlStoreTaobao', 'error', {
                             "param1": task_id,
                             "param2": res.data.url,
-                            "param": {"message": error}
+                            "param": {"message": '保存tablestore失败--' + err.message}
                         })
-                        dealerrorcallback(res.data.task_id, error);
+                        return dealerrorcallback(res.data.task_id, err.message);
                     } else {
-                        //保存tablestore
-                        var dataJson = {Status: true, Data: itemInfo};
-                        controller.insertTableStore(res.data.task_id, itemInfo.Unique, res.data.url, dataJson, function (err, rows) {
-                            if (err) {
-                                console.log(cluster.worker.id + ' error '+ err.message)
+                        console.log(cluster.worker.id + ' success')
 
-                                fun.stoneLog('crawlStoreTaobao', 'error', {
-                                    "param1": task_id,
-                                    "param2": res.data.url,
-                                    "param": {"message": '保存tablestore失败--' + err.message}
-                                })
-                                dealerrorcallback(res.data.task_id, err.message);
-                            } else {
-                                console.log(cluster.worker.id + ' success')
-
-                                fun.stoneLog('crawlStoreTaobao', 'info', {
-                                    "param1": task_id,
-                                    "param2": res.data.url,
-                                    "param": {"message": '保存tablestore成功'}
-                                })
-                                //callback
-                                controller.callbackData(crawltaskConfig.postUrl.guonei, res.data.task_id, dataJson, 'success').then(function (result) {
-                                    console.log(result)
-                                    fun.stoneLog('crawlStoreTaobao', 'info', {
-                                        "param1": task_id,
-                                        "param2": res.data.url,
-                                        "param": {"message": 'callback成功'}
-                                    })
-                                    //start
-                                    deal();
-                                }, function (err) {
-                                    console.log(err)
-                                    fun.stoneLog('crawlStoreTaobao', 'error', {
-                                        "param1": task_id,
-                                        "param2": res.data.url,
-                                        "param": {"message": 'callback失败--' + err.message}
-                                    })
-                                    dealerrorcallback(res.data.task_id, err.message);
-                                })
-                            }
+                        fun.stoneLog('crawlStoreTaobao', 'info', {
+                            "param1": task_id,
+                            "param2": res.data.url,
+                            "param": {"message": '保存tablestore成功'}
+                        })
+                        //callback
+                        controller.callbackData(crawltaskConfig.postUrl.guonei, res.data.task_id, dataJson, 'success').then(function (result) {
+                            console.log(result)
+                            fun.stoneLog('crawlStoreTaobao', 'info', {
+                                "param1": task_id,
+                                "param2": res.data.url,
+                                "param": {"message": 'callback成功'}
+                            })
+                            //start
+                            deal();
+                        }, function (err) {
+                            console.log(err)
+                            fun.stoneLog('crawlStoreTaobao', 'error3', {
+                                "param1": task_id,
+                                "param2": res.data.url,
+                                "param": {"message": 'callback失败--' + err.message}
+                            })
+                            dealerrorcallback(res.data.task_id, err.message);
                         })
                     }
                 })
-            } else {
-                fun.stoneLog('crawlStoreTaobao', 'error', {
-                    "param1": task_id,
-                    "param2": res.data.url,
-                    "param": {"message": '当前地址不支持爬取'}
-                })
-                dealerrorcallback(res.data.task_id, '当前地址不支持爬取');
-            }
-
+            })
         } else {
             setTimeout(function () {deal();}, 5000)
         }

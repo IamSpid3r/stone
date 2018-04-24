@@ -44,7 +44,7 @@ var runList = function(params, cookiePath, callback) {
             options = {};
             options.gzip = true;
             options.url = apiUrl;
-            options.timeout = 6000;
+            options.timeout = 10000;
             options.headers = {
                 'Accept':'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
                 'Accept-Encoding':'gzip, deflate, br',
@@ -55,7 +55,7 @@ var runList = function(params, cookiePath, callback) {
             };
             proxyRequest2(options, function (error, response, body) {
                 if(error) {
-                    return callback(null, error);
+                    return callback(null, error.message);
                 }else{
                     let resStr = response.body.replace('mtopjsonp1(','')
                     let res = resStr.substring(0,resStr.length-1);
