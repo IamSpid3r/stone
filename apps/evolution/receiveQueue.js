@@ -3,7 +3,8 @@ const _ = require('lodash');
 const dateFormat = require('dateformat');
 const Q = require("q");
 
-const stoneTaskES = require(process.cwd()+"/apps/lib/elasticsearch/stoneTasks").esClient;
+//const stoneTaskES = require(process.cwd()+"/apps/lib/elasticsearch/stoneTasks").esClient;
+const superTaskES = require(process.cwd()+"/apps/lib/elasticsearch/superTask").esClient;
 const fun = require(process.cwd()+"/apps/lib/fun.js");
 const tableStore = require(process.cwd()+"/apps/lib/tablestore.js").tableStore;
 
@@ -46,7 +47,7 @@ var controller = {
         var updateErrStatus = packageInfo[2];
         var now = new Date();
 
-        stoneTaskES.update({
+        superTaskES.update({
             task_id: taskId,
             'status' : 2,
             'update_info' : JSON.stringify(updateInfo),

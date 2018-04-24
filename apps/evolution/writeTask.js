@@ -5,7 +5,8 @@ const Q = require('q');
 const _ = require('lodash');
 const dateFormat = require('dateformat');
 
-const stoneTaskES = require(process.cwd()+"/apps/lib/elasticsearch/stoneTasks.js").esClient;
+//const stoneTaskES = require(process.cwd()+"/apps/lib/elasticsearch/stoneTasks.js").esClient;
+const superTaskES = require(process.cwd()+"/apps/lib/elasticsearch/superTask.js").esClient;
 const fun = require(process.cwd()+'/apps/lib/fun.js');
 
 const maxTaskNum = 2000;
@@ -31,7 +32,7 @@ function handler(request, response) {
     }
 
     //检测当前有多少未处理的任务
-    stoneTaskES.search({'status': [0], 'size': 0}, function (err, res) {
+    superTaskES.search({'status': [0], 'size': 0}, function (err, res) {
         if (err) {
             return response.json({code: 405, msg: err.message});
         }
@@ -77,7 +78,7 @@ var controller = {
         })
 
         var opration = 'create';
-        stoneTaskES.bulk(body, opration, function (err, res) {
+        superTaskES.bulk(body, opration, function (err, res) {
             if (err){
                 return defer.reject(err);
             }

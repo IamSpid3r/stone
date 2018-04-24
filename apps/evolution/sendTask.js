@@ -113,7 +113,7 @@ var controller = {
         })
     }
 };
-
-setInterval(function () {
-    handler();
-}, 5000)
+//
+// setInterval(function () {
+//     handler();
+// }, 5000)

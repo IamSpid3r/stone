@@ -4,7 +4,8 @@ const _ = require('lodash');
 const dateFormat = require('dateformat');
 
 const Q = require("q");
-const stoneTaskES = require(process.cwd()+"/apps/lib/elasticsearch/stoneTasks").esClient;
+//const stoneTaskES = require(process.cwd()+"/apps/lib/elasticsearch/stoneTasks").esClient;
+const superTaskES = require(process.cwd()+"/apps/lib/elasticsearch/superTask").esClient;
 const fun = require(process.cwd()+"/apps/lib/fun.js");
 
 const crawlMain = require('./crawlMain').saveTask;
@@ -30,8 +31,8 @@ var controller = {
     getWaitList: function () {
         var that = this;
         var defer = Q.defer();
-        
-        stoneTaskES.search(
+
+        superTaskES.search(
             { status: 0, size: 100, sort: [['from', 'desc'],['create_at', 'asc']]
         }, function (err, res) {
             if (err) {
@@ -85,7 +86,7 @@ var controller = {
                     }
                 })
                 if (body.length > 0) {
-                    stoneTaskES.bulk(body, 'update', function (err, res) {
+                    superTaskES.bulk(body, 'update', function (err, res) {
                         if (err) {
                             console.log('change status err '+err.message)
                             fun.stoneLog('deliver_queue', 'error', {
