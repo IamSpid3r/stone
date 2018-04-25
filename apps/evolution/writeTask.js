@@ -61,7 +61,7 @@ var controller = {
         var now = new Date();
         var urlToTaskId = [];
         var body = urls.map(function (url) {
-            var taskId = that.generateTaskId(url);
+            var taskId = fun.generateTaskId(url);
             var store = fun.getStore(url);
 
             urlToTaskId[taskId] = url;
@@ -102,13 +102,6 @@ var controller = {
             return defer.resolve(taskIds);
         })
         return defer.promise;
-    },
-    //生成taskid,随机数+时间+url
-    generateTaskId: function (url) {
-        var millisecond = (new Date()).getTime();
-        var rand = Math.random();
-
-        return  md5(rand+url+millisecond);
     }
 };
 

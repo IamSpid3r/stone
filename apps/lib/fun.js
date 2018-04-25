@@ -140,3 +140,33 @@ exports.stoneLog = function (key, level, param) {
     //     return true
     // });
 }
+
+
+exports.generateTaskId = function (url) {
+    var date = exports.dateformat(new Date(), 'yyyy.MM.dd');
+    var millisecond = (new Date()).getTime();
+    var rand = Math.random();
+
+    return  date+md5(rand+url+millisecond);
+}
+
+
+exports.dateformat = function (data, fmt) { //author: meizz
+    var o = {
+        "M+": data.getMonth() + 1, //月份
+        "d+": data.getDate(), //日
+        "h+": data.getHours(), //小时
+        "m+": data.getMinutes(), //分
+        "s+": data.getSeconds(), //秒
+        "q+": Math.floor((data.getMonth() + 3) / 3), //季度
+        "S": data.getMilliseconds() //毫秒
+    };
+    if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (data.getFullYear() + "").substr(4 - RegExp.$1.length));
+    for (var k in o)
+        if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+    return fmt;
+}
+
+exports.isDate = function(str){
+    return /(\d{4})\.(\d{2})\.(\d{2})/.exec(str) ? true : false;
+}
