@@ -168,8 +168,8 @@ function search(condition, callback) {
     //查询的从最近三天的索引查询
     _dateToday = _index+fun.dateformat(new Date(), 'yyyy.MM.dd');
     _dateYesterday = _index+fun.dateformat(new Date(new Date()-24*60*60*1000), 'yyyy.MM.dd');
-    _dateBeforeYd = _index+fun.dateformat(new Date(new Date()-48*60*60*1000), 'yyyy.MM.dd');
-    _indexArr =[_dateToday, _dateYesterday ,_dateBeforeYd]
+    //_dateBeforeYd = _index+fun.dateformat(new Date(new Date()-48*60*60*1000), 'yyyy.MM.dd');
+    _indexArr =[_dateToday, _dateYesterday]
 
     var params = {
         index : _indexArr,
