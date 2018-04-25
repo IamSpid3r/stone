@@ -3,7 +3,7 @@
 const Q = require("q");
 const fun = require(process.cwd()+"/apps/lib/fun.js");
 const tableStore = require(process.cwd()+"/apps/lib/tablestore.js").tableStore;
-const stoneTaskES = require(process.cwd()+"/apps/lib/elasticsearch/stoneTasks.js").esClient;
+const superTaskES = require(process.cwd()+"/apps/lib/elasticsearch/superTask.js").esClient;
 
 function handler(request, response) {
     var body = request.query;
@@ -33,7 +33,7 @@ function handler(request, response) {
 var controller = {
     //获取任务状态
     getTaskStatus: function (taskId, callback) {
-        stoneTaskES.search({
+        superTaskES.search({
             task_id : taskId,
         }, function (err, res) {
             if (err){
