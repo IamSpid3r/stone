@@ -1,5 +1,5 @@
 const esClient = require(process.cwd()+'/apps/lib/elasticsearch.js').esClient;
-const _index = 'crawl_main_tasks';
+const _index = 'crawl_main_tasks_';
 const _type = 'crawl_main_tasks';
 
 const fun = require(process.cwd()+"/apps/lib/fun.js");
@@ -168,11 +168,11 @@ function search(condition, callback) {
     //查询的从最近三天的索引查询
     _dateToday = _index+fun.dateformat(new Date(), 'yyyy.MM.dd');
     _dateYesterday = _index+fun.dateformat(new Date(new Date()-24*60*60*1000), 'yyyy.MM.dd');
-    //_dateBeforeYd = _index+fun.dateformat(new Date(new Date()-48*60*60*1000), 'yyyy.MM.dd');
-    _indexArr =[_dateToday, _dateYesterday]
+    _dateBeforeYd = _index+fun.dateformat(new Date(new Date()-48*60*60*1000), 'yyyy.MM.dd');
+    _indexArr =[_dateToday, _dateYesterday ,_dateBeforeYd]
 
     var params = {
-        index : _index,
+        index : _indexArr,
         type  : _type,
         body   : body
     };
@@ -244,7 +244,7 @@ function count(condition, callback) {
     _indexArr =[_dateToday, _dateYesterday ,_dateBeforeYd]
 
     var params = {
-        index : _index,
+        index : _indexArr,
         type  : _type,
         body   : body
     };
@@ -261,15 +261,15 @@ function create(body, callback) {
     }
 
     //索引和日期相关
-     var task_id = body.task_id;
-    // var _date = task_id.substr(0, 10);
-    // if (!fun.isDate(_date)) {
-    //     return callback(new Error('task_id非日期格式'));
-    // }
-    // var _indexReal = _index+_date;
+    var task_id = body.task_id;
+    var _date = task_id.substr(0, 10);
+    if (!fun.isDate(_date)) {
+        return callback(new Error('task_id非日期格式'));
+    }
+    var _indexReal = _index+_date;
 
     var params = {
-        index : _index,
+        index : _indexReal,
         type : _type,
         id : task_id,
         body   : body
@@ -288,14 +288,14 @@ function update(body, callback, refresh) {
 
     //索引和日期相关
     var task_id = body.task_id;
-    // var _date = task_id.substr(0, 10);
-    // if (!fun.isDate(_date)) {
-    //     return callback(new Error('task_id非日期格式'));
-    // }
-    // var _indexReal = _index+_date;
+    var _date = task_id.substr(0, 10);
+    if (!fun.isDate(_date)) {
+        return callback(new Error('task_id非日期格式'));
+    }
+    var _indexReal = _index+_date;
 
     var params = {
-        index : _index,
+        index : _indexReal,
         type : _type,
         id : task_id,
         body   : {
@@ -321,14 +321,14 @@ function _delete(body, callback) {
 
     //索引和日期相关
     var task_id = body.task_id;
-    // var _date = task_id.substr(0, 10);
-    // if (!fun.isDate(_date)) {
-    //     return callback(new Error('task_id非日期格式'));
-    // }
-    // var _indexReal = _index+_date;
+    var _date = task_id.substr(0, 10);
+    if (!fun.isDate(_date)) {
+        return callback(new Error('task_id非日期格式'));
+    }
+    var _indexReal = _index+_date;
 
     var params = {
-        index  : _index,
+        index  : _indexReal,
         type  : _type,
         id    : task_id,
     };
@@ -344,18 +344,18 @@ function bulk(body, operate, callback) {
     body.forEach(function (val) {
         //索引和日期相关
         task_id = val.task_id;
-        // _date = task_id.substr(0, 10);
+        _date = task_id.substr(0, 10);
 
-        //if (fun.isDate(_date)) {
+        if (fun.isDate(_date)) {
             var _indexReal = _index+_date;
             if ('create' == operate) {
-                params.push({ 'create' :  { _index: _index, _type: _type, _id: task_id } });
+                params.push({ 'create' :  { _index: _indexReal, _type: _type, _id: task_id } });
                 params.push(val);
             } else {
-                params.push({ 'update' :  { _index: _index, _type: _type, _id: task_id } });
+                params.push({ 'update' :  { _index: _indexReal, _type: _type, _id: task_id } });
                 params.push({ doc: val});
             }
-        //}
+        }
     })
 
     esClient.bulk({body : params}, function (err, res) {
