@@ -128,7 +128,7 @@ exports.stoneLog = function (key, level, param) {
         }
     })
 
-    var filePath = "/data0/log-data/stone-"+fun.dateformat(new Date(), 'yyyy.MM.dd')+".log"
+    var filePath = "/data0/log-data/stone-"+exports.dateformat(new Date(), 'yyyy.MM.dd')+".log"
     fs.appendFile(filePath, JSON.stringify(res) + "\n", function (err) {
         if (err) {
             return console.error(err);
