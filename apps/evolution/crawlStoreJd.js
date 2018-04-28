@@ -85,7 +85,7 @@ var controller = {
                     {'handle_status' : 0},
                 ]
             })
-            if (attributes.length > 80){
+            if (attributes.length > 50){
                 tableStore.InsertBatch(attributes, callback);
                 attributes = [];
             }
