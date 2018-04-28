@@ -457,6 +457,7 @@ function getStoreObj(urlInfo){
             return xtep;
         case 'www.kaola.com':
         case 'www.kaola.com.hk':
+        case 'goods.kaola.com':
             return kaola;
             break;
 
