@@ -85,8 +85,12 @@ var controller = {
                     {'handle_status' : 0},
                 ]
             })
+            if (attributes.length > 80){
+                tableStore.InsertBatch(attributes, callback);
+                attributes = [];
+            }
         })
-        tableStore.InsertBatch(attributes, callback)
+        tableStore.InsertBatch(attributes, callback);
     },
     callbackData:function(url, taskId, data, status){
         var defer = Q.defer();
