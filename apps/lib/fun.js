@@ -68,7 +68,7 @@ exports.getStore = function (urlStr) {
         ['footlocker官网', ['www.footlocker.com']],
         ['UA官网', ['www.underarmour.cn']],
         ['特步官网', ['www.xtep.com.cn']],
-        ['考拉海购', ['www.kaola.com']],
+        ['考拉海购', ['www.kaola.com', 'goods.kaola.com']],
         ['国美在线', ['item.gome.com.cn']],
         ['苏宁易购', ['www.suning.com']],
         ['毒', ['du.hupu.com']],

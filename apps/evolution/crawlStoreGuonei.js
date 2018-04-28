@@ -7,8 +7,6 @@ var url = require('url');
 const cluster = require('cluster');
 const fun = require(process.cwd() + "/apps/lib/fun.js");
 const Q = require("q");
-var taobao = require('../../lib/taobao');
-var taobaoV2 = require('../../lib/taobaoV2');
 var amazonCn = require('../../lib/amazonCn');
 var nikeStore = require('../../lib/nikeStore');
 var yougou = require('../../lib/yougou');
@@ -233,11 +231,6 @@ function getStoreObj(urlInfo) {
             return amazonJp;
         case 'www.amazon.com':
             return amazonUsa;
-        case 'item.taobao.com':
-        case 'detail.tmall.com':
-        case 'detail.tmall.hk':
-        //    return taobao;
-            return taobaoV2;
         case 'store.nike.com':
         case 'www.nike.com':
             return nikeStore;
