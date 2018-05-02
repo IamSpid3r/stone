@@ -9,11 +9,14 @@ var url = require('url');
 var lastLoginTime = 0;
 var _ = require('lodash');
 var proxyRequest2 = require(process.cwd()+'/lib/proxyRequest2');
+var proxyRequest = require(process.cwd()+'/lib/proxyRequest').proxyRequest;
 
 var runList = function(params, cookiePath, callback) {
     var requestNum = 0;
-    var maxRequestNum = 2;
-    var requestBody = function (globalCookies) {
+    var maxRequestNum = 3;
+    var requestBody = function (globalCookies, requestProxy) {
+        requestProxy = requestProxy || proxyRequest2;
+
         tbAPI = initTbApi(globalCookies);
         maxRequest = maxRequestNum;
 
@@ -54,8 +57,13 @@ var runList = function(params, cookiePath, callback) {
                 'User-Agent':'user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.91 Safari/537.36',
                 'Cookie' : requestCookie
             };
-            proxyRequest2(options, function (error, response, body) {
+            requestProxy(options, function (error, response, body) {
+
                 if(error) {
+                    if (response && response.statusCode == 429) {
+                        console.log(429, 'proxyRequest');
+                        return requestBody(globalCookies, proxyRequest);
+                    }
                     return callback(null, error.message);
                 }else{
                     let resStr = response.body.replace('mtopjsonp1(','')
