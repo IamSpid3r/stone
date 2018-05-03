@@ -33,7 +33,7 @@ var controller = {
         var defer = Q.defer();
 
         superTaskES.search(
-            { status: 0, size: 100, sort: [['from', 'desc'],['create_at', 'asc']]
+            { status: 0, size: 200, sort: [['from', 'desc'],['create_at', 'asc']]
         }, function (err, res) {
             if (err) {
                 return defer.reject(err);
