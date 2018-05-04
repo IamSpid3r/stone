@@ -2,7 +2,7 @@ var NODE_ENV = typeof process.env.NODE_ENV != 'undefined' ? process.env.NODE_ENV
 var config = require(process.cwd() + '/config/' + NODE_ENV + '/app.json');
 var crawltaskConfig = config.crawltask;
 const tableStore = require(process.cwd() + "/apps/lib/tablestorecrawl.js").tableStore;
-var request = require('request');
+const request = require('request');
 var url = require('url');
 const cluster = require('cluster');
 const fun = require(process.cwd() + "/apps/lib/fun.js");
@@ -15,10 +15,10 @@ var controller = {
         var defer = Q.defer();
         request(url, function (error, response, body) {
             if (error) {
-                return defer.reject(error);
+                return defer.reject('get task:'+error);
             }
             if (response.statusCode != 200) {
-                return defer.reject(new Error('http code '+response.statusCode));
+                return defer.reject('get task: http code '+response.statusCode);
             }
 
             return defer.resolve(JSON.parse(body));
@@ -67,10 +67,10 @@ var controller = {
             }
         }, function (error, response, body) {
             if (error) {
-                return defer.reject(error);
+                return defer.reject('save task:'+error.message);
             }
             if (response.statusCode != 200) {
-                return defer.reject(new Error('http code '+response.statusCode));
+                return defer.reject('save task: http code '+response.statusCode);
             }
 
             return defer.resolve({status: true});
@@ -171,26 +171,14 @@ var deal = function () {
             setTimeout(function () {deal();}, 5000)
         }
     }, function (err) {
-        console.log(err.message)
-        setTimeout(function () { deal() }, 2000)
+        console.log(err)
+        setTimeout(function () { deal() }, 3000)
     }).then(function () {
     }, function (err) {
-        console.log(err.message)
-        setTimeout(function () { deal() }, 2000)
+        console.log(err)
+        setTimeout(function () { deal() }, 3000)
     })
 
-}
-
-//获取商城对象
-function getStoreObj(urlInfo) {
-    switch (urlInfo.host) {
-        case 'item.taobao.com':
-        case 'detail.tmall.com':
-        case 'detail.tmall.hk':
-            return taobaoV2;
-        default:
-            return '';
-    }
 }
 
 //错误日志
