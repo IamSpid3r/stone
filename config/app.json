@@ -40,10 +40,10 @@
       "guowai" : "http://120.26.107.228:3200/saveCrawlInfo"
     },
     "taskNum" : {
-      "guonei" : 4,
-      "guowai" : 6,
+      "guonei" : 2,
+      "guowai" : 4,
       "jd" : 4,
-      "taobao" : 9
+      "taobao" : 6
     }
   },
   "app" : {
