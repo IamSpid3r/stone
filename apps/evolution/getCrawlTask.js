@@ -377,8 +377,7 @@ var handler = function (request, response){
     var store = request.query.store;
     //验证 必须传store
     if (!store) {
-        response.json({code: 400, msg: '缺少store参数'});
-        return;
+        return response.json({code: 400, msg: '缺少store参数'});
     }
 
     var resultList = [];
@@ -401,14 +400,13 @@ var handler = function (request, response){
         resultFlag = taobaoFlag;
         resultTime = taobaoTime;
     }
-console.log(store + ' has ' + resultList.length)
+
+    console.log(store + ' has ' + resultList.length)
     if (resultList.length == 0){
         if (!resultFlag || (new Date().getTime() - resultTime > 20 * 1000)){
             initialize(store);
         }
-        setTimeout(function(){
-            response.json({code: 400, msg: store+'没有任务了'});
-        },500);
+        response.json({code: 400, msg: store+'没有任务了'});
     } else {
         var reslut = resultList.pop();
         var redis_key = 'stone_get_crawl_task2_'+reslut.task_id;

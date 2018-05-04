@@ -81,14 +81,13 @@ var controller = {
 
 var dealerrorcallback = function (taskId, error) {
     var response = {Status: false, Msg: {Errors: [{Code: 'Error', Message: error}]}}
-
     //callback
     controller.callbackData(crawltaskConfig.postUrl.guonei, taskId, response, 'error').then(function (res) {
         //start
         deal();
     }, function (err) {
-        console.log(err.message)
-        setTimeout(function () {deal();}, 1000)
+        console.log(err)
+        setTimeout(function () {deal();}, 2000)
     })
 }
 
@@ -130,7 +129,6 @@ var deal = function () {
                 controller.insertTableStore(res.data.task_id, itemInfo.Unique, res.data.url, dataJson, function (err, rows) {
                     if (err) {
                         console.log(cluster.worker.id + ' error2 '+ err.message)
-
                         fun.stoneLog('crawlStoreTaobao', 'error', {
                             "param1": task_id,
                             "param2": res.data.url,
@@ -157,12 +155,12 @@ var deal = function () {
                             deal();
                         }, function (err) {
                             console.log(err)
-                            fun.stoneLog('crawlStoreTaobao', 'error3', {
+                            fun.stoneLog('crawlStoreTaobao', 'error', {
                                 "param1": task_id,
                                 "param2": res.data.url,
-                                "param": {"message": 'callback失败--' + err.message}
+                                "param": {"message": 'callback失败--' + err}
                             })
-                            dealerrorcallback(res.data.task_id, err.message);
+                            //dealerrorcallback(res.data.task_id, err);
                         })
                     }
                 })

@@ -1,13 +1,10 @@
 //投递至抓取队列
-
 const _ = require('lodash');
 const dateFormat = require('dateformat');
 
 const Q = require("q");
-//const stoneTaskES = require(process.cwd()+"/apps/lib/elasticsearch/stoneTasks").esClient;
 const superTaskES = require(process.cwd()+"/apps/lib/elasticsearch/superTask").esClient;
 const fun = require(process.cwd()+"/apps/lib/fun.js");
-
 const crawlMain = require('./crawlMain').saveTask;
 
 function handler() {
@@ -108,4 +105,4 @@ var controller = {
 
 setInterval(function () {
     handler();
-}, 2000)
+}, 3000)
