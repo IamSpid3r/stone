@@ -47,6 +47,7 @@ var pharmacy4less = require('../../lib/kaluli/pharmacy4less');
 var pharmacydirect = require('../../lib/kaluli/pharmacydirect');
 var discountApotheke = require('../../lib/kaluli/discountApotheke');
 var amcal = require('../../lib/kaluli/amcal');
+var pharmacyonline = require('../../lib/kaluli/pharmacyonline');
 
 
 var task_id;//当前在跑的任务id
