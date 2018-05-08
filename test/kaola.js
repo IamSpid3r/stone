@@ -1,5 +1,5 @@
 var assert = require('assert');
-var kaola = require('../lib/kaola');
+var kaola = require('../lib/kaola12');
 
 
 describe('kaola', function() {
