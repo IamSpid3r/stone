@@ -70,7 +70,7 @@ var controller = {
                 'update_status' : 'success'
             })
             attributes.push({
-                'shop_name' : data.Data.ItemAttributes.ShopName
+                'shop_name' : 'ShopName' in data.Data.ItemAttributes ? data.Data.ItemAttributes.ShopName : ''
             })
         } else {
             attributes.push({
