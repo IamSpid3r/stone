@@ -17,11 +17,11 @@ const ipList = {
     'guowai' : ['47.88.18.192', '47.88.77.102']
 }
 const os = require('os');
-var  currentIp = os.networkInterfaces().eth1[0].address;
-if (ipList.guowai.indexOf(currentIp) == -1) {
+// var  currentIp = os.networkInterfaces().eth1[0].address;
+// if (ipList.guowai.indexOf(currentIp) == -1) {
     var taobao = require('./lib/taobao');
     var taobaoV2 = require('./lib/taobaoV2');
-}
+// }
 
 var amazonCn = require('./lib/amazonCn');
 var nikeStore = require('./lib/nikeStore');
