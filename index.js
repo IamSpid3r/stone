@@ -12,8 +12,17 @@ var url = require('url');
 var request = require('request');
 var domain = require('domain');
 
-var taobao = require('./lib/taobao');
-var taobaoV2 = require('./lib/taobaoV2');
+const ipList = {
+    'guonei' : ['120.26.107.228', '121.41.62.148', '121.41.62.183', '116.62.53.123', '116.62.53.162'],
+    'guowai' : ['47.88.18.192', '47.88.77.102']
+}
+const os = require('os');
+var  currentIp = os.networkInterfaces().eth1[0].address;
+if (ipList.guowai.indexOf(currentIp) == -1) {
+    var taobao = require('./lib/taobao');
+    var taobaoV2 = require('./lib/taobaoV2');
+}
+
 var amazonCn = require('./lib/amazonCn');
 var nikeStore = require('./lib/nikeStore');
 var yougou = require('./lib/yougou');

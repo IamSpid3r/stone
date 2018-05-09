@@ -7,29 +7,16 @@ var url = require('url');
 const fun = require(process.cwd()+"/apps/lib/fun.js");
 const Q = require("q");
 const cluster = require('cluster');
-var amazonCn = require('../../lib/amazonCn');
 var nikeStore = require('../../lib/nikeStore');
-var yougou = require('../../lib/yougou');
 var _6pm = require('../../lib/6pm');
 var shihuoHaitao = require('../../lib/shihuoHaitao');
-var shihuoTuangou = require('../../lib/shihuoTuangou');
 var amazonJp = require('../../lib/amazonJp');
 var amazonUsa = require('../../lib/amazonUsa');
 var nbaStore = require('../../lib/nbaStore');
-var yohobuy = require('../../lib/yohobuy');
-var yintai = require('../../lib/yintai');
-var kaluli = require('../../lib/kaluli');
-var footlocker = require('../../lib/footlocker');
-var jd = require('../../lib/jd');
 var underarmour = require('../../lib/underarmour');
-var xtep = require('../../lib/xtep');
 // 适合卡路里的考拉拉取方式
-// var kaola = require('./lib/kaola');
-var kaola = require('../../lib/kaola12');
-var beibei = require('../../lib/kaluli/beibei');
-var meitun = require('../../lib/kaluli/meitun');
-var xiji = require('../../lib/kaluli/xiji');
 var delemei = require('../../lib/kaluli/delemei');
+var footlocker = require('../../lib/footlocker');
 var ba = require('../../lib/kaluli/ba');
 var kiwi = require('../../lib/kaluli/kiwistarcare');
 var uka = require('../../lib/uka');
@@ -37,11 +24,7 @@ var discovery = require('../../lib/kaluli/discovery');
 var dod = require('../../lib/kaluli/dod');
 var abcpost = require('../../lib/kaluli/abcpost');
 var apo = require('../../lib/kaluli/cnapo');
-var suning = require('../../lib/suning');
-var gome = require('../../lib/gome');
-var du = require('../../lib/du');
 var iherb = require('../../lib/iherb');
-var mia = require('../../lib/mia');
 var chemistdirect = require('../../lib/kaluli/chemistdirect');
 var pharmacy4less = require('../../lib/kaluli/pharmacy4less');
 var pharmacydirect = require('../../lib/kaluli/pharmacydirect');
@@ -194,19 +177,13 @@ var deal = function(){
 //获取商城对象
 function getStoreObj(urlInfo){
     switch(urlInfo.host){
-        case 'www.amazon.cn':
-            return amazonCn;
         case 'www.amazon.co.jp':
             return amazonJp;
         case 'www.amazon.com':
             return amazonUsa;
-        //return taobaoV2;
         case 'store.nike.com':
         case 'www.nike.com':
             return nikeStore;
-        case 'www.yougou.com':
-        case 'seoul.yougou.com':
-            return yougou;
         case 'www.shihuo.cn':
             var xianhuoExp = /\/xianhuo\/buy\/(\d+)(-(\d+)){0,1}\.html/ig;
             var haitaoExp = /\/haitao\/buy\/(\d+)(-(\d+)){0,1}\.html/ig;
@@ -231,44 +208,10 @@ function getStoreObj(urlInfo){
             return _6pm;
         case 'store.nba.com':
             return nbaStore;
-        case 'item.yohobuy.com':
-            return yohobuy;
-        case 'item.yintai.com':
-            return yintai;
-        case 'www.kaluli.com':
-            return kaluli;
         case 'www.footlocker.com':
             return footlocker;
         case 'www.underarmour.cn':
             return underarmour;
-        case 'www.xtep.com.cn':
-            return xtep;
-        case 'www.kaola.com':
-        case 'www.kaola.com.hk':
-        case 'goods.kaola.com':
-            return kaola;
-
-        // 贝贝网
-        case 'global.beibei.com':
-        case 'www.beibei.com':
-        case 'you.beibei.com':
-            return beibei;
-        //美囤网
-        case 'item.meitun.com':
-            return meitun;
-        //西集网
-        case 'www.xiji.com':
-            return xiji;
-
-
-        case 'product.suning.com':
-            return suning;
-        case 'item.gome.com.cn':
-            return gome;
-        case 'du.hupu.com':
-        case 'dev.du.hupu.com':
-            return du;
-
         //卡路里抓取部分
         case 'cn.iherb.com':
             return iherb;
@@ -292,7 +235,6 @@ function getStoreObj(urlInfo){
         case 'www.miyabaobei.hk':
         case 'www.mia.com':
             return mia;
-
         case 'www.delemei.de':
             return delemei;
         case 'www.ba.de':
