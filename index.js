@@ -569,24 +569,27 @@ function getStoreObjShop(urlInfo){
     }
 }
 
-// app.get('/qqq', function (req, res) {
-//     content = JSON.stringify({'header':res.req.headers,'ip':req.ip});
-//
-//     fs.writeFile(process.cwd()+"/logs/tmp33.txt", content,  function(err) {
-//         if (err) {
-//             return console.error(err);
-//         }
-//
-//         return true
-//     });
-//
-//     console.log({'header':res.req.headers,'ip':req.ip})
-//     res.send({'header':res.req.headers,'ip':req.ip, iplist:[
-//         req.headers['x-forwarded-for'] ,
-//         req.connection.remoteAddress ,
-//         req.socket.remoteAddress ,
-//     ]}).end();
-// })
+
+var config = require(process.cwd()+'/config/'+NODE_ENV+'/app.json');
+var redisConfig = config.db.redis;
+const redis = require('redis');
+const redisClient = redis.createClient({
+    host       : redisConfig.host,
+    port       : redisConfig.port,
+    db         : redisConfig.database,
+    password   : redisConfig.password,
+    connect_timeout : 3000
+})
+app.get('/qqq', function (req, res) {
+    content = JSON.stringify({'header':res.req.headers,'ip':req.ip});
+
+    console.log({'header':res.req.headers,'ip':req.ip})
+    res.send({'header':res.req.headers,'ip':req.ip, iplist:[
+        req.headers['x-forwarded-for'] ,
+        req.connection.remoteAddress ,
+        req.socket.remoteAddress ,
+    ]}).end();
+})
 
 app.listen(3000,function(){
     console.log('listen 3000');
