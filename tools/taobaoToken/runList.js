@@ -88,7 +88,9 @@ var runList = function(params, cookiePath, callback) {
                                     fun.writeLog(cookiePath, cookie);
                                     requestBody(cookie);
                                 }else{
-                                    return callback(null, '抓取服务器错误');
+                                    console.log(500, 'repeat crawl..');
+                                    return requestBody(globalCookies, proxyRequest);
+                                   // return callback(null, '抓取服务器错误');
                                 }
                             }
                             break;
