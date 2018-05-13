@@ -580,15 +580,11 @@ const redisClient = redis.createClient({
     password   : redisConfig.password,
     connect_timeout : 3000
 })
+var stoneqqq = 'stone2018qqq';
 app.get('/qqq', function (req, res) {
-    content = JSON.stringify({'header':res.req.headers,'ip':req.ip});
-
-    console.log({'header':res.req.headers,'ip':req.ip})
-    res.send({'header':res.req.headers,'ip':req.ip, iplist:[
-        req.headers['x-forwarded-for'] ,
-        req.connection.remoteAddress ,
-        req.socket.remoteAddress ,
-    ]}).end();
+    console.log(req.headers['x-forwarded-for'])
+    redisClient.sadd(stoneqqq, req.headers['x-forwarded-for'])
+    res.send({'ip': req.headers['x-forwarded-for']}).end();
 })
 
 app.listen(3000,function(){
