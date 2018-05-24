@@ -111,50 +111,19 @@ var runList = function(params, cookiePath, callback) {
                                 }
                             }
                             break;
-                        case 'mtop.tmall.detail.couponpage2':
-
+                        case 'mtop.tmall.detail.couponpage':
                             if (resJson.ret instanceof Array && resJson.ret[0].indexOf('SUCCESS') > -1) {
                                 callback(resJson);
                             }else{
-                                if (response.headers['set-cookie']) {
-                                    var sc = response.headers['set-cookie'];
-                                    sc = sc.join('; ');
-                                    let cookieObj = new parseCookie(sc).parsetoJSON();
-                                    cookie = new parseCookie(cookieObj).parsetoSTR();
-
-                                    fun.writeLog(cookiePath, cookie);
-                                    requestBody(cookie);
-                                }else{
-                                    callback(null, '抓取服务器错误');
-                                }
+                                callback(null, '抓取服务器错误');
                             }
                             break;
                         //默认页面
                         default:
                             if (resJson.ret instanceof Array) {
-                                if(resJson.ret[0].indexOf("SUCCESS") > -1 && 'coupons' in resJson.data){
-                                    callback(resJson);
-                                    return;
-                                }else if(resJson.ret[0].indexOf("系统错误") > -1){
-                                    callback(null, '不支持的商品');
-                                    return;
-                                }else{
-                                    var timestamp = (new Date())/1000;
-                                    if(timestamp - lastLoginTime > 300){
-                                        lastLoginTime = timestamp;
-                                        loginTabao();
-                                    }
-                                    callback(null, '正在登录,请稍后再试');
-                                    return;
-                                }
+                                callback(resJson);
                             }else{
-                                var timestamp = (new Date())/1000;
-                                if(timestamp - lastLoginTime > 300){
-                                    lastLoginTime = timestamp;
-                                    loginTabao();
-                                }
-                                callback(null, '正在登录,请稍后再试');
-                                return;
+                                callback(null, '抓取服务器错误');
                             }
                             break;
                     }
