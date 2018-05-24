@@ -3,7 +3,6 @@ var initTbApi = require('./tbApi.js');
 var request = require('request');
 var fun = require(process.cwd()+'/lib/fun.js');
 var Q = require('q');
-var loginTabao = require(process.cwd()+'/tools/loginTabao/index')
 var login = 0;
 var url = require('url');
 var lastLoginTime = 0;
