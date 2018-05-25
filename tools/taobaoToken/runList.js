@@ -111,7 +111,12 @@ var runList = function(params, cookiePath, callback) {
                             }
                             break;
                         case 'mtop.tmall.detail.couponpage':
-                            if (resJson.ret instanceof Array && resJson.ret[0].indexOf('SUCCESS') > -1) {
+                            if (resJson.ret instanceof Array
+                                && (
+                                    resJson.ret[0].indexOf('SUCCESS') > -1
+                                    || resJson.ret[0].indexOf('系统错误') > -1
+                                )
+                            ) {
                                 callback(resJson);
                             }else{
                                 callback(null, '抓取服务器错误');
