@@ -63,7 +63,7 @@ async function browserStart(username) {
             await page.waitFor(2000);
             var currentUrl = await page.url();
             if ('https://www.taobao.com/go/act/loginsuccess/taobao.php' == currentUrl) {
-                await page.on('response', async function (msg) {
+                await page.on('requestfinished', async function (msg) {
                     //h5api js cookie
                     if (msg.url.indexOf('https://h5api.m.taobao.com/h5/com.taobao.mcl.fav.querycolgoodsbycursor/3.0/') != -1) {
                         var cookies = await page.cookies();
@@ -72,7 +72,7 @@ async function browserStart(username) {
                         });
                         var cookiesStr = cookiesArr.join(' ');
 
-                        console.log(username+' : '+cookiesStr);
+                        console.log(username, cookiesStr);
                         //写入js
                         fs.writeFile(process.cwd()+'/logs/'+cookieInfos[username].file, cookiesStr,  function(err) {
                             if (err) {
@@ -80,11 +80,19 @@ async function browserStart(username) {
                             }
                             cookieInfos[username].status = true;
                         });
-                        //关闭浏览器
-                        browser.close();
                     }
                 });
-                console.log(username+' : 我的收藏');
+
+                //页面加载完毕
+                await page.on('load', async function (msg) {
+                    console.log(username, 'load finish')
+                    //关闭浏览器
+                    setTimeout(function () {
+                        browser.close();
+                    }, 2000)
+                })
+
+                console.log(username, 'my fav');
                 await page.goto("https://h5.m.taobao.com/fav/index.htm");
             } else {
                 if (cookieInfos[username].timer.s < cookieInfos[username].timer.e) {
@@ -96,7 +104,7 @@ async function browserStart(username) {
                 } else {
                     //关闭浏览器
                     browser.close();
-                    console.log('err max '+cookieInfos[username].timer.e)
+                    console.log(username, 'err max '+cookieInfos[username].timer.e)
 
                     fun.stoneLog('taobaoLogin', 'info', {
                         "param1": username,
@@ -105,6 +113,7 @@ async function browserStart(username) {
                 }
             }
         } else {
+            console.log(username, sContent)
             if (cookieInfos[username].timer.s < cookieInfos[username].timer.e) {
                 cookieInfos[username].timer.s++;
                 //关闭浏览器
@@ -138,7 +147,6 @@ async function couponpage (cookieVal, callback) {
         "data" :{"itemId": 562728700307,"source":"tmallH5"},
     };
 
-    console.log(cookieVal.relative_file)
     await taobaoToken(params , cookieVal.file, function (body, err) {
         if(err){
            return callback(false);
@@ -152,7 +160,7 @@ async function couponpage (cookieVal, callback) {
 _(cookieInfos).forEach(function (cookieVal, username) {
     cookieInfos[username].timer.s = 0;
     couponpage(cookieVal, function (status) {
-        console.log('username :'+username +',status :'+ status)
+        console.log(username, status)
         if (!status) {
             browserStart(username);
         }
@@ -164,7 +172,7 @@ setInterval(function () {
     _(cookieInfos).forEach(function (cookieVal, username) {
         cookieInfos[username].timer.s = 0;
         couponpage(cookieVal, function (status) {
-            console.log('username :'+username +',status :'+ status)
+            console.log(username, status)
             if (!status) {
                 browserStart(username);
             }
