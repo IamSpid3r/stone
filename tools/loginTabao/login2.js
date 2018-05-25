@@ -58,7 +58,9 @@ async function browserStart(username) {
         return 'http:'+$('#J_QRCodeImg img').attr('src');
     });
     //获取img
+    console.log(username, 'sendImg')
     socket.emit('sendImg', {'type':username, 'img': qrcodeHref}, async function (sContent){
+        console.log(username, sContent)
         if (sContent.status == 200) {
             await page.waitFor(2000);
             var currentUrl = await page.url();
@@ -113,7 +115,6 @@ async function browserStart(username) {
                 }
             }
         } else {
-            console.log(username, sContent)
             if (cookieInfos[username].timer.s < cookieInfos[username].timer.e) {
                 cookieInfos[username].timer.s++;
                 //关闭浏览器

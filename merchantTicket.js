@@ -46,10 +46,11 @@ app.use(function (req, res, next) {
 
 app.get('/info', function (req, res) {
     var urlStr = req.query.url;
+    var shopId = req.query.shopId;
     var storeObj = getStoreObj(urlStr);
 
     if(typeof storeObj == 'object'){
-        storeObj.getInfo(urlStr ,function(error, itemInfo){
+        storeObj.getInfo(urlStr ,shopId, function(error, itemInfo){
             if(error){
                 res.json({
                     Status: false,
