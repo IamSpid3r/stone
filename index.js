@@ -13,22 +13,8 @@ var request = require('request');
 var domain = require('domain');
 
 const NODE_ENV   = typeof process.env.NODE_ENV != 'undefined' ? process.env.NODE_ENV : '';
-if (!NODE_ENV) {
-    const os = require('os');
-    const ipList = {
-        'guonei' : ['120.26.107.228', '121.41.62.148', '121.41.62.183', '116.62.53.123', '116.62.53.162'],
-        'guowai' : ['47.88.18.192', '47.88.77.102']
-    }
-    var  currentIp = os.networkInterfaces().eth1[0].address;
-    if (ipList.guowai.indexOf(currentIp) == -1) {
-        var taobao = require('./lib/taobao');
-        var taobaoV2 = require('./lib/taobaoV2');
-    }
-} else {
-    var taobao = require('./lib/taobao');
-    var taobaoV2 = require('./lib/taobaoV2');
-}
-
+var taobao = require('./lib/taobao');
+var taobaoV2 = require('./lib/taobaoV2');
 
 var amazonCn = require('./lib/amazonCn');
 var nikeStore = require('./lib/nikeStore');
