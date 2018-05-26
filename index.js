@@ -556,20 +556,9 @@ function getStoreObjShop(urlInfo){
 }
 
 
-var config = require(process.cwd()+'/config/'+NODE_ENV+'/app.json');
-var redisConfig = config.db.redis;
-const redis = require('redis');
-const redisClient = redis.createClient({
-    host       : redisConfig.host,
-    port       : redisConfig.port,
-    db         : redisConfig.database,
-    password   : redisConfig.password,
-    connect_timeout : 3000
-})
 var stoneqqq = 'stone2018qqq';
 app.get('/qqq', function (req, res) {
     console.log(req.headers['x-forwarded-for'])
-    redisClient.sadd(stoneqqq, req.headers['x-forwarded-for'])
     res.send({'ip': req.headers['x-forwarded-for']}).end();
 })
 
