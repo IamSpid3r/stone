@@ -555,8 +555,6 @@ function getStoreObjShop(urlInfo){
     }
 }
 
-
-var stoneqqq = 'stone2018qqq';
 app.get('/qqq', function (req, res) {
     console.log(req.headers['x-forwarded-for'])
     res.send({'ip': req.headers['x-forwarded-for']}).end();
