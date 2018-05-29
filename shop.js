@@ -7,6 +7,7 @@ var taobao = require('./lib/shop/taobaoShop');
 var nikeStore = require('./lib/shop/nikeShop');
 var amazoncnStore = require('./lib/shop/amazoncnShop');
 var duStore = require('./lib/shop/duShop');
+var jdStore = require('./lib/shop/jdShop');
 
 
 app.get('/t',function(req,res){
@@ -61,6 +62,8 @@ function getStoreObj(host){
             return amazoncnStore;
         }else if(host == 'du.hupu.com'){
             return duStore;
+        }else if(host.indexOf('jd.com') > 0){
+            return jdStore;
         }
         return taobao;
 
