@@ -30,7 +30,7 @@ app.use(function (req, res, next) {
                 Msg: {
                     Errors: {
                         Code: 'Error',
-                        Message: stack.slice(0, 120)
+                        Message: stack.slice(0, 200)
                     }
                 }
             });
