@@ -59,7 +59,24 @@ async function browserStart(username) {
     });
     //获取img
     console.log(username, 'sendImg')
+    var sendImgTime  = Date.now();
+    var si = setInterval(function () {
+        //超过2分钟
+        if ((Date.now() - sendImgTime) > 1000*60*2) {
+            //关闭浏览器
+            browser.close();
+
+            console.log('sendImgTimeout')
+            fun.stoneLog('taobaoLogin', 'info', {
+                "param1": username,
+                "param2": 'sendImgTimeout',
+            })
+
+            clearInterval(si);
+        }
+    }, 20000)
     socket.emit('sendImg', {'type':username, 'img': qrcodeHref}, async function (sContent){
+        clearInterval(si);
         console.log(username, sContent)
         if (sContent.status == 200) {
             await page.waitFor(2000);
