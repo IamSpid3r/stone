@@ -173,6 +173,7 @@ var dealerrorcallback = function(taskId,error){
 function getHtml(urlStr, callback){
 
     var options = {};
+    options.timeout = 15000;
     options.url = urlStr;
     options.headers = {
          'User-Agent':'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/40.0.2214.93 Safari/537.36',
