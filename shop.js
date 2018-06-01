@@ -9,6 +9,7 @@ var amazoncnStore = require('./lib/shop/amazoncnShop');
 var duStore = require('./lib/shop/duShop');
 var jdStore = require('./lib/shop/jdShop');
 var kaolaStore = require('./lib/shop/kaolaShop');
+var vipStore = require('./lib/shop/vipShop');
 
 
 app.get('/t',function(req,res){
@@ -67,6 +68,8 @@ function getStoreObj(host){
             return jdStore;
         }else if(host.indexOf('kaola.com') > 0){
             return kaolaStore;
+        }else if(host.indexOf('vip.com') > 0){
+            return vipStore;
         }
         return taobao;
 
