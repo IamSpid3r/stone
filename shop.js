@@ -64,7 +64,7 @@ function getStoreObj(host){
             return amazoncnStore;
         }else if(host == 'du.hupu.com'){
             return duStore;
-        }else if(host.indexOf('jd.com') > 0){
+        }else if(host.indexOf('jd.com') > 0 || host.indexOf('jd.hk') > 0){
             return jdStore;
         }else if(host.indexOf('kaola.com') > 0){
             return kaolaStore;
