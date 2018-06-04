@@ -73,7 +73,7 @@ var getCrawlStatInfohandler = require('./apps/evolution/getCrawlStatInfo').handl
 var taobaoOrigin =  require('./lib/special/taobao');  //淘宝原始抓取信息
 
 var huawei =  require('./lib/huawei');  //华为
-var farfetch =  require('./lib/farfetch');  //farfetch
+//var farfetch =  require('./lib/farfetch');  //farfetch
 
 //淘宝店铺信息
 var taobaoShop = require('./lib/taobaoShop');
