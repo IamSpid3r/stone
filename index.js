@@ -72,6 +72,8 @@ var getCrawlTaskInfohandler = require('./apps/evolution/getCrawlTaskInfo').handl
 var getCrawlStatInfohandler = require('./apps/evolution/getCrawlStatInfo').handler;
 var taobaoOrigin =  require('./lib/special/taobao');  //淘宝原始抓取信息
 
+var huawei =  require('./lib/huawei');  //华为
+var farfetch =  require('./lib/farfetch');  //farfetch
 
 //淘宝店铺信息
 var taobaoShop = require('./lib/taobaoShop');
@@ -536,6 +538,10 @@ function getStoreObj(urlInfo){
             return dod;
         case 'detail.vip.com':
             return vip;
+        case 'www.vmall.com':
+            return huawei;
+        case 'www.farfetch.com':
+            return farfetch;
         default:
             return '';
             break;

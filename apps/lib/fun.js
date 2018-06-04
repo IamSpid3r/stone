@@ -76,6 +76,7 @@ exports.getStore = function (urlStr) {
         ['美囤妈妈', ['item.meitun.com']],
         ['贝贝', ['www.beibei.com']],
         ['唯品会', ['detail.vip.com']],
+        ['华为商城', ['www.vmall.com']],
         ['蜜芽', ['www.mia.com']],
         ['澳洲chemistdirect', ['cn.chemistdirect.com.au']],
         ['澳洲pharmacy4less', ['cn.pharmacy4less.com.au']],

@@ -50,6 +50,8 @@ var pharmacy4less = require('../../lib/kaluli/pharmacy4less');
 var pharmacydirect = require('../../lib/kaluli/pharmacydirect');
 var discountApotheke = require('../../lib/kaluli/discountApotheke');
 var amcal = require('../../lib/kaluli/amcal');
+var huawei =  require('../../lib/huawei');  //华为
+
 
 var task_id;//当前在跑的任务id
 var controller = {
@@ -320,6 +322,8 @@ function getStoreObj(urlInfo) {
         case 'www.miyabaobei.hk':
         case 'www.mia.com':
             return mia;
+        case 'www.vmall.com':
+            return huawei;
         default:
             return '';
     }
