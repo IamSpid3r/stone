@@ -60,6 +60,7 @@ var guowaiArr = [
   {'name':'新西兰Kiwistarcare'},
   {'name':'德国UKA'},
   {'name':'荷兰DOD'},
+  {'name':'farfetch'},
 ];
 var guoneiArr = [
 	{'name':'中亚'},

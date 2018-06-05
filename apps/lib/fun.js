@@ -91,7 +91,7 @@ exports.getStore = function (urlStr) {
         ['新西兰Kiwistarcare', ['www.kiwistarcare.com']],
         ['德国UKA', ['cn.unserekleineapotheke.de']],
         ['荷兰DOD', ['cn.dod.nl']],
-
+        ['farfetch', ['www.farfetch.com']],
     ];
 
     var name = '其他';

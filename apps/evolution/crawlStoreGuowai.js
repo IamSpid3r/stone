@@ -9,6 +9,7 @@ const Q = require("q");
 const cluster = require('cluster');
 var nikeStore = require('../../lib/nikeStore');
 var _6pm = require('../../lib/6pm');
+var farfetch = require('../../lib/farfetch');
 var shihuoHaitao = require('../../lib/shihuoHaitao');
 var amazonJp = require('../../lib/amazonJp');
 var amazonUsa = require('../../lib/amazonUsa');
@@ -206,6 +207,8 @@ function getStoreObj(urlInfo){
             }
         case 'www.6pm.com':
             return _6pm;
+        case 'www.farfetch.com':
+            return farfetch;
         case 'store.nba.com':
             return nbaStore;
         case 'www.footlocker.com':
