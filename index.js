@@ -75,6 +75,8 @@ var taobaoOrigin =  require('./lib/special/taobao');  //淘宝原始抓取信息
 var huawei =  require('./lib/huawei');  //华为
 var farfetch =  require('./lib/farfetch');  //farfetch
 
+var sephora = require('./lib/sephora');
+
 //淘宝店铺信息
 var taobaoShop = require('./lib/taobaoShop');
 
@@ -542,6 +544,8 @@ function getStoreObj(urlInfo){
             return huawei;
         case 'www.farfetch.com':
             return farfetch;
+        case 'www.sephora.cn':
+            return sephora;
         default:
             return '';
             break;
