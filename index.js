@@ -77,6 +77,8 @@ var farfetch =  require('./lib/farfetch');  //farfetch
 
 var sephora = require('./lib/sephora');
 
+var bolo = require('./lib/bolo');
+
 //淘宝店铺信息
 var taobaoShop = require('./lib/taobaoShop');
 
@@ -546,6 +548,8 @@ function getStoreObj(urlInfo){
             return farfetch;
         case 'www.sephora.cn':
             return sephora;
+        case  'm.bolo.me':
+            return bolo;
         default:
             return '';
             break;
