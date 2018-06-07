@@ -13,7 +13,7 @@ var task_id;//当前在跑的任务id
 var controller = {
     getData: function (url) {
         var defer = Q.defer();
-        request(url, function (error, response, body) {
+        request({url:url, timeout:8000}, function (error, response, body) {
             if (error) {
                 return defer.reject('get task:'+error);
             }
@@ -59,7 +59,9 @@ var controller = {
     },
     callbackData: function (url, taskId, data, status) {
         var defer = Q.defer();
-        request.post(url, {
+        request.post({
+            url : url,
+            timeout: 8000,
             form: {
                 task_id: taskId,
                 data: JSON.stringify(data),
