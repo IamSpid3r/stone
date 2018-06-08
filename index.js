@@ -79,6 +79,8 @@ var sephora = require('./lib/sephora');
 
 var bolo = require('./lib/bolo');
 
+var jumei = require('./lib/jumei');
+
 //淘宝店铺信息
 var taobaoShop = require('./lib/taobaoShop');
 
@@ -548,8 +550,14 @@ function getStoreObj(urlInfo){
             return farfetch;
         case 'www.sephora.cn':
             return sephora;
+            break;
         case  'm.bolo.me':
             return bolo;
+            break;
+        case 'item.jumei.com':
+        case 'item.jumeiglobal.com':
+            return jumei;
+            break;
         default:
             return '';
             break;
