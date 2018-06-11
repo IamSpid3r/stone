@@ -235,16 +235,16 @@ if (cluster.isMaster) {
     //controller.run()
 
     //listen timeout
-    // setInterval(function () {
-    //     if ((new Date()).getTime() - controller.dealTime > 30 * 1000) {
-    //         fun.stoneLog('crawlMainGuonei', 'error', {
-    //             "param1": controller.taskUrl,
-    //             "param2": 'timeout',
-    //         })
-    //
-    //         controller.run()
-    //     }
-    // }, 5000)
+    setInterval(function () {
+        if ((new Date()).getTime() - controller.dealTime > 30 * 1000) {
+            fun.stoneLog('crawlMainGuonei', 'error', {
+                "param1": controller.taskUrl,
+                "param2": 'timeout',
+            })
+
+            //controller.run()
+        }
+    }, 5000)
 }
 
 
