@@ -82,6 +82,8 @@ var bolo = require('./lib/bolo');
 
 var jumei = require('./lib/jumei');
 
+var xiaohongshu = require('./lib/xiaohongshu');
+
 //淘宝店铺信息
 var taobaoShop = require('./lib/taobaoShop');
 
@@ -559,6 +561,8 @@ function getStoreObj(urlInfo){
         case 'item.jumeiglobal.com':
             return jumei;
             break;
+        case 'pages.xiaohongshu.com':
+            return xiaohongshu;
         default:
             return '';
             break;
