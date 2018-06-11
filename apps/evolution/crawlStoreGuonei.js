@@ -87,6 +87,7 @@ const controller = {
                             await _this.saveTask(_this.taskId, response, 'error')
                         }
 
+
                         //再次
                         _this.run();
                     }) ()
@@ -246,7 +247,7 @@ if (cluster.isMaster) {
                 "param2": 'timeout',
             })
 
-            controller.run()
+            process.exit();
         }
     }, 5000)
 }
