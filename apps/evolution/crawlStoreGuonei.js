@@ -192,7 +192,7 @@ const controller = {
         })
     },
     saveTask: function (taskId, data, status) {
-        request.post({url:saveTaskApi, timeout: 3000}, {
+        request.post(saveTaskApi, {
             form: {
                 task_id: taskId,
                 data: JSON.stringify(data),
