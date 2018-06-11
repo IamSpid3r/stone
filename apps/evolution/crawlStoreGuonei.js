@@ -50,11 +50,11 @@ const controller = {
                             //保存tablestore
                             var dataJson = {Status: true, Data: itemInfo};
                             console.log(cluster.worker.id + ' start3..'+ taskUrl, _this.taskId);
-                            var saveInfo =  _this.insertTableStore(_this.taskId, itemInfo.Unique, taskUrl, dataJson);
+                            var saveInfo =  await _this.insertTableStore(_this.taskId, itemInfo.Unique, taskUrl, dataJson);
 
                             //save task
                             console.log(cluster.worker.id + ' start4..'+ taskUrl, _this.taskId);
-                            _this.saveTask( _this.taskId, dataJson, 'success');
+                            await _this.saveTask( _this.taskId, dataJson, 'success');
                             fun.stoneLog('crawlMainGuonei', 'trace', {
                                 "param1": _this.taskId,
                                 "param2": taskUrl,
@@ -87,7 +87,7 @@ const controller = {
                                 };
                             }
                             //callback
-                            _this.saveTask(_this.taskId, response, 'error')
+                            await _this.saveTask(_this.taskId, response, 'error')
                         }
 
                         //再次
@@ -130,7 +130,7 @@ const controller = {
                     };
                 }
                 //callback
-                _this.saveTask(_this.taskId, response, 'error')
+                await _this.saveTask(_this.taskId, response, 'error')
             }
 
             //再来
@@ -195,32 +195,35 @@ const controller = {
         })
     },
     saveTask: function (taskId, data, status) {
-        _this = this;
-        request.post(saveTaskApi, {
-            form: {
-                task_id: taskId,
-                data: JSON.stringify(data),
-                status: status
-            }
-        }, function (error, response, body) {
-            console.log(cluster.worker.id + ' start5..'+_this.taskUrl, taskId, error, body);
-            if (error) {
-                fun.stoneLog('crawlMainGuonei', 'error', {
-                    "param1": taskId,
-                    "param2": 'saveTask',
-                    "param": {"message":  'save task:' + error.message}
-                })
-                return;
-            }
+        return new Promise((resolve, reject) => {
+            _this = this;
+            request.post(saveTaskApi, {
+                form: {
+                    task_id: taskId,
+                    data: JSON.stringify(data),
+                    status: status
+                }
+            }, function (error, response, body) {
+                console.log(cluster.worker.id + ' start5..'+_this.taskUrl, taskId, error, body);
+                if (error) {
+                    fun.stoneLog('crawlMainGuonei', 'error', {
+                        "param1": taskId,
+                        "param2": 'saveTask',
+                        "param": {"message":  'save task:' + error.message}
+                    })
+                }
 
-            if (response.statusCode != 200) {
-                fun.stoneLog('crawlMainGuonei', 'error', {
-                    "param1": taskId,
-                    "param2": 'saveTask',
-                    "param": {"message": "saveTask statusCode "+response.statusCode}
-                })
-            }
-         })
+                if (!error && response.statusCode != 200) {
+                    fun.stoneLog('crawlMainGuonei', 'error', {
+                        "param1": taskId,
+                        "param2": 'saveTask',
+                        "param": {"message": "saveTask statusCode "+response.statusCode}
+                    })
+                }
+
+                resolve('ok')
+            })
+        })
     }
 }
 
