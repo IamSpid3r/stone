@@ -95,6 +95,9 @@ var controller = {
         }
     },
     insertTableStore : function (taskId, url, data, callback) {
+        if (!data) {
+            return callback(new Error('null data'))
+        }
         var attributes = [];
         attributes.push({
             'data' : JSON.stringify(data),
