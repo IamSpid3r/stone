@@ -232,7 +232,7 @@ if (cluster.isMaster) {
 } else {
     //start
     console.log("I am worker #" + cluster.worker.id);
-    //controller.run()
+    controller.run()
 
     //listen timeout
     setInterval(function () {
