@@ -24,6 +24,7 @@ var shihuoHaitao = require('./lib/shihuoHaitao');
 var shihuoTuangou = require('./lib/shihuoTuangou');
 var amazonJp = require('./lib/amazonJp');
 var amazonUsa = require('./lib/amazonUsa');
+//var amazonUsa2 = require('./lib/amazonUsa2');
 var nbaStore = require('./lib/nbaStore');
 var yohobuy = require('./lib/yohobuy');
 var yintai = require('./lib/yintai');
