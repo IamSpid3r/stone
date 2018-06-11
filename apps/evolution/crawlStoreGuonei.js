@@ -195,6 +195,7 @@ const controller = {
         })
     },
     saveTask: function (taskId, data, status) {
+        _this = this;
         request.post(saveTaskApi, {
             form: {
                 task_id: taskId,
@@ -202,6 +203,7 @@ const controller = {
                 status: status
             }
         }, function (error, response, body) {
+            console.log(cluster.worker.id + ' start5..'+_this.taskUrl, taskId, error, body);
             if (error) {
                 fun.stoneLog('crawlMainGuonei', 'error', {
                     "param1": taskId,
