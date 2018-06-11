@@ -95,8 +95,8 @@ var controller = {
         }
     },
     insertTableStore : function (taskId, url, data, callback) {
-        if (!data) {
-            return callback(new Error('null data'))
+        if (typeof data.Data != 'object') {
+            return callback(new Error('null data'+data.Data))
         }
         var attributes = [];
         attributes.push({
