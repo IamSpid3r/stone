@@ -31,7 +31,7 @@ const controller = {
                 _this.taskUrl = taskUrl;
 
                 //商城
-                console.log(cluster.worker.id + ' start..'+ taskUrl);
+                console.log(cluster.worker.id + ' start..'+ taskUrl, _this.taskId);
                 var urlInfo =  url.parse(taskUrl, true, true);
                 var storeObj = store.getStore(urlInfo);
                 if (!storeObj) {
@@ -39,6 +39,7 @@ const controller = {
                 }
 
                 //抓取
+                console.log(cluster.worker.id + ' start2..'+ taskUrl, _this.taskId);
                 storeObj.getInfo(taskUrl, function (error, itemInfo) {
                     (async () => {
                         try {
@@ -48,9 +49,11 @@ const controller = {
 
                             //保存tablestore
                             var dataJson = {Status: true, Data: itemInfo};
+                            console.log(cluster.worker.id + ' start3..'+ taskUrl, _this.taskId);
                             var saveInfo =  _this.insertTableStore(_this.taskId, itemInfo.Unique, taskUrl, dataJson);
 
                             //save task
+                            console.log(cluster.worker.id + ' start4..'+ taskUrl, _this.taskId);
                             _this.saveTask( _this.taskId, dataJson, 'success');
                             fun.stoneLog('crawlMainGuonei', 'trace', {
                                 "param1": _this.taskId,
@@ -232,10 +235,11 @@ if (cluster.isMaster) {
 } else {
     //start
     console.log("I am worker #" + cluster.worker.id);
-    //controller.run()
+    controller.run()
 
     //listen timeout
     setInterval(function () {
+        console.log(cluster.worker.id + ' start7..'+ controller.taskUrl);
         if ((new Date()).getTime() - controller.dealTime > 30 * 1000) {
             fun.stoneLog('crawlMainGuonei', 'error', {
                 "param1": controller.taskUrl,
