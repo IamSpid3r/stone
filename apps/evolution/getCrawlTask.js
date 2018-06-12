@@ -85,6 +85,10 @@ var guoneiArr = [
 	{'name':'贝贝'},
 	{'name':'蜜芽'},
 	{'name':'其他'},
+    {'name':'小红书'},
+    {'name':'丝芙兰'},
+    {'name':'菠萝蜜'},
+    {'name':'聚美优品'}
 ];
 
 var taobaoArr = [
