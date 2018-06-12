@@ -51,6 +51,10 @@ var pharmacydirect = require('../../lib/kaluli/pharmacydirect');
 var discountApotheke = require('../../lib/kaluli/discountApotheke');
 var amcal = require('../../lib/kaluli/amcal');
 var huawei =  require('../../lib/huawei');  //华为
+var jumei = require('../../lib/kaluli/jumei');//聚美优品
+var bolo  = require('../../lib/kaluli/bolo');//菠萝蜜
+var sephora = require('../../lib/kaluli/sephora');//丝芙兰
+var xiaohongshu = require('../../lib/kaluli/xiaohongshu');//小红书
 
 
 var task_id;//当前在跑的任务id
@@ -324,6 +328,19 @@ function getStoreObj(urlInfo) {
             return mia;
         case 'www.vmall.com':
             return huawei;
+        case 'www.sephora.cn':
+            return sephora;
+            break;
+        case  'm.bolo.me':
+            return bolo;
+            break;
+        case 'item.jumei.com':
+        case 'item.jumeiglobal.com':
+            return jumei;
+            break;
+        case 'pages.xiaohongshu.com':
+            return xiaohongshu;
+            break;
         default:
             return '';
     }
