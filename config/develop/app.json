@@ -40,7 +40,7 @@
       "guowai" : "http://127.0.0.1:3200/saveCrawlInfo"
     },
     "taskNum" : {
-      "guonei" : 2,
+      "guonei" : 3,
       "guowai" : 1,
       "jd" : 1,
       "taobao" : 1
