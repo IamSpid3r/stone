@@ -52,7 +52,7 @@ var discountApotheke = require('../../lib/kaluli/discountApotheke');
 var amcal = require('../../lib/kaluli/amcal');
 var huawei =  require('../../lib/huawei');  //华为
 var jumei = require('../../lib/kaluli/jumei');//聚美优品
-var bolo  = require('../../lib/kaluli/bolo');//菠萝蜜
+var bolo  = require('../../lib/kaluli/bolo');//波罗蜜
 var sephora = require('../../lib/kaluli/sephora');//丝芙兰
 var xiaohongshu = require('../../lib/kaluli/xiaohongshu');//小红书
 
