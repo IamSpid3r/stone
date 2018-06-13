@@ -93,7 +93,7 @@ exports.getStore = function (urlStr) {
         ['荷兰DOD', ['cn.dod.nl']],
         ['farfetch', ['www.farfetch.com']],
         ['小红书',['pages.xiaohongshu.com']],
-        ['菠萝蜜',['m.bolo.me']],
+        ['波罗蜜',['m.bolo.me']],
         ['丝芙兰',['www.sephora.cn']],
         ['聚美优品',['item.jumei.com','item.jumeiglobal.com']]
     ];
