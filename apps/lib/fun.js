@@ -73,7 +73,7 @@ exports.getStore = function (urlStr) {
         ['苏宁易购', ['www.suning.com']],
         ['毒', ['du.hupu.com']],
         ['西集', ['www.xiji.com']],
-        ['美囤妈妈', ['item.meitun.com']],
+        ['美囤妈妈', ['item.meitun.com', 'item.babytreegroup.hk']],
         ['贝贝', ['www.beibei.com']],
         ['唯品会', ['detail.vip.com']],
         ['华为商城', ['www.vmall.com']],
