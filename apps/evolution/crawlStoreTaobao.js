@@ -45,7 +45,7 @@ const controller = {
                             if (error) {
                                 console.log(cluster.worker.id , JSON.stringify(error));
 
-                                fun.stoneLog('crawlMainGuonei', 'error', {
+                                fun.stoneLog('crawlMainTaobao', 'error', {
                                     "param1": _this.taskId,
                                     "param2": taskUrl,
                                     "param": {"message":  JSON.stringify(error)}
@@ -64,7 +64,7 @@ const controller = {
                                 //save task
                                 await _this.saveTask(taskId, dataJson, 'success');
 
-                                fun.stoneLog('crawlMainGuonei', 'trace', {
+                                fun.stoneLog('crawlMainTaobao', 'trace', {
                                     "param1": _this.taskId,
                                     "param2": taskUrl,
                                     "param": {"message": '抓取完成'}
@@ -74,7 +74,7 @@ const controller = {
                             }
                         } catch (e){
                             console.log(cluster.worker.id , e.message);
-                            fun.stoneLog('crawlMainGuonei', 'error', {
+                            fun.stoneLog('crawlMainTaobao', 'error', {
                                 "param1": taskId,
                                 "param2": taskUrl,
                                 "param": {"message": e.message}
@@ -114,7 +114,7 @@ const controller = {
             console.log(cluster.worker.id , e.message);
 
             if (typeof taskId != 'undefined') {
-                fun.stoneLog('crawlMainGuonei', 'error', {
+                fun.stoneLog('crawlMainTaobao', 'error', {
                     "param1": taskId,
                     "param2": taskUrl,
                     "param": {"message":  e.message}
@@ -220,7 +220,7 @@ const controller = {
                 }
             }, function (error, response, body) {
                 if (error) {
-                    fun.stoneLog('crawlMainGuonei', 'error', {
+                    fun.stoneLog('crawlMainTaobao', 'error', {
                         "param1": taskId,
                         "param2": 'saveTask',
                         "param": {"message":  'save task:' + error.message}
@@ -228,7 +228,7 @@ const controller = {
                 }
 
                 if (!error && response.statusCode != 200) {
-                    fun.stoneLog('crawlMainGuonei', 'error', {
+                    fun.stoneLog('crawlMainTaobao', 'error', {
                         "param1": taskId,
                         "param2": 'saveTask',
                         "param": {"message": "saveTask statusCode "+response.statusCode}
@@ -244,7 +244,7 @@ const controller = {
 
 //多进程
 if (cluster.isMaster) {
-    for (var i = 0; i < crawltaskConfig.taskNum.guonei; i++) {
+    for (var i = 0; i < crawltaskConfig.taskNum.taobao; i++) {
         cluster.fork();
     }
     cluster.on('exit', function (worker, code, signal) {
@@ -259,7 +259,7 @@ if (cluster.isMaster) {
     //listen timeout
     setInterval(function () {
         if ((new Date()).getTime() - controller.dealTime > 200 * 1000) {
-            fun.stoneLog('crawlMainGuonei', 'error', {
+            fun.stoneLog('crawlMainTaobao', 'error', {
                 "param1": controller.taskUrl,
                 "param2": 'timeout',
             })
