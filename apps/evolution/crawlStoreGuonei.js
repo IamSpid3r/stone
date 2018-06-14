@@ -7,7 +7,7 @@ const config = require(process.cwd() + '/config/' + NODE_ENV + '/app.json');
 const crawltaskConfig = config.crawltask;
 const tableStore = require(process.cwd() + "/apps/lib/tablestorecrawl.js").tableStore;
 const request = require('request');
-var url = require('url');
+const url = require('url');
 const cluster = require('cluster');
 const fun = require(process.cwd() + "/apps/lib/fun.js");
 const Q = require("q");
@@ -265,9 +265,9 @@ if (cluster.isMaster) {
             })
 
             //杀掉进程
-            // setTimeout(function () {
-            //     process.exit();
-            // },1500)
+            setTimeout(function () {
+                process.exit();
+            },1500)
         }
     }, 5000)
 }
