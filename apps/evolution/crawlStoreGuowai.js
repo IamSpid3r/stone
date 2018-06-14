@@ -152,7 +152,7 @@ const controller = {
     },
     getTask: function () {
         return new Promise((resolve, reject) => {
-            request({url:getTaskApi + '?store=taobao', timeout: 3000}, function (error, response, body) {
+            request({url:getTaskApi + '?store=guowai', timeout: 3000}, function (error, response, body) {
                 if (error) {
                     reject(error);
                 } else {
