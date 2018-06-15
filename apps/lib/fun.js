@@ -70,7 +70,7 @@ exports.getStore = function (urlStr) {
         ['特步官网', ['www.xtep.com.cn']],
         ['考拉海购', ['www.kaola.com', 'goods.kaola.com']],
         ['国美在线', ['item.gome.com.cn']],
-        ['苏宁易购', ['www.suning.com']],
+        ['苏宁易购', ['suning.com']],
         ['毒', ['du.hupu.com']],
         ['西集', ['www.xiji.com']],
         ['美囤妈妈', ['item.meitun.com', 'item.babytreegroup.hk']],
