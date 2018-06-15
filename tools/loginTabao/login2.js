@@ -61,8 +61,8 @@ async function browserStart(username) {
     console.log(username, 'sendImg')
     var sendImgTime  = Date.now();
     var si = setInterval(function () {
-        //超过2分钟
-        if ((Date.now() - sendImgTime) > 1000*60*2) {
+        //超过50s钟
+        if ((Date.now() - sendImgTime) > 1000*50) {
             //关闭浏览器
             browser.close();
 
@@ -74,7 +74,7 @@ async function browserStart(username) {
 
             clearInterval(si);
         }
-    }, 20000)
+    }, 5000)
     socket.emit('sendImg', {'type':username, 'img': qrcodeHref}, async function (sContent){
         clearInterval(si);
         console.log(username, sContent)
