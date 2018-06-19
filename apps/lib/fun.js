@@ -96,9 +96,9 @@ exports.getStore = function (urlStr) {
         ['波罗蜜',['m.bolo.me']],
         ['丝芙兰',['www.sephora.cn']],
         ['聚美优品',['item.jumei.com','item.jumeiglobal.com']],
-        ['莎莎',['www.sasa.com']],
+        ['香港莎莎网',['www.sasa.com']],
         ['香港草莓网',['cn.strawberrynet.com']],
-        ['香港卓悦',['www.bonjourhk.com']],
+        ['香港卓悦网',['www.bonjourhk.com']],
         ['豌豆公主',['m.wandougongzhu.cn']]
     ];
 
