@@ -95,7 +95,11 @@ exports.getStore = function (urlStr) {
         ['小红书',['pages.xiaohongshu.com']],
         ['波罗蜜',['m.bolo.me']],
         ['丝芙兰',['www.sephora.cn']],
-        ['聚美优品',['item.jumei.com','item.jumeiglobal.com']]
+        ['聚美优品',['item.jumei.com','item.jumeiglobal.com']],
+        ['莎莎',['www.sasa.com']],
+        ['香港草莓网',['cn.strawberrynet.com']],
+        ['香港卓悦',['www.bonjourhk.com']],
+        ['豌豆公主',['m.wandougongzhu.cn']]
     ];
 
     var name = '其他';
