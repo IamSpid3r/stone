@@ -5,7 +5,7 @@ var fun  = require('../lib/fun');
 const crawlmainTaskES = require(process.cwd()+"/apps/lib/elasticsearch/crawlMainTasks.js").esClient;
 
 const Q = require("q");
-var limit = 70000;//最大任务
+var limit = 40000;//最大任务
 
 exports.saveTask = function(param, callback) {
     try{
