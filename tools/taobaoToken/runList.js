@@ -75,6 +75,7 @@ var runList = function(params, cookiePath, callback) {
                             if (resJson.ret instanceof Array
                                 && resJson.ret[0].indexOf('代理软件') == -1
                                 && resJson.ret[0].indexOf('被挤爆啦') == -1
+                                && resJson.ret[0].indexOf('FAIL_SYS_USER_VALIDATE') == -1
                             ) {
                                 return callback(resJson);
                             }else{
