@@ -355,16 +355,19 @@ app.get('/cookie',function(req,res){
             Msg: '缺少指定的cookie名称'
         }).end();
     }
-    let content = fs.readFileSync(process.cwd() + '/logs/' + 'taobaoCookie' + _.upperFirst(req.query.name) +'.txt');
-    console.log(content);
-    if(content){
-        res.json({ Status: true, Data: content.toString()}).end();
-    }else{
-        res.json({
-            Status: false,
-            Msg: '获取指定cookie内容失败'
-        }).end();
+    let file = process.cwd() + '/logs/' + 'taobaoCookie' + _.upperFirst(req.query.name) +'.txt';
+    console.log(file);
+    if(fs.existsSync(file)){
+        let content = fs.readFileSync();
+        console.log(content);
+        if(content){
+            res.json({ Status: true, Data: content.toString()}).end();
+        }
     }
+    res.json({
+        Status: false,
+        Msg: '获取指定cookie内容失败'
+    }).end();
 });
 
 app.listen(3000,function(){
