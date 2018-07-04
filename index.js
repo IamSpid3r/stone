@@ -1,5 +1,5 @@
 // var request = require('request');
-// var _ = require('lodash');
+var _ = require('lodash');
 // var jschardet = require('jschardet');
 // var cheerio = require('cheerio');
 // // var zlib = require('zlib');
@@ -347,6 +347,25 @@ app.get('/qqq', function (req, res) {
     console.log(req.headers['x-forwarded-for'])
     res.send({'ip': req.headers['x-forwarded-for']}).end();
 })
+
+app.get('/cookie',function(req,res){
+    if(!req.query.name){
+        res.json({
+            Status: false,
+            Msg: '缺少指定的cookie名称'
+        }).end();
+    }
+    let content = fs.readFileSync(process.cwd() + '/logs/' + 'taobaoCookie' + _.upperFirst(req.query.name) +'.txt');
+    console.log(content);
+    if(content){
+        res.json({ Status: true, Data: content.toString()}).end();
+    }else{
+        res.json({
+            Status: false,
+            Msg: '获取指定cookie内容失败'
+        }).end();
+    }
+});
 
 app.listen(3000,function(){
     console.log('listen 3000');
