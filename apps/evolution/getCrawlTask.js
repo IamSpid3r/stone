@@ -35,10 +35,10 @@ if (initFlag){
 var lock;
 
 //特殊处理的商城
-var storeArr = config.crawltask.jd;
-var guowaiArr = config.crawltask.guowai;
-var guoneiArr = config.crawltask.guonei;
-var taobaoArr = config.crawltask.taobao;
+var storeArr = config.crawltask.store.jd;
+var guowaiArr = config.crawltask.store.guowai;
+var guoneiArr = config.crawltask.store.guonei;
+var taobaoArr = config.crawltask.store.taobao;
 
 exports.getMainList = function(request, response) {
 	handler(request, response);
