@@ -32,8 +32,7 @@ const controller = {
 
                 //商城
                 console.log(cluster.worker.id, taskUrl, taskId);
-                var urlInfo =  url.parse(taskUrl, true, true);
-                var storeObj = store.getStore(urlInfo);
+                var storeObj = store.getStore(taskUrl);
                 if (!storeObj) {
                     throw new Error(' 当前地址不支持爬取');
                 }

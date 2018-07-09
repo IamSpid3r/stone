@@ -10,6 +10,7 @@ const Q = require("q");
 
 const getTaskApi = crawltaskConfig.getUrl.guowai;
 const saveTaskApi = crawltaskConfig.postUrl.guowai;
+
 //商城集合
 const store = require(process.cwd()+'/lib/store');
 
@@ -28,8 +29,7 @@ const controller = {
 
                 //商城
                 console.log(cluster.worker.id, taskUrl, taskId);
-                var urlInfo =  url.parse(taskUrl, true, true);
-                var storeObj = store.getStore(urlInfo);
+                var storeObj = store.getStore(taskUrl);
                 if (!storeObj) {
                     throw new Error(' 当前地址不支持爬取');
                 }
