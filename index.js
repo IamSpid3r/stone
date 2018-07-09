@@ -11,6 +11,7 @@ const bodyParser = require('body-parser');
 const url = require('url');
 const request = require('request');
 const domain = require('domain');
+const fun = require(process.cwd() + "/apps/lib/fun.js");
 
 const NODE_ENV   = typeof process.env.NODE_ENV != 'undefined' ? process.env.NODE_ENV : '';
 
@@ -26,9 +27,6 @@ const getCrawlStatInfohandler = require('./apps/evolution/getCrawlStatInfo').han
 
 //淘宝店铺信息
 const taobaoShop = require('./lib/taobaoShop');
-
-//商城集合
-const store = require(process.cwd()+'/lib/store');
 
 app.use(compress());
 app.use(bodyParser.json({limit: '50mb'}));
@@ -74,11 +72,10 @@ app.all('*', function(req, res, next) {
 });
 
 app.get('/info', function (req, res) {
-    var goodsUrl = req.query.url;
-    var urlInfo = goodsUrl ?  url.parse(goodsUrl, true, true) : {path:'',host:''};
-    var storeObj = store.getStore(urlInfo);
+    let urlStr = req.query.url;
+    let storeObj = fun.getStore(urlStr);
     if(typeof storeObj == 'object'){
-        storeObj.getInfo(goodsUrl ,function(error, itemInfo){
+        return storeObj.getInfo(urlStr ,function(error, itemInfo){
             if(error){
                 res.json({
                     Status: false,
@@ -89,7 +86,7 @@ app.get('/info', function (req, res) {
             }
         })
     }else{
-        res.json({
+        return res.json({
             Status: false,
             Msg: {
                 Errors: {
@@ -97,7 +94,7 @@ app.get('/info', function (req, res) {
                     Message: '当前地址不支持爬取'
                 }
             }
-        }).end();
+        });
     }
 })
 
@@ -124,12 +121,10 @@ app.get('/taobao', function (req, res) {
 
 
 app.get('/i', function (req, res) {
-    var goodsUrl = req.query.url;
-    var urlInfo = goodsUrl ?  url.parse(goodsUrl, true, true) : {path:'',host:''};
-
-    var storeObj = store.getStore(urlInfo);
+    let urlStr = req.query.url;
+    let storeObj = fun.getStore(urlStr);
     if(typeof storeObj == 'object'){
-        storeObj.getInfo(encodeURI(goodsUrl) ,function(error, itemInfo){
+        storeObj.getInfo(encodeURI(urlStr) ,function(error, itemInfo){
             if(error){
                 res.json({
                     Status: false,

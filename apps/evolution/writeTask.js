@@ -62,7 +62,7 @@ var controller = {
         var urlToTaskId = [];
         var body = urls.map(function (url) {
             var taskId = fun.generateTaskId(url);
-            var store = fun.getStore(url);
+            var store = fun.getStore(url, 'name');
 
             urlToTaskId[taskId] = url;
 
