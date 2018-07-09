@@ -19,7 +19,7 @@ exports.saveTask = function(param, callback) {
                 throw new Error('task_id和url不可为空');
                 return '';
             }else{
-                param[index].store = fun.getStore(row.url, 'name');
+                param[index].store = fun.getStore(row.url);
                 param[index].sku_info = '';
                 param[index].update_err_num = 0;
                 param[index].status = 0;
@@ -156,7 +156,7 @@ var controller = {
                     SequelizeDb.CrawlMain.create({
                         task_id: param.task_id,
                         url: param.url,
-                        store:fun.getStore(param.url, 'name'),
+                        store:fun.getStore(param.url),
                         status:0,
                       }).then(row=>{
                         if (!row) {

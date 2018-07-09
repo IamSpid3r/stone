@@ -14,6 +14,8 @@ const Q = require("q");
 
 const getTaskApi = crawltaskConfig.getUrl.guonei;
 const saveTaskApi = crawltaskConfig.postUrl.guonei;
+//商城集合
+const store = require(process.cwd()+'/lib/store');
 
 const controller = {
     dealTime : null,
@@ -30,7 +32,7 @@ const controller = {
 
                 //商城
                 console.log(cluster.worker.id, taskUrl, taskId);
-                var storeObj = fun.getStore(taskUrl);
+                var storeObj = store.getStore(taskUrl);
                 if (!storeObj) {
                     throw new Error(' 当前地址不支持爬取');
                 }
@@ -176,7 +178,7 @@ const controller = {
                 'url': url
             })
             attributes.push({
-                'store': fun.getStore(url, 'name')
+                'store': fun.getStore(url)
             })
             if (data.Status) {
                 attributes.push({

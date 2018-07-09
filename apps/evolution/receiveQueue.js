@@ -106,7 +106,7 @@ var controller = {
             'url' : url
         })
         attributes.push({
-            'store' : fun.getStore(url, 'name')
+            'store' : fun.getStore(url)
         })
         if (data.Status) {
             attributes.push({

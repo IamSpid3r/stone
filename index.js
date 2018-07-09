@@ -28,6 +28,9 @@ const getCrawlStatInfohandler = require('./apps/evolution/getCrawlStatInfo').han
 //淘宝店铺信息
 const taobaoShop = require('./lib/taobaoShop');
 
+//商城集合
+const store = require(process.cwd()+'/lib/store');
+
 app.use(compress());
 app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.urlencoded({ limit: '50mb',extended: true }));
@@ -73,7 +76,7 @@ app.all('*', function(req, res, next) {
 
 app.get('/info', function (req, res) {
     let urlStr = req.query.url;
-    let storeObj = fun.getStore(urlStr);
+    let storeObj = store.getStore(urlStr);
     if(typeof storeObj == 'object'){
         return storeObj.getInfo(urlStr ,function(error, itemInfo){
             if(error){
@@ -122,7 +125,7 @@ app.get('/taobao', function (req, res) {
 
 app.get('/i', function (req, res) {
     let urlStr = req.query.url;
-    let storeObj = fun.getStore(urlStr);
+    let storeObj = store.getStore(urlStr);
     if(typeof storeObj == 'object'){
         storeObj.getInfo(encodeURI(urlStr) ,function(error, itemInfo){
             if(error){
