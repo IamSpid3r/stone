@@ -10,7 +10,7 @@ var duStore = require('./lib/shop/duShop');
 var jdStore = require('./lib/shop/jdShop');
 var kaolaStore = require('./lib/shop/kaolaShop');
 var vipStore = require('./lib/shop/vipShop');
-
+var farfetch = require('./lib/shop/farfetchShop');
 
 app.get('/t',function(req,res){
     taobao.getInfo('https://auxdq.tmall.com',1,function(error,itemInfo){
@@ -24,7 +24,8 @@ app.get('/t',function(req,res){
 
 app.get('/info', function (req, res) {
     var goodsUrl = req.query.url;
-    var page = req.query.page ? req.query.page : 1;
+    let urlinfo = url.parse(goodsUrl,true);
+    var page = urlinfo.query.page ? urlinfo.query.page : 1;
     var goodsUrlHost = '';
     if(goodsUrl){
         var urlInfo = url.parse(goodsUrl, true, true);
@@ -70,6 +71,8 @@ function getStoreObj(host){
             return kaolaStore;
         }else if(host.indexOf('vip.com') > 0){
             return vipStore;
+        }else if(host.indexOf('farfetch.com')){
+            return farfetch;
         }
         return taobao;
 
