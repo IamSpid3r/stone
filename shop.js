@@ -24,8 +24,7 @@ app.get('/t',function(req,res){
 
 app.get('/info', function (req, res) {
     var goodsUrl = req.query.url;
-    let urlinfo = url.parse(goodsUrl,true);
-    var page = urlinfo.query.page ? urlinfo.query.page : 1;
+    var page = req.query.page ? req.query.page : 1;
     var goodsUrlHost = '';
     if(goodsUrl){
         var urlInfo = url.parse(goodsUrl, true, true);
