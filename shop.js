@@ -71,7 +71,7 @@ function getStoreObj(host){
             return kaolaStore;
         }else if(host.indexOf('vip.com') > 0){
             return vipStore;
-        }else if(host.indexOf('farfetch.com')){
+        }else if(host.indexOf('farfetch.com') > 0){
             return farfetch;
         }
         return taobao;
