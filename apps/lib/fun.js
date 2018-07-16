@@ -48,7 +48,7 @@ exports.getStore = function (urlStr) {
         {name:'荷兰DOD',  regexp: ['cn.dod.nl']},
         {name:'farfetch',  regexp: ['www.farfetch.com']},
         {name:'小红书',  regexp: ['pages.xiaohongshu.com']},
-        {name:'波罗蜜',  regexp: ['m.bolo.me']},
+        {name:'波罗蜜',  regexp: ['m.bolo.me','m.bolome.jp']},
         {name:'丝芙兰',  regexp: ['www.sephora.cn']},
         {name:'聚美优品',  regexp: ['item.jumei.com','item.jumeiglobal.com']},
         {name:'香港莎莎网',  regexp: ['www.sasa.com']},
