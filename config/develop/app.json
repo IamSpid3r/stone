@@ -1,12 +1,19 @@
 {
     "db":{
        "stone":{
-            "host"     : "shihuo-db-01.offline.hupu.com",
-            "user"     : "shihuomain",
-            "password" : "E67uD100",
-            "database" : "trade_stone",
-            "port"     :  3306
+          "host"     : "shihuo-db-01.offline.hupu.com",
+          "user"     : "shihuomain",
+          "password" : "E67uD100",
+          "database" : "trade_stone",
+          "port"     :  3306
        },
+      "kunlun": {
+          "host"     : "shihuo-db-01.offline.hupu.com",
+          "user"     : "shihuomain",
+          "password" : "E67uD100",
+          "database": "trade_kunlun",
+          "port": 3306
+      },
        "redis":{
            "host"     : "10.64.56.130",
            "user"     : "",
