@@ -46,73 +46,92 @@ socket.on('connect', function(){
 });
 //浏览器
 async function browserStart(username) {
-    const browser = await puppeteer.launch({
-        args: ['--no-sandbox', '--disable-setuid-sandbox'],
-        headless: true
-    });
-    const page = await browser.newPage();
-    await page.goto(taobaoLoginUrl);
-    await page.addScriptTag({ url: 'http://b1.hoopchina.com.cn/common/jquery-1.8.js' });
-    const qrcodeHref = await page.evaluate(() => {
-        const $ = window.$;
-        return 'http:'+$('#J_QRCodeImg img').attr('src');
-    });
-    //获取img
-    console.log(username, 'sendImg')
-    var sendImgTime  = Date.now();
-    var si = setInterval(function () {
-        //超过50s钟
-        if ((Date.now() - sendImgTime) > 1000*50) {
-            //关闭浏览器
-            browser.close();
+    try {
+        const browser = await puppeteer.launch({
+            args: ['--no-sandbox', '--disable-setuid-sandbox'],
+            headless: true
+        });
+        const page = await browser.newPage();
+        await page.goto(taobaoLoginUrl);
+        await page.addScriptTag({ url: 'https://cdn.bootcss.com/jquery/2.2.3/jquery.js' });
+        const qrcodeHref = await page.evaluate(() => {
+            const $ = window.$;
+            return 'http:'+$('#J_QRCodeImg img').attr('src');
+        });
+        //获取img
+        console.log(username, 'sendImg')
+        var sendImgTime  = Date.now();
+        var si = setInterval(function () {
+            //超过50s钟
+            if ((Date.now() - sendImgTime) > 1000*50) {
+                //关闭浏览器
+                browser.close();
 
-            console.log('sendImgTimeout')
-            fun.stoneLog('taobaoLogin', 'info', {
-                "param1": username,
-                "param2": 'sendImgTimeout',
-            })
-
-            clearInterval(si);
-        }
-    }, 5000)
-    socket.emit('sendImg', {'type':username, 'img': qrcodeHref}, async function (sContent){
-        clearInterval(si);
-        console.log(username, sContent)
-        if (sContent.status == 200) {
-            await page.waitFor(2000);
-            var currentUrl = await page.url();
-            if ('https://www.taobao.com/go/act/loginsuccess/taobao.php' == currentUrl) {
-                await page.on('requestfinished', async function (msg) {
-                    //h5api js cookie
-                    if (msg.url.indexOf('https://h5api.m.taobao.com/h5/com.taobao.mcl.fav.querycolgoodsbycursor/3.0/') != -1) {
-                        var cookies = await page.cookies();
-                        var cookiesArr = cookies.map(function (val) {
-                            return val.name+'='+val.value+';';
-                        });
-                        var cookiesStr = cookiesArr.join(' ');
-
-                        console.log(username, cookiesStr);
-                        //写入js
-                        fs.writeFile(process.cwd()+'/logs/'+cookieInfos[username].file, cookiesStr,  function(err) {
-                            if (err) {
-                                return console.log(err.message);
-                            }
-                            cookieInfos[username].status = true;
-                        });
-                    }
-                });
-
-                //页面加载完毕
-                await page.on('load', async function (msg) {
-                    console.log(username, 'load finish')
-                    //关闭浏览器
-                    setTimeout(function () {
-                        browser.close();
-                    }, 2000)
+                console.log('sendImgTimeout')
+                fun.stoneLog('taobaoLogin', 'info', {
+                    "param1": username,
+                    "param2": 'sendImgTimeout',
                 })
 
-                console.log(username, 'my fav');
-                await page.goto("https://h5.m.taobao.com/fav/index.htm");
+                clearInterval(si);
+            }
+        }, 5000)
+        socket.emit('sendImg', {'type':username, 'img': qrcodeHref}, async function (sContent){
+            clearInterval(si);
+            console.log(username, sContent)
+            if (sContent.status == 200) {
+                await page.waitFor(2000);
+                var currentUrl = await page.url();
+                if ('https://www.taobao.com/go/act/loginsuccess/taobao.php' == currentUrl) {
+                    await page.on('requestfinished', async function (msg) {
+                        //h5api js cookie
+                        if (msg.url.indexOf('https://h5api.m.taobao.com/h5/com.taobao.mcl.fav.querycolgoodsbycursor/3.0/') != -1) {
+                            var cookies = await page.cookies();
+                            var cookiesArr = cookies.map(function (val) {
+                                return val.name+'='+val.value+';';
+                            });
+                            var cookiesStr = cookiesArr.join(' ');
+
+                            console.log(username, cookiesStr);
+                            //写入js
+                            fs.writeFile(process.cwd()+'/logs/'+cookieInfos[username].file, cookiesStr,  function(err) {
+                                if (err) {
+                                    return console.log(err.message);
+                                }
+                                cookieInfos[username].status = true;
+                            });
+                        }
+                    });
+
+                    //页面加载完毕
+                    await page.on('load', async function (msg) {
+                        console.log(username, 'load finish')
+                        //关闭浏览器
+                        setTimeout(function () {
+                            browser.close();
+                        }, 2000)
+                    })
+
+                    console.log(username, 'my fav');
+                    await page.goto("https://h5.m.taobao.com/fav/index.htm");
+                } else {
+                    if (cookieInfos[username].timer.s < cookieInfos[username].timer.e) {
+                        cookieInfos[username].timer.s++;
+                        //关闭浏览器
+                        browser.close();
+                        //新开浏览器
+                        browserStart(username);
+                    } else {
+                        //关闭浏览器
+                        browser.close();
+                        console.log(username, 'err max '+cookieInfos[username].timer.e)
+
+                        fun.stoneLog('taobaoLogin', 'info', {
+                            "param1": username,
+                            "param2": 'err max '+cookieInfos[username].timer.s,
+                        })
+                    }
+                }
             } else {
                 if (cookieInfos[username].timer.s < cookieInfos[username].timer.e) {
                     cookieInfos[username].timer.s++;
@@ -123,7 +142,7 @@ async function browserStart(username) {
                 } else {
                     //关闭浏览器
                     browser.close();
-                    console.log(username, 'err max '+cookieInfos[username].timer.e)
+                    console.log('err max '+cookieInfos[username].timer.s)
 
                     fun.stoneLog('taobaoLogin', 'info', {
                         "param1": username,
@@ -131,25 +150,13 @@ async function browserStart(username) {
                     })
                 }
             }
-        } else {
-            if (cookieInfos[username].timer.s < cookieInfos[username].timer.e) {
-                cookieInfos[username].timer.s++;
-                //关闭浏览器
-                browser.close();
-                //新开浏览器
-                browserStart(username);
-            } else {
-                //关闭浏览器
-                browser.close();
-                console.log('err max '+cookieInfos[username].timer.s)
+        });
+    } catch (e) {
+        //关闭浏览器
+        browser && browser.close();
 
-                fun.stoneLog('taobaoLogin', 'info', {
-                    "param1": username,
-                    "param2": 'err max '+cookieInfos[username].timer.s,
-                })
-            }
-        }
-    });
+        console.log(e.message)
+    }
 }
 
 //抓取优惠券的接口
