@@ -52,7 +52,7 @@ async function browserStart(username) {
     });
     const page = await browser.newPage();
     await page.goto(taobaoLoginUrl);
-    await page.addScriptTag({ url: 'https://code.jquery.com/jquery-3.2.1.min.js' });
+    await page.addScriptTag({ url: 'http://b1.hoopchina.com.cn/common/jquery-1.8.js' });
     const qrcodeHref = await page.evaluate(() => {
         const $ = window.$;
         return 'http:'+$('#J_QRCodeImg img').attr('src');
