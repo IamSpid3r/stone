@@ -7,6 +7,13 @@
       "database": "trade_stone",
       "port": 3306
     },
+    "kunlun": {
+      "host": "rm-bp14g5uo635nza203.mysql.rds.aliyuncs.com",
+      "user": "tradekunlun",
+      "password": "GJe28S4Ge8lQ2NdXh2",
+      "database": "trade_kunlun",
+      "port": 3306
+    },
     "redis": {
       "host": "r-bp17accf82d27144.redis.rds.aliyuncs.com",
       "user": "",

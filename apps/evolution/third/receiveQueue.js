@@ -4,7 +4,8 @@ const dateFormat = require('dateformat');
 const Q = require("q");
 
 //const stoneTaskES = require(process.cwd()+"/apps/lib/elasticsearch/stoneTasks").esClient;
-const superTaskES = require(process.cwd()+"/apps/lib/elasticsearch/superTask").esClient;
+const sequelizeDb = require('../../lib/dbKunlun').db;
+const Op = sequelizeDb.sequelize.Op;
 const fun = require(process.cwd()+"/apps/lib/fun.js");
 const tableStore = require(process.cwd()+"/apps/lib/tablestore.js").tableStore;
 
@@ -21,7 +22,7 @@ function handler(taskId, url,  data, callback) {
                 'param' : err.message,
                 'param2' : taskId,
             });
-            return  callback(err.message)
+            return  callback('insertTableStore:'+err.message)
         }
 
         //存入数据库
@@ -32,7 +33,7 @@ function handler(taskId, url,  data, callback) {
                     'param' : err.message,
                     'param2' : taskId,
                 });
-                return callback(err.message)
+                return callback('updateTask'+err.message)
             }
 
             return  callback(null, 'ok')
@@ -52,19 +53,24 @@ var controller = {
         var updateErrStatus = packageInfo[2];
         var now = new Date();
 
-        superTaskES.update({
-            task_id: taskId,
+        let date = taskId.substr(0, 10);
+        //日期超过五天直接return ok
+        if ((Date.now() - new Date(date).getTime()) > 3600*24*1000*5) {
+            return callback(null, 'ok');
+        }
+        let KunlunTasks = sequelizeDb.KunlunTasks(date);
+        KunlunTasks.update({
             'status' : 2,
             'update_info' : JSON.stringify(updateInfo),
             'update_status' : updateStatus,
             'update_err_status' : updateErrStatus,
             'update_at' : now
-        }, function (err, res) {
-            if (err) {
-                return callback(err);
-            }
-
-            return callback(null, res);
+        },{
+            where : {task_id: taskId}
+        }).then(row => {
+            return callback(null, row);
+        }).catch(err=> {
+            return callback(err);
         })
     },
     packageInfo: function (data) {
@@ -109,6 +115,7 @@ var controller = {
             if (typeof data.Data != 'object') {
                 return callback(new Error('null data'+data.Data))
             }
+
             attributes.push({
                 'status' : data.Data.Status
             })

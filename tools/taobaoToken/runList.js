@@ -115,7 +115,6 @@ var runList = function(params, cookiePath, callback) {
                             if (resJson.ret instanceof Array
                                 && (
                                     resJson.ret[0].indexOf('SUCCESS') > -1
-                                    || resJson.ret[0].indexOf('系统错误') > -1
                                 )
                             ) {
                                 callback(resJson);
