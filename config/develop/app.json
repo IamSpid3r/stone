@@ -80,9 +80,6 @@
         {"name":"丝芙兰"},
         {"name":"波罗蜜"},
         {"name":"聚美优品"},
-        {"name":"香港莎莎网"},
-        {"name":"香港草莓网"},
-        {"name":"香港卓悦网"},
         {"name":"豌豆公主"}
       ],
       "guowai": [
@@ -106,7 +103,14 @@
         {"name":"新西兰Kiwistarcare"},
         {"name":"德国UKA"},
         {"name":"荷兰DOD"},
-        {"name":"farfetch"}
+        {"name":"farfetch"},
+        {"name":"香港莎莎网"},
+        {"name":"香港草莓网"},
+        {"name":"香港卓悦网"},
+        {"name":"欧洲直邮"},
+        {"name":"日本直邮"},
+        {"name":"日本乐天"},
+        {"name":"韩国直邮"}
       ],
       "taobao": [{"name":"淘宝"}, {"name":"天猫"}],
       "jd": [{"name":"京东"}]
