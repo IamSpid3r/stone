@@ -55,6 +55,10 @@ exports.getStore = function (urlStr) {
         {name:'香港草莓网',  regexp: ['cn.strawberrynet.co']},
         {name:'香港卓悦网',  regexp: ['www.bonjourhk.com']},
         {name:'豌豆公主',  regexp: ['m.wandougongzhu.cn']},
+        {name: '欧洲直邮' , regexp: ['cn.feelunique.com']},
+        {object: '日本直邮' , regexp: ['dokodemo.world']},
+        {object: '日本乐天' , regexp: ['global.rakuten.com']},
+        {object: '韩国直邮' , regexp: ['item2.gmarket.co.kr']},
     ];
 
     //findindex
