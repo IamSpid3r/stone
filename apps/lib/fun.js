@@ -47,6 +47,7 @@ exports.getStore = function (urlStr) {
         {name:'德国UKA',  regexp: ['cn.unserekleineapotheke.de']},
         {name:'荷兰DOD',  regexp: ['cn.dod.nl']},
         {name:'farfetch',  regexp: ['www.farfetch.com','www.farfetch.cn']},
+        {name:'stockx',  regexp: ['stockx']},
         {name:'小红书',  regexp: ['pages.xiaohongshu.com']},
         {name:'波罗蜜',  regexp: ['m.bolo.me','m.bolome.jp']},
         {name:'丝芙兰',  regexp: ['www.sephora.cn']},
