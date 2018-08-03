@@ -1,5 +1,6 @@
 const puppeteer = require('puppeteer');
 const fs = require('fs');
+const request = require('request');
 const _ = require('lodash');
 
 const fun = require(process.cwd()+"/apps/lib/fun.js");
@@ -47,10 +48,15 @@ socket.on('connect', function(){
 //浏览器
 async function browserStart(username) {
     try {
-        const browser = await puppeteer.launch({
+        var launch = {
             args: ['--no-sandbox', '--disable-setuid-sandbox'],
             headless: true
-        });
+        };
+        // const proxyIp = await getProxyip();
+        // if (proxyIp) {
+        //     launch.args.push('--proxy-server='+proxyIp)
+        // }
+        const browser = await puppeteer.launch(launch);
         const page = await browser.newPage();
         await page.goto(taobaoLoginUrl);
         await page.addScriptTag({ url: 'https://cdn.bootcss.com/jquery/2.2.3/jquery.js' });
@@ -158,6 +164,27 @@ async function browserStart(username) {
         console.log(e.message)
     }
 }
+
+//getproxyip
+const developUrl = 'http://121.41.100.22:3333/proxyGet?add=1';
+function getProxyip() {
+    return new Promise(function (resolve, reject) {
+        request(developUrl, function (err, response, body) {
+            if (!error && response.statusCode == 200) {
+                let body = JSON.parse(body);
+                if(body.status == 'ok'){
+                    let proxyIp = body.Ip.Ip+':'+body.Ip.Port;
+                    return resolve(proxyIp);
+                } else {
+                    return resolve(null);
+                }
+            }else{
+                return resolve(null);
+            }
+        })
+    })
+}
+
 
 //抓取优惠券的接口
 async function couponpage (cookieVal, callback) {
