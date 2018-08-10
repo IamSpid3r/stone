@@ -12,7 +12,22 @@ const username = 'shihuo';
 
 //所有账户cookie
 var cookieInfos = {
-
+    'shihuo': {
+        'file' : 'taobaoCookieShihuo.txt',
+        'status' : false,
+         timer: {
+            's' : 0,
+            'e' : 3,
+        }
+    },
+    'paobu': {
+        file : 'taobaoCookiePaobu.txt',
+        status : false,
+        timer : {
+            's' : 0,
+            'e' : 3,
+        }
+    },
     'kaluli': {
         file : 'taobaoCookieKaluli.txt',
         status : false,
@@ -60,7 +75,6 @@ async function browserStart(username) {
                 clearInterval(si);
             }
         }, 5000)
-
         await page.goto(taobaoLoginUrl);
         await page.addScriptTag({ url: 'https://cdn.bootcss.com/jquery/2.2.3/jquery.js' });
         const qrcodeHref = await page.evaluate(() => {
