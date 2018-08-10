@@ -12,22 +12,7 @@ const username = 'shihuo';
 
 //所有账户cookie
 var cookieInfos = {
-    'shihuo': {
-        'file' : 'taobaoCookieShihuo.txt',
-        'status' : false,
-         timer: {
-            's' : 0,
-            'e' : 3,
-        }
-    },
-    'paobu': {
-        file : 'taobaoCookiePaobu.txt',
-        status : false,
-        timer : {
-            's' : 0,
-            'e' : 3,
-        }
-    },
+
     'kaluli': {
         file : 'taobaoCookieKaluli.txt',
         status : false,
@@ -50,22 +35,15 @@ async function browserStart(username) {
     try {
         var launch = {
             args: ['--no-sandbox', '--disable-setuid-sandbox'],
-            headless: true
+            headless: false
         };
-        // const proxyIp = await getProxyip();
-        // if (proxyIp) {
-        //     launch.args.push('--proxy-server='+proxyIp)
-        // }
+        const proxyIp = await getProxyip();
+        if (proxyIp) {
+            console.log(proxyIp)
+            launch.args.push('--proxy-server='+proxyIp)
+        }
         const browser = await puppeteer.launch(launch);
         const page = await browser.newPage();
-        await page.goto(taobaoLoginUrl);
-        await page.addScriptTag({ url: 'https://cdn.bootcss.com/jquery/2.2.3/jquery.js' });
-        const qrcodeHref = await page.evaluate(() => {
-            const $ = window.$;
-            return 'http:'+$('#J_QRCodeImg img').attr('src');
-        });
-        //获取img
-        console.log(username, 'sendImg')
         var sendImgTime  = Date.now();
         var si = setInterval(function () {
             //超过50s钟
@@ -82,6 +60,15 @@ async function browserStart(username) {
                 clearInterval(si);
             }
         }, 5000)
+
+        await page.goto(taobaoLoginUrl);
+        await page.addScriptTag({ url: 'https://cdn.bootcss.com/jquery/2.2.3/jquery.js' });
+        const qrcodeHref = await page.evaluate(() => {
+            const $ = window.$;
+            return 'http:'+$('#J_QRCodeImg img').attr('src');
+        });
+        //获取img
+        console.log(username, 'sendImg')
         socket.emit('sendImg', {'type':username, 'img': qrcodeHref}, async function (sContent){
             clearInterval(si);
             console.log(username, sContent)
@@ -170,8 +157,8 @@ const developUrl = 'http://121.41.100.22:3333/proxyGet?add=1';
 function getProxyip() {
     return new Promise(function (resolve, reject) {
         request(developUrl, function (err, response, body) {
-            if (!error && response.statusCode == 200) {
-                let body = JSON.parse(body);
+            if (!err && response.statusCode == 200) {
+                body = JSON.parse(body);
                 if(body.status == 'ok'){
                     let proxyIp = body.Ip.Ip+':'+body.Ip.Port;
                     return resolve(proxyIp);
