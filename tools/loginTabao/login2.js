@@ -50,7 +50,7 @@ async function browserStart(username) {
     try {
         var launch = {
             args: ['--no-sandbox', '--disable-setuid-sandbox'],
-            headless: false
+            headless: true
         };
         const proxyIp = await getProxyip();
         if (proxyIp) {
