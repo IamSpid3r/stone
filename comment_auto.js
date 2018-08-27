@@ -86,7 +86,7 @@ var stone = {
      * 应答给识货
      */
     consumer:function(formData,callback){
-        console.log(formData);
+        console.log(JSON.stringify(formData,null,3));
         request.post({
             url: consumerUrl,
             form: {'info': JSON.stringify(formData)},
@@ -117,7 +117,6 @@ var stone = {
         if(typeof storeObj == 'object'){
             Promise.race([getComment(storeObj,goodsUrl,body.data.id), timeout()])
             .then(function(formData){  //如果20秒内返回了
-                console.log(formData);
                 callback(formData);
                 console.log("正常返回。。。。");
             })
