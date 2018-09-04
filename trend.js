@@ -62,6 +62,19 @@ app.get('/d',function (req, res) {
     }
 })
 
+//获取商城对象
+function getStoreObj(urlStr){
+    var taobaoReg = /(taobao|tmall)\.com/ig;
+    var jdReg = /jd\.com/ig;
+
+    if (taobaoReg.exec(urlStr)) {
+        return taobao;
+    }
+    if (jdReg.exec(urlStr)) {
+        return jd;
+    }
+    return null;
+}
 
 
 
