@@ -4,12 +4,14 @@ var request = require('request');
 
 var taobao = require('./lib/trend/taobao');
 
-app.get('/d',async function (req, res) {
-    var goodsUrl = req.query.url;
+app.get('/d',function (req, res) {
+    var goods_id = req.query.goods_id;
+    var supplier_id = req.query.supplier_id;
+    var supplier_title = req.query.supplier_title;
+    var supplier_url = req.query.supplier_url;
     var goodsUrlHost = '';
-    
-    if(goodsUrl){
-        var urlInfo = url.parse(goodsUrl, true, true);
+    if (supplier_url) {
+        var urlInfo = url.parse(supplier_url, true, true);
         goodsUrlHost = urlInfo.host;
     }
     //抓取数据
@@ -19,20 +21,38 @@ app.get('/d',async function (req, res) {
     if(goodsUrlHost == 'item.taobao.com' || goodsUrlHost == 'detail.tmall.com') {
     // if(1) {
         console.log('通过puppeteer抓取'+goodsUrlHost);
-        try { 
-            itemInfo = await taobao.getInfo(goodsUrl);
-            res.json({ Status: true, Data: itemInfo});
-        }catch(e) {
-            res.json({ Status: false,Msg: e});
+        if (!goods_id || !supplier_title) {
+            res.json({ Status: false,Msg: {
+                    "Errors":{
+                        'Code': 'Error',
+                        "Message": '缺少参数'
+                    }
+                }});
+            return;
         }
+        taobao.getInfo(supplier_url,supplier_title, function (err, itemInfo) {
+            if (err) {
+                res.json({ Status: false,Msg: err});
+            } else {
+                itemInfo.goods_id = goods_id;
+                itemInfo.supplier_id = supplier_id;
+                itemInfo.supplier_title = supplier_title;
+                itemInfo.supplier_url = supplier_url;
+                res.json({ Status: true, Data: itemInfo});
+            }
+        });
     } else {
         console.log("普通抓取"+goodsUrlHost);
         storeObj = getStoreObj(goodsUrlHost);
         if(typeof storeObj == 'object'){
-            storeObj.getInfo(goodsUrl ,function(error, itemInfo){
+            storeObj.getInfo(supplier_url ,function(error, itemInfo){
                 if(error){
                     res.json({ Status: false,Msg: error});
                 }else{
+                    itemInfo.goods_id = goods_id;
+                    itemInfo.supplier_id = supplier_id;
+                    itemInfo.supplier_title = supplier_title;
+                    itemInfo.supplier_url = supplier_url;
                     res.json({ Status: true, Data: itemInfo});
                 }
             })
@@ -42,7 +62,20 @@ app.get('/d',async function (req, res) {
     }
 })
 
+//获取商城对象
+function getStoreObj(urlStr){
+    var taobaoReg = /(taobao|tmall)\.com/ig;
+    var jdReg = /jd\.com/ig;
+
+    if (taobaoReg.exec(urlStr)) {
+        return taobao;
+    }
+    if (jdReg.exec(urlStr)) {
+        return jd;
+    }
+    return null;
+}
 
 
 
-app.listen(3012);
+app.listen(3020);
