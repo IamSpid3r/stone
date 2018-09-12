@@ -40,6 +40,12 @@ var runList = function(params, cookiePath, callback) {
             if (params.api == 'mtop.tmall.detail.couponpage') {
                 apiUrl = apiUrl.replace(/api\.m\.taobao/g, 'h5api\.m\.tmall');
             }
+            if (params.api == 'mtop.taobao.social.ugc.post.detail') {
+                apiUrl = apiUrl.replace(/api\.m/g, 'h5api\.m');
+            }
+            if (params.api == 'mtop.taobao.rate.detail') {
+                apiUrl = apiUrl.replace(/api\.m\.taobao/g, 'h5api\.m\.tmall');
+            }
 
             var requestCookie = globalCookies;
 
@@ -95,6 +101,23 @@ var runList = function(params, cookiePath, callback) {
                             }
                             break;
                         case 'mtop.alimama.union.hsf.coupon.get':
+                            if (resJson.ret instanceof Array && resJson.ret[0].indexOf('SUCCESS') > -1) {
+                                callback(resJson);
+                            }else{
+                                if (response.headers['set-cookie']) {
+                                    var sc = response.headers['set-cookie'];
+                                    sc = sc.join('; ');
+                                    let cookieObj = new parseCookie(sc).parsetoJSON();
+                                    cookie = new parseCookie(cookieObj).parsetoSTR();
+
+                                    fun.writeLog(cookiePath, cookie);
+                                    requestBody(cookie);
+                                }else{
+                                    callback(null, '抓取服务器错误');
+                                }
+                            }
+                            break;
+                        case 'mtop.taobao.rate.detail':
                             if (resJson.ret instanceof Array && resJson.ret[0].indexOf('SUCCESS') > -1) {
                                 callback(resJson);
                             }else{

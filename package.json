@@ -1,6 +1,7 @@
 {
   "name": "stone",
   "dependencies": {
+    "ali-topSdk": "^1.2.0",
     "aws-lib": "^0.3.0",
     "body-parser": "^1.17.2",
     "cheerio": "^0.19.0",
