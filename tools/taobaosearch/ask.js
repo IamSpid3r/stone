@@ -27,6 +27,8 @@ var getbrowser =  async function () {
 
 exports.getInfo = async function(askUrl, callback) {
     try {
+        var isResponse = false;
+        var returnData = {};
         var browser = await getbrowser();
         var page = await browser.newPage();
 
@@ -35,8 +37,6 @@ exports.getInfo = async function(askUrl, callback) {
             throw new Error('urlerror');
         }
         var currentAskId = urlInfo.query.id;
-        var isResponse = false;
-        var returnData = {};
 
         //监听response
         var FAIL_SYS_TOKEN_EMPTY = 0;
@@ -169,7 +169,7 @@ exports.getInfo = async function(askUrl, callback) {
         }
     } catch (e) {
         isResponse = true;
-        page.close();
+        page && page.close();
         return callback(e.message);
     }
     //var urlInfo = url.parse(askUrl, true);
