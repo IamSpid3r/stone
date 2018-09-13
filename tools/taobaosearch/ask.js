@@ -11,7 +11,7 @@ var browser = null;
 var getbrowser =  async function () {
     var launch = {
         args: ['--no-sandbox', '--disable-setuid-sandbox'],
-        headless: false
+        headless: true
     };
     // const proxyIp = await getProxyip();
     // if (proxyIp) {
