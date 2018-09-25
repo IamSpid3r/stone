@@ -14,6 +14,7 @@ var vipStore = require('./lib/shop/vipShop');
 var farfetch = require('./lib/shop/farfetchShop');
 var stockx = require('./lib/shop/stockxShop');
 var tmall = require('./lib/shop/tmallShop');
+var adidas = require('./lib/shop/adidasShop')
 
 app.get('/t',function(req,res){
     taobao.getInfo('https://auxdq.tmall.com',1,function(error,itemInfo){
@@ -81,6 +82,8 @@ function getStoreObj(host){
         return stockx;
     }else if(host.indexOf('list.tmall') >= 0){
         return tmall;
+    }else if(host.indexOf('adidas.tmall.com') >= 0){
+        return adidas;
     }
     return taobao;
 
