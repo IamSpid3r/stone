@@ -43,7 +43,7 @@ var stone = {
                     that.consumer(formData, function(){
                         setTimeout(function(){ //work
                             that.init();
-                        },4000)
+                        },2000)
                     });
                 });
             }else{ //如果没有连接 那么等会
