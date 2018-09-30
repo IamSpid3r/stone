@@ -10,6 +10,9 @@ var gome = require('./lib/comment/gomeComment');
 var jd = require('./lib/comment/jdComment');
 var kaola = require('./lib/comment/kaluli/kaolaComment');//考拉
 var mia = require('./lib/comment/kaluli/miaComment');//蜜芽
+const gwyy = require('./tools/gwyy');
+
+
 //错误 json 
 var err_info = {
     Status: false,
@@ -165,7 +168,7 @@ function timeout(){
     var p = new Promise(function(resolve, reject){
         setTimeout(function(){
             reject('URL请求20秒无响应');
-        }, 20000);
+        }, 25000);
     });
     return p;
 }
