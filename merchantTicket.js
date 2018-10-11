@@ -8,6 +8,7 @@ var request = require('request');
 var domain = require('domain');
 
 var taobao = require('./lib/merchant_ticket/taobao');
+var taobaov2 = require('./lib/merchant_ticket/taobaov2');
 var jd = require('./lib/merchant_ticket/jd');
 
 app.use(compress());
@@ -47,10 +48,39 @@ app.use(function (req, res, next) {
 app.get('/info', function (req, res) {
     var urlStr = req.query.url;
     var shopId = req.query.shopId;
-    var storeObj = getStoreObj(urlStr);
+    var sellerId = req.query.sellerId;
+    var v = req.query.v || '';
 
-    if(typeof storeObj == 'object'){
-        storeObj.getInfo(urlStr ,shopId, function(error, itemInfo){
+    var taobaoReg = /(taobao|tmall)\.com/ig;
+    var jdReg = /jd\.com/ig;
+    if (taobaoReg.exec(urlStr)) {
+        if (v.indexOf('v2') > -1) {
+            taobaov2.getInfo(urlStr ,shopId, sellerId, function(error, itemInfo){
+                if(error){
+                    return res.json({
+                        Status: false,
+                        Msg: error
+                    }).end();
+                }else{
+                    return res.json({ Status: true, Data: itemInfo}).end();
+                }
+            })
+        } else {
+            taobao.getInfo(urlStr ,shopId, function(error, itemInfo){
+                if(error){
+                    res.json({
+                        Status: false,
+                        Msg: error
+                    }).end();
+                }else{
+                    res.json({ Status: true, Data: itemInfo}).end();
+                }
+            })
+        }
+        return;
+    }
+    if (jdReg.exec(urlStr)) {
+        jd.getInfo(urlStr ,shopId, function(error, itemInfo){
             if(error){
                 res.json({
                     Status: false,
@@ -60,17 +90,18 @@ app.get('/info', function (req, res) {
                 res.json({ Status: true, Data: itemInfo}).end();
             }
         })
-    }else{
-        res.json({
-            Status: false,
-            Msg: {
-                Errors: {
-                    Code: 'Fatal',
-                    Message: '当前地址不支持爬取'
-                }
-            }
-        }).end();
+        return;
     }
+
+    return res.json({
+        Status: false,
+        Msg: {
+            Errors: {
+                Code: 'Fatal',
+                Message: '当前地址不支持爬取'
+            }
+        }
+    }).end();
 })
 
 
@@ -96,6 +127,9 @@ function getStoreObj(urlStr){
     var jdReg = /jd\.com/ig;
 
     if (taobaoReg.exec(urlStr)) {
+        if (urlStr.indexOf('v2')) {
+            return taobaov2;
+        }
         return taobao;
     }
     if (jdReg.exec(urlStr)) {
