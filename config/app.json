@@ -24,7 +24,7 @@
     "tablestore": {
       "accessKeyId": "LTAIMqpuvWAkLY7U",
       "secretAccessKey": "dGu4qSUOXOD8fop3abdmWaXUsWOjF3",
-      "endpoint": "https://stone.cn-hangzhou.ots.aliyuncs.com",
+      "endpoint": "https://stone.cn-hangzhou.ots-internal.aliyuncs.com",
       "instancename": "stone",
       "tableName": "stone"
     },

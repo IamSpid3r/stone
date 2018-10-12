@@ -73,7 +73,12 @@ var runList = function(params, cookiePath, callback) {
                 }else{
                     let resStr = response.body.replace('mtopjsonp1(','')
                     let res = resStr.substring(0,resStr.length-1);
-                    let resJson = JSON.parse(res);
+                    try {
+                        var resJson = JSON.parse(res);
+                    } catch (e) {
+                       return callback(null, 'jsonerror:'+res.substr(0, 100));
+                    }
+
 
                     switch (params.api) {
                         //商品详情页
