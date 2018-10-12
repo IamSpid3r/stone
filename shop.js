@@ -14,7 +14,8 @@ var vipStore = require('./lib/shop/vipShop');
 var farfetch = require('./lib/shop/farfetchShop');
 var stockx = require('./lib/shop/stockxShop');
 var tmall = require('./lib/shop/tmallShop');
-var adidas = require('./lib/shop/adidasShop')
+var adidas = require('./lib/shop/adidasShop');
+var idlefish = require('./lib/shop/idleMainItemSearch');
 
 app.get('/t',function(req,res){
     taobao.getInfo('https://auxdq.tmall.com',1,function(error,itemInfo){
@@ -25,6 +26,25 @@ app.get('/t',function(req,res){
         }
     })
 })
+
+app.get('/idle',function (req, res){
+    let keyword = req.query.keyword;
+    let page = req.query.page || 1;
+    if(req.query.url){
+        var urlInfo = url.parse(req.query.url, true, true);
+        page = req.query.page ?Number(req.query.page):Number(urlInfo.query.page);
+    }
+    idlefish.doSearch({keyword,page},function(error, itemInfo){
+        if(error){
+            res.json({
+                Status: false,
+                Msg: error
+            })
+        }else{
+            res.json({ Status: true, Data: itemInfo});
+        }
+    });
+});
 
 app.get('/info', function (req, res) {
     var goodsUrl = req.query.url;
