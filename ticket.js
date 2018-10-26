@@ -3,9 +3,10 @@ var url = require('url');
 var request = require('request');
 
 var taobao = require('./lib/ticket/taobao');
+var taobaov2 = require('./lib/ticket/taobaov2');
 
 app.get('/t',function(req,res){
-    taobao.getInfo('https://auxdq.tmall.com', function(error, itemInfo){
+    taobaov2.getInfo('https://auxdq.tmall.com', function(error, itemInfo){
         if(error){
             res.send(error);
         }else{
@@ -20,7 +21,7 @@ app.get('/info', function (req, res) {
     var sellerId = req.query.sellerId;
     var key = req.query.key;
 
-    taobao.getInfo(activityId , itemId, sellerId, key, function(error, itemInfo){
+    taobaov2.getInfo(activityId , itemId, sellerId, key, function(error, itemInfo){
         if(error){
             res.json({
                 Status: false,
@@ -41,7 +42,7 @@ app.get('/detail', function (req, res) {
     var sellerId = req.query.sellerId;
     var key = req.query.key;
 
-    taobao.getInfo(activityId , itemId, sellerId, key, function(error, itemInfo){
+    taobaov2.getInfo(activityId , itemId, sellerId, key, function(error, itemInfo){
         if(error){
             res.json({
                 Status: false,
@@ -56,4 +57,6 @@ app.get('/detail', function (req, res) {
     })
 })
 
-app.listen(3011);
+app.listen(3011, function () {
+    console.log('listen 3011')
+});
