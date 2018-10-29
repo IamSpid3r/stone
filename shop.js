@@ -1,7 +1,7 @@
 var express = require('express'), app = express();
 var url = require('url');
 var request = require('request');
-
+var _ = require('lodash');
 
 var taobao = require('./lib/shop/taobaoShop');
 var nikeStore = require('./lib/shop/nikeShop');
@@ -30,6 +30,7 @@ app.get('/t',function(req,res){
 app.get('/idle',function (req, res){
     let keyword = req.query.keyword;
     let page = req.query.page || 1;
+    console.log(keyword);
     if(req.query.url){
         var urlInfo = url.parse(req.query.url, true, true);
         page = req.query.page ?Number(req.query.page):Number(urlInfo.query.page);
@@ -50,6 +51,9 @@ app.get('/info', function (req, res) {
     var goodsUrl = req.query.url;
     var page = 1;
     var goodsUrlHost = '';
+    if(req.originalUrl && (_.includes(req.originalUrl,'search.jd.com')|| _.includes(req.originalUrl,'list.tmall.com'))){
+        goodsUrl = decodeURI(_.replace(req.originalUrl,'/info?url=',''));
+    }
     if(goodsUrl){
         var urlInfo = url.parse(goodsUrl, true, true);
         goodsUrlHost = urlInfo.host;
@@ -100,7 +104,7 @@ function getStoreObj(host){
         return farfetch;
     }else if(host.indexOf('stockx.com') >= 0){
         return stockx;
-    }else if(host.indexOf('list.tmall') >= 0){
+    }else if(host.indexOf('list.tmall.com') >= 0){
         return tmall;
     }else if(host.indexOf('adidas.tmall.com') >= 0){
         return adidas;
