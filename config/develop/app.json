@@ -123,5 +123,13 @@
       "1" : "kunlun_fast",
       "2" : "shihuo_fast"
     }
+  },
+  "farfetch":{
+    "clientId":"farfetch_ShihuoApiDigitalAsset",
+    "clientSecret":"5kr0n5NurRmLk1HkVlIhYnAekA35s01O9ueU/Ms5nNQxYBVklwcClKLLc5Po2sTw6cIlf7OSl3B9RD3bXJnSwZmKqA7ijDcmlLvW",
+    "username":"shihuo",
+    "password":"Farfetch2018!",
+    "auth":"https://sbx01-authbo.fftech.info",
+    "api":"https://sbx01-api.fftech.info"
   }
 }
