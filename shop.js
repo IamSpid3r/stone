@@ -3,7 +3,7 @@ var url = require('url');
 var request = require('request');
 var _ = require('lodash');
 
-var taobao = require('./lib/shop/taobaoShop');
+var taobao = require('./lib/shop/taobaoShopNew');
 var nikeStore = require('./lib/shop/nikeShop');
 var amazoncnStore = require('./lib/shop/amazoncnShop');
 var duStore = require('./lib/shop/duShop');
