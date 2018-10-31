@@ -126,7 +126,7 @@
   },
   "farfetch":{
     "clientId":"farfetch_ShihuoApiDigitalAsset",
-    "clientSecret":"5kr0n5NurRmLk1HkVlIhYnAekA35s01O9ueU/Ms5nNQxYBVklwcClKLLc5Po2sTw6cIlf7OSl3B9RD3bXJnSwZmKqA7ijDcmlLvW",
+    "clientSecret":"SecretProductionShihuo",
     "username":"shihuo",
     "password":"Farfetch2018!",
     "auth":"https://sbx01-authbo.fftech.info",
