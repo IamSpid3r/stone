@@ -1,11 +1,12 @@
 var TableStore = require('tablestore');
 var NODE_ENV   = typeof process.env.NODE_ENV != 'undefined' ? process.env.NODE_ENV : '';
+var NODE_COUNTRY   = typeof process.env.NODE_COUNTRY != 'undefined' ? process.env.NODE_COUNTRY : '';
 
 var config = require(process.cwd()+'/config/'+NODE_ENV+'/app.json');
 var tablestoreConf = config.db.tablestore;
 var tableName = 'stone_sku_crawl';
 
-if (NODE_ENV == 'guowai') {
+if (NODE_COUNTRY == 'guowai') {
     tablestoreConf.endpoint = 'https://stone.cn-hangzhou.ots.aliyuncs.com';
 }
 
