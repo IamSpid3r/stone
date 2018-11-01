@@ -9,8 +9,8 @@ const sequelize = new Sequelize(dbConfig.database, dbConfig.user, dbConfig.passw
     pool: {
         max: 3,
         min: 1,
-        acquire: 10000,
-        idle: 30000
+        acquire: 30000,
+        idle: 40000
     },
     operatorsAliases: false,
     timezone: '+08:00', //东八时区,
