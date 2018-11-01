@@ -38,6 +38,7 @@ var deal = function () {
                         controller.getTablestoreData(row.task_id, function (tberr, skuInfo) {
                             if (tberr) {
                                 n++;
+                                console.log(n, dataLength)
                                 if (n >= dataLength) {
                                     emitter.emit('ok');
                                 }
@@ -73,6 +74,7 @@ var deal = function () {
                                         callback_err_num: parseInt(row.callback_err_num) + 1
                                     });
                                     n++;
+                                    console.log(n, dataLength)
                                     if (n >= dataLength) {
                                         emitter.emit('ok');
                                     }
@@ -90,6 +92,7 @@ var deal = function () {
                                         callback_status: 1
                                     });
                                     n++;
+                                    console.log(n, dataLength)
                                     if (n >= dataLength) {
                                         emitter.emit('ok');
                                     }
@@ -112,6 +115,7 @@ var deal = function () {
                                 callback_err_num: parseInt(row.callback_err_num) + 1
                             });
                             n++;
+                            console.log(n, dataLength)
                             if (n >= dataLength) {
                                 emitter.emit('ok');
                             }
@@ -133,6 +137,7 @@ var deal = function () {
                                         callback_err_num: parseInt(row.callback_err_num) + 1
                                     });
                                     n++;
+                                    console.log(n, dataLength)
                                     if (n >= dataLength) {
                                         emitter.emit('ok');
                                     }
@@ -150,6 +155,7 @@ var deal = function () {
                                         callback_status: 1,
                                     });
                                     n++;
+                                    console.log(n, dataLength)
                                     if (n >= dataLength) {
                                         emitter.emit('ok');
                                     }
