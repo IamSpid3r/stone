@@ -367,7 +367,10 @@ function bulk(body, operate, callback) {
         }
     })
 
-    esClient.bulk({body : params}, function (err, res) {
+    esClient.bulk({
+        body : params,
+        refresh : true
+    }, function (err, res) {
         return callback(err, res);
     })
 }
