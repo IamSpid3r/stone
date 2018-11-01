@@ -153,7 +153,16 @@ function search(condition, callback) {
         body.sort = [];
         sort.forEach(function (sortRow) {
             var tmpSort = {};
-            tmpSort[sortRow[0]] = sortRow[1];
+            if ('random' == sortRow[0]) {
+                tmpSort['_script'] =  {
+                    "script" : "Math.random()",
+                    "type" : "number",
+                    "params" : {},
+                    "order" : "asc"
+                }
+            } else {
+                tmpSort[sortRow[0]] = sortRow[1];
+            }
             body.sort.push(tmpSort);
         })
     }
