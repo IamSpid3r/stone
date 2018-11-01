@@ -11,7 +11,7 @@ const Q = require("q");
 
 var deal = function(){
     console.log('start notice')
-	controller.getDataListEs(800).then(function (data) {
+	controller.getDataListEs(500).then(function (data) {
             if (data.status){
                 data.data.forEach(function (row) {
                     if (row.task_id){
