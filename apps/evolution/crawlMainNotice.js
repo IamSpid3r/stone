@@ -266,14 +266,12 @@ var controller = {
         });
         return defer.promise;
     },
-    sortTmp:"asc",
     getDataListEs: function (pagesize) {
         var defer = Q.defer();
 
-        this.sortTmp = this.sortTmp == 'asc' ? 'desc' : 'asc';
         crawlmainTaskES.search(
             {
-                callback_status: 0, callback_err_num: 5, notice: 1, size: pagesize, sort: [['update_at', this.sortTmp]]
+                callback_status: 0, callback_err_num: 5, notice: 1, size: pagesize, sort: [['update_at', 'asc']]
             }, function (err, res) {
                 if (err) {
                     return defer.reject(err);
