@@ -264,13 +264,13 @@ var handler = function (request, response){
         client.get(redis_key, function (err, reply) {
             if (!reply){//没有获取过
                 //获取完把状态更新成1（处理中） todo 加快更新速度此处不更新es状态
-                //controller.updateDataEs(reslut.task_id).then(function (datas) {
+                controller.updateDataEs(reslut.task_id).then(function (datas) {
                     client.set(redis_key, 1);
                     client.expire(redis_key, 10);
                     response.json({code: 200, msg: '',data:reslut});
-                //}, function (errs) {
-                    //response.json({code: 400, msg: err.message});
-                //})
+                }, function (errs) {
+                    response.json({code: 400, msg: err.message});
+                })
             } else {
                 //100ms后继续获取
                 setTimeout(function(){
