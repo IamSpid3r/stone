@@ -271,7 +271,7 @@ var controller = {
 
         crawlmainTaskES.search(
             {
-                callback_status: 0, callback_err_num: 5, notice: 1, size: pagesize, sort: [['random', 'asc']]
+                callback_status: 0, callback_err_num: 5, notice: 1, size: pagesize, sort: [['update_at', 'asc']]
             }, function (err, res) {
                 if (err) {
                     return defer.reject(err);
