@@ -169,9 +169,15 @@ var deal = function () {
         }
     }, function (err) {
         console.log('flag 1', err.message);
+        setTimeout(function () {
+            deal();
+        }, 5000)
     }).then(function () {
     }, function (err) {
         console.log('flag 2', err.message);
+        setTimeout(function () {
+            deal();
+        }, 5000)
     })
 }
 
