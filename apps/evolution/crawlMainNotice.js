@@ -12,7 +12,7 @@ const events = require('events');
 
 var deal = function () {
     console.log('start notice')
-    controller.getDataListEs(400).then(function (data) {
+    controller.getDataListEs(500).then(function (data) {
         if (data.status) {
             //bulk es data
             var bulkData = [];
@@ -20,12 +20,18 @@ var deal = function () {
             var dataLength =  data.data.length;
             var emitter = new events.EventEmitter();
             emitter.on('ok', function() {
-                controller.updateDataBulkEs(bulkData, function (success) {
+                controller.updateDataBulkEs(bulkData).then(function (success) {
                     console.log('es bulk success');
                     fun.stoneLog('crawlMainNotice', 'info', {"param":{"message":'notice es bulk success'}})
+
+                    //re
+                    deal();
                 },function (err) {
                     fun.stoneLog('crawlMainNotice', 'error',{"param":{"message":'notice es bulk '+err.message}})
                     console.log('es bulk '+err.message)
+
+                    //re
+                    deal();
                 });
             });
 
@@ -38,7 +44,6 @@ var deal = function () {
                         controller.getTablestoreData(row.task_id, function (tberr, skuInfo) {
                             if (tberr) {
                                 n++;
-                                console.log(n, dataLength)
                                 if (n >= dataLength) {
                                     emitter.emit('ok');
                                 }
@@ -74,7 +79,6 @@ var deal = function () {
                                         callback_err_num: parseInt(row.callback_err_num) + 1
                                     });
                                     n++;
-                                    console.log(n, dataLength)
                                     if (n >= dataLength) {
                                         emitter.emit('ok');
                                     }
@@ -92,7 +96,6 @@ var deal = function () {
                                         callback_status: 1
                                     });
                                     n++;
-                                    console.log(n, dataLength)
                                     if (n >= dataLength) {
                                         emitter.emit('ok');
                                     }
@@ -115,7 +118,6 @@ var deal = function () {
                                 callback_err_num: parseInt(row.callback_err_num) + 1
                             });
                             n++;
-                            console.log(n, dataLength)
                             if (n >= dataLength) {
                                 emitter.emit('ok');
                             }
@@ -137,7 +139,6 @@ var deal = function () {
                                         callback_err_num: parseInt(row.callback_err_num) + 1
                                     });
                                     n++;
-                                    console.log(n, dataLength)
                                     if (n >= dataLength) {
                                         emitter.emit('ok');
                                     }
@@ -155,7 +156,6 @@ var deal = function () {
                                         callback_status: 1,
                                     });
                                     n++;
-                                    console.log(n, dataLength)
                                     if (n >= dataLength) {
                                         emitter.emit('ok');
                                     }
@@ -347,6 +347,4 @@ var controller = {
 }
 
 //start
-setInterval(function () {
-    deal();
-}, 5000)
+deal();
