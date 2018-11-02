@@ -153,7 +153,16 @@ function search(condition, callback) {
         body.sort = [];
         sort.forEach(function (sortRow) {
             var tmpSort = {};
-            tmpSort[sortRow[0]] = sortRow[1];
+            if ('random' == sortRow[0]) {
+                tmpSort['_script'] =  {
+                    "script" : "Math.random()",
+                    "type" : "number",
+                    "params" : {},
+                    "order" : "asc"
+                }
+            } else {
+                tmpSort[sortRow[0]] = sortRow[1];
+            }
             body.sort.push(tmpSort);
         })
     }
@@ -358,7 +367,10 @@ function bulk(body, operate, callback) {
         }
     })
 
-    esClient.bulk({body : params}, function (err, res) {
+    esClient.bulk({
+        body : params,
+        refresh : true
+    }, function (err, res) {
         return callback(err, res);
     })
 }

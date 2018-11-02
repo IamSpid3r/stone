@@ -268,9 +268,9 @@ var handler = function (request, response){
                     client.set(redis_key, 1);
                     client.expire(redis_key, 10);
                     response.json({code: 200, msg: '',data:reslut});
-                //}, function (errs) {
-                    //response.json({code: 400, msg: err.message});
-                //})
+                // }, function (errs) {
+                //     response.json({code: 400, msg: err.message});
+                // })
             } else {
                 //100ms后继续获取
                 setTimeout(function(){
