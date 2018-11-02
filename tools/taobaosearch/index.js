@@ -2175,7 +2175,7 @@ const redisClient = redis.createClient({
     socket_keepalive: true
 });
 const taobaoToken = require(process.cwd()+'/tools/taobaoToken/runList.js');
-const redisKey = 'stone2018:keywords2';
+const redisKey = 'stone2018:keywords';
 
 const ApiClient = require('ali-topSdk').ApiClient;
 const client = new ApiClient({
@@ -2271,17 +2271,6 @@ async function browserStart(keywords) {
         }
     }
 
-    //var sendImgTime  = Date.now();
-    // var si = setInterval(function () {
-    //     //超过50s钟
-    //     if ((Date.now() - sendImgTime) > 1000*50) {
-    //         console.log(3333)
-    //         //关闭浏览器
-    //         clearInterval(si);
-    //         browser.close();
-    //         keywordsSearch();
-    //     }
-    // }, 5000)
     page.on('response', async function (data) {
         //h5api js cookie
         if (data.url.indexOf('http://acs.m.taobao.com/h5/mtop.taobao.social.feed.aggregate') != -1) {
