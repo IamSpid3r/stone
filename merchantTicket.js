@@ -49,13 +49,14 @@ app.get('/info', function (req, res) {
     var urlStr = req.query.url;
     var shopId = req.query.shopId;
     var sellerId = req.query.sellerId;
+    var sellerType = req.query.sellerType;
     var v = req.query.v || '';
 
     var taobaoReg = /(taobao|tmall)\.com/ig;
     var jdReg = /jd\.com/ig;
     if (taobaoReg.exec(urlStr)) {
         if (v.indexOf('v2') > -1) {
-            taobaov2.getInfo(urlStr ,shopId, sellerId, function(error, itemInfo){
+            taobaov2.getInfo(urlStr ,shopId, sellerId, sellerType, function(error, itemInfo){
                 if(error){
                     return res.json({
                         Status: false,
