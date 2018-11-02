@@ -46,7 +46,10 @@ var runList = function(params, cookiePath, callback) {
             if (params.api == 'mtop.taobao.rate.detail') {
                 apiUrl = apiUrl.replace(/api\.m\.taobao/g, 'h5api\.m\.tmall');
             }
-
+            if (params.api == 'mtop.taobao.social.feed.aggregate') {
+                apiUrl = apiUrl.replace(/api\.m/g, 'acs\.m');
+            }
+            console.log(apiUrl);
             var requestCookie = globalCookies;
 
             options = {};
@@ -71,14 +74,13 @@ var runList = function(params, cookiePath, callback) {
                     }
                     return callback(null, error.message);
                 }else{
-                    let resStr = response.body.replace('mtopjsonp1(','')
+                    let resStr = response.body.replace('mtopjsonp1(','');
                     let res = resStr.substring(0,resStr.length-1);
                     try {
                         var resJson = JSON.parse(res);
                     } catch (e) {
                        return callback(null, 'jsonerror:'+res.substr(0, 100));
                     }
-
 
                     switch (params.api) {
                         //商品详情页
@@ -148,6 +150,30 @@ var runList = function(params, cookiePath, callback) {
                                 callback(resJson);
                             }else{
                                 callback(null, '抓取服务器错误');
+                            }
+                            break;
+                        case 'mtop.taobao.social.feed.aggregate':
+                       
+                            if (resJson.ret instanceof Array
+                                && resJson.ret[0].indexOf('代理软件') == -1
+                                && resJson.ret[0].indexOf('被挤爆啦') == -1
+                                && resJson.ret[0].indexOf('FAIL') == -1
+                            ) {
+                                return callback(resJson);
+                            }else{
+                                if (response.headers['set-cookie']) {
+                                    var sc = response.headers['set-cookie'];
+                                    sc = sc.join('; ');
+                                    let cookieObj = new parseCookie(sc).parsetoJSON();
+                                    cookie = new parseCookie(cookieObj).parsetoSTR();
+                                    console.log(cookie, 223333)
+                                    fun.writeLog(cookiePath, cookie);
+                                    requestBody(cookie);
+                                }else{
+                                    console.log(500, 'repeat crawl..');
+                                    return requestBody(globalCookies, proxyRequest);
+                                // return callback(null, '抓取服务器错误');
+                                }
                             }
                             break;
                         //默认页面
