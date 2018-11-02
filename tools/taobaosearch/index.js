@@ -2175,7 +2175,7 @@ const redisClient = redis.createClient({
     socket_keepalive: true
 });
 const taobaoToken = require(process.cwd()+'/tools/taobaoToken/runList.js');
-const redisKey = 'stone2018:keywords';
+const redisKey = 'stone2018:keywords2';
 
 const ApiClient = require('ali-topSdk').ApiClient;
 const client = new ApiClient({
