@@ -1,25 +1,8 @@
 const request = require('request');
 const _ = require('lodash');
 const url = require('url');
-const redis = require('redis');
 const taobaoToken = require(process.cwd()+'/tools/taobaoToken/runList.js');
-const NODE_ENV = typeof process.env.NODE_ENV != 'undefined' ? process.env.NODE_ENV : '';
-var redisConfig = require(process.cwd()+'/config/'+NODE_ENV+'/app.json');
-if (!NODE_ENV){
-    var redisClient = redis.createClient(redisConfig.port,redisConfig.host);
-    //线上环境需要认证
-    redisClient.auth(redisConfig.password);
-}else{
-    var redisClient = redis.createClient({
-        host: redisConfig.host,
-        port: redisConfig.port,
-        db: redisConfig.database,
-        password: redisConfig.password,
-        connect_timeout: 5000,
-        socket_keepalive: true
-    });
-}
-
+var redisClient = require(process.cwd()+'/apps/lib/redis.js');
 const REDIS_URL_KEY = 'taobao:ask:url';//redis list
 
 exports.urlSearch = async function (callback) {
