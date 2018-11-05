@@ -2,8 +2,6 @@ const request = require('request');
 const _ = require('lodash');
 const url = require('url');
 const taobaoToken = require(process.cwd()+'/tools/taobaoToken/runList.js');
-var redisClient = require(process.cwd()+'/apps/lib/redis.js');
-const REDIS_URL_KEY = 'taobao:ask:url';//redis list
 
 exports.urlSearch = async function (taobaoUrl,callback) {
     var hasList = 0;
@@ -11,7 +9,6 @@ exports.urlSearch = async function (taobaoUrl,callback) {
     
         if (taobaoUrl) {
             console.log( taobaoUrl);
-            // redisClient.lpush(REDIS_URL_KEY,taobaoUrl);//测试环境先循环处理单条
             var urlInfo = url.parse(taobaoUrl, true);
             //h5api js cookie
             let list = await getAsk(urlInfo.query.id);//问答列表
@@ -29,21 +26,6 @@ exports.urlSearch = async function (taobaoUrl,callback) {
                 return callback('no need update ',params);   
             }
             return callback(null,params);
-            //调用接口，失败重新添加到队尾
-            // request.post(config.shihuo.askUrl, {form:params} , function (error, response, body) {
-            //     if (error || response.statusCode !== 200) {
-            //         redisClient.rpush(REDIS_URL_KEY,taobaoUrl);//本次失败忽略操作
-            //         return callback('request fail',{});
-            //     } else {//成功，因为接口总返回  写入trd_taobao_ask_bind
-            //         console.log(body);
-            //         if(_.includes(body,urlInfo.query.id)){
-            //             return callback(null,params);
-            //         }else{
-            //             redisClient.rpush(REDIS_URL_KEY,taobaoUrl);//本次失败忽略操作
-            //             return callback(json.msg||'参数错误',{});
-            //         }
-            //     }
-            // });
         } else {
             console.log('no new url...');//暂时没url中断
             return callback('no new url',{});
@@ -96,7 +78,7 @@ function getAsk (itemId, keywords = '') {
     
     console.log(params);
     return new Promise((resolve, reject)=> {
-        taobaoToken(params ,'taobaoCookieShihuo.txt', function (body, err) {
+        taobaoToken(params ,'taobaoAskCookie.txt', function (body, err) {
             if(err){
                 reject(err.message)
             }
