@@ -1,18 +1,8 @@
 const request = require('request');
 const _ = require('lodash');
 const url = require('url');
-const redis = require('redis');
-const config = require(process.cwd() + '/config/develop/app.json');
 const taobaoToken = require(process.cwd()+'/tools/taobaoToken/runList.js');
-const redisConfig = config.db.redis;
-const redisClient = redis.createClient({
-    host: redisConfig.host,
-    port: redisConfig.port,
-    db: redisConfig.database,
-    password: redisConfig.password,
-    connect_timeout: 5000,
-    socket_keepalive: true
-});
+var redisClient = require(process.cwd()+'/apps/lib/redis.js');
 const REDIS_URL_KEY = 'taobao:ask:url';//redis list
 
 exports.urlSearch = async function (callback) {
