@@ -8,7 +8,7 @@ var tableName = 'stone_sku_crawl';
 //guowai tablestore 走公网
 const os = require('os');
 const guowaiIp = config.app.ip.guowai;
-if (guowaiIp.indexOf(os.networkInterfaces().eth0[0].address)) {
+if (guowaiIp.indexOf(os.networkInterfaces().eth0[0].address) > -1) {
     tablestoreConf.endpoint = 'https://stone.cn-hangzhou.ots.aliyuncs.com';
 }
 
