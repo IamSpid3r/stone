@@ -50,7 +50,7 @@
       "guonei" : 3,
       "guowai" : 4,
       "jd" : 4,
-      "taobao" : 8
+      "taobao" : 12
     },
     "store" : {
       "guonei": [
@@ -122,6 +122,9 @@
        "0" : "kunlun",
        "1" : "kunlun_fast",
        "2" : "shihuo_fast"
+    },
+    "ip" : {
+      "guowai" : ["10.34.116.61", "10.45.24.213"]
     }
   },
   "farfetch":{

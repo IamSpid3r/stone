@@ -49,7 +49,7 @@ var runList = function(params, cookiePath, callback) {
             if (params.api == 'mtop.taobao.social.feed.aggregate') {
                 apiUrl = apiUrl.replace(/api\.m/g, 'acs\.m');
             }
-            console.log(apiUrl);
+            //console.log(apiUrl);
             var requestCookie = globalCookies;
 
             options = {};
@@ -166,7 +166,7 @@ var runList = function(params, cookiePath, callback) {
                                     sc = sc.join('; ');
                                     let cookieObj = new parseCookie(sc).parsetoJSON();
                                     cookie = new parseCookie(cookieObj).parsetoSTR();
-                                    console.log(cookie, 223333)
+                                    //console.log(cookie, 223333)
                                     fun.writeLog(cookiePath, cookie);
                                     requestBody(cookie);
                                 }else{

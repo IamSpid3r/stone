@@ -1,12 +1,14 @@
 var TableStore = require('tablestore');
 var NODE_ENV   = typeof process.env.NODE_ENV != 'undefined' ? process.env.NODE_ENV : '';
-var NODE_COUNTRY   = typeof process.env.NODE_COUNTRY != 'undefined' ? process.env.NODE_COUNTRY : '';
 
 var config = require(process.cwd()+'/config/'+NODE_ENV+'/app.json');
 var tablestoreConf = config.db.tablestore;
 var tableName = 'stone_sku_crawl';
 
-if (NODE_COUNTRY == 'guowai') {
+//guowai tablestore 走公网
+const os = require('os');
+const guowaiIp = config.app.ip.guowai;
+if (guowaiIp.indexOf(os.networkInterfaces().eth0[0].address) > -1) {
     tablestoreConf.endpoint = 'https://stone.cn-hangzhou.ots.aliyuncs.com';
 }
 
