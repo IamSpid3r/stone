@@ -15,6 +15,9 @@ async function handler () {
         controller.deliverQueue(data);
     } else {
         console.log('waiting..')
+        setTimeout(function () {
+            handler();
+        }, 4000);
     }
 }
 
@@ -31,7 +34,7 @@ var controller = {
                 status: 0,
             },
             attributes: ['task_id', 'url', 'from'],
-            limit: 300,
+            limit: 500,
             order : [
                 ['from', 'desc'],
                 ['create_at', 'asc']
@@ -43,7 +46,7 @@ var controller = {
                 status: 0,
             },
             attributes: ['task_id', 'url', 'from'],
-            limit: 300,
+            limit: 500,
             order : [
                 ['from', 'desc'],
                 ['create_at', 'asc']
@@ -62,6 +65,10 @@ var controller = {
                 fun.stoneLog('deliver_queue', 'error', {
                     "param" : err
                 })
+
+                setTimeout(function () {
+                    handler();
+                }, 3000);
                 return;
             }
 
@@ -89,12 +96,14 @@ var controller = {
                         errMsg = val.msg;
                     }
                 })
+
+                setTimeout(function () {
+                    handler();
+                }, 1000);
                 return;
             }
         })
     }
 };
 
-setInterval(function () {
-    handler();
-}, 4000)
+handler();
