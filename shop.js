@@ -14,7 +14,6 @@ var vipStore = require('./lib/shop/vipShop');
 var farfetch = require('./lib/shop/farfetchShop');
 var stockx = require('./lib/shop/stockxShop');
 var tmall = require('./lib/shop/tmallShop');
-var adidas = require('./lib/shop/adidasShop');
 var idlefish = require('./lib/shop/idleMainItemSearch');
 
 app.get('/t',function(req,res){
@@ -106,8 +105,6 @@ function getStoreObj(host){
         return stockx;
     }else if(host.indexOf('list.tmall.com') >= 0){
         return tmall;
-    }else if(host.indexOf('adidas.tmall.com') >= 0){
-        return adidas;
     }
     return taobao;
 
