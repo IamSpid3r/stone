@@ -105,6 +105,8 @@
         {"name":"荷兰DOD"},
         {"name":"farfetch"},
         {"name":"stockx"},
+        {"name":"eastbay"},
+        {"name":"finishline"},
         {"name":"香港莎莎网"},
         {"name":"香港草莓网"},
         {"name":"香港卓悦网"},
@@ -122,6 +124,8 @@
       "0" : "kunlun",
       "1" : "kunlun_fast",
       "2" : "shihuo_fast"
+    } ,"ip" : {
+      "guowai" : ["10.34.116.61", "10.45.24.213"]
     }
   },
   "farfetch":{
