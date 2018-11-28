@@ -43,7 +43,7 @@ var start = function () {
             body = JSON.parse(body);
             try {
                 let total = body.responses[0].hits.total;
-
+console.log(total)
                 if (!isNaN(total) && total > 0) {
                     var browser = await getbrowser();
                     var page = await browser.newPage();
