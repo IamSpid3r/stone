@@ -44,7 +44,7 @@ var start = function () {
             try {
                 let total = body.responses[0].hits.total;
 console.log(total)
-                if (!isNaN(total) && total > 0) {
+                if (!isNaN(total) && total > 100) {
                     var browser = await getbrowser();
                     var page = await browser.newPage();
                     await page.setViewport({
