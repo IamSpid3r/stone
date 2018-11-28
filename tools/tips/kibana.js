@@ -68,6 +68,7 @@ var start = function () {
 
                     await r(imgPath);
 
+                    page.close();
                     //push time
                     timerStime = Date.now();
                 }
@@ -130,8 +131,7 @@ var r = function (imagePath) {
 
 
 //
-//start();
-
+start();
 setInterval(function () {
     start();
 }, 60000)
