@@ -141,5 +141,15 @@
   },
   "shihuo":{
     "askUrl":"http://www.shihuo.cn/api/taobaoask/act/noticeBind"
+  },
+  "idlefish":{
+    "fishlist_api":"mtop.taobao.idle.main.item.search",
+    "fishlist_v":"3.2",
+    "poolid_api":"mtop.taobao.idle.fishpool.search",
+    "poolid_v":"3.0",
+    "poollist_api":"mtop.taobao.idle.fishpool.item.list",
+    "poollist_v":"5.0",
+    "poolarea_api":"mtop.taobao.idle.pool.group.feeds",
+    "poolarea_v":"2.0"
   }
 }
