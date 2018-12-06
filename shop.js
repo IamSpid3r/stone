@@ -27,23 +27,41 @@ app.get('/t',function(req,res){
 })
 
 app.get('/idle',function (req, res){
+    let id = req.query.id;
     let keyword = req.query.keyword;
     let page = req.query.page || 1;
-    console.log(keyword);
+
     if(req.query.url){
         var urlInfo = url.parse(req.query.url, true, true);
         page = req.query.page ?Number(req.query.page):Number(urlInfo.query.page);
     }
-    idlefish.doSearch({keyword,page},function(error, itemInfo){
-        if(error){
-            res.json({
-                Status: false,
-                Msg: error
-            })
-        }else{
-            res.json({ Status: true, Data: itemInfo});
-        }
-    });
+    
+    if(id){
+        let isarea = req.query.isarea;
+        idlefish.getPoolList({id,page,isarea},function(error, itemInfo){
+            if(error){
+                res.json({
+                    Status: false,
+                    Msg: error
+                })
+            }else{
+                res.json({ Status: true, Data: itemInfo});
+            }
+        });
+    }
+
+    if(keyword){
+        idlefish.doSearch({keyword,page},function(error, itemInfo){
+            if(error){
+                res.json({
+                    Status: false,
+                    Msg: error
+                })
+            }else{
+                res.json({ Status: true, Data: itemInfo});
+            }
+        });
+    }
 });
 
 app.get('/info', function (req, res) {
