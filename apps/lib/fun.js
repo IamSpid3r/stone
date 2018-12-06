@@ -26,7 +26,7 @@ exports.getStore = function (urlStr) {
         {name:'考拉海购',  regexp: ['kaola.com']},
         {name:'国美在线',  regexp: ['gome.com.cn']},
         {name:'苏宁易购',  regexp: ['suning.com']},
-        {name:'毒',  regexp: ['du.hupu.com']},
+        {name:'毒',  regexp: ['du.hupu.com', 'm.poizon.com']},
         {name:'西集',  regexp: ['xiji.com']},
         {name:'美囤妈妈',  regexp: ['item.meitun.com', 'item.babytreegroup.hk']},
         {name:'贝贝',  regexp: ['beibei.com']},
