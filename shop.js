@@ -30,6 +30,7 @@ app.get('/idle',function (req, res){
     let id = req.query.id;
     let keyword = req.query.keyword;
     let page = req.query.page || 1;
+    let source = req.query.source || 1;
 
     if(req.query.url){
         var urlInfo = url.parse(req.query.url, true, true);
@@ -51,7 +52,7 @@ app.get('/idle',function (req, res){
     }
 
     if(keyword){
-        idlefish.doSearch({keyword,page},function(error, itemInfo){
+        idlefish.doSearch({source,keyword,page},function(error, itemInfo){
             if(error){
                 res.json({
                     Status: false,
